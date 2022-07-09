@@ -1,34 +1,34 @@
-import React from 'react';
-import { Button } from 'react-native';
+import React from "react";
+import { Button } from "react-native";
 
-import { FormProvider, useForm } from 'react-hook-form';
+import { FormProvider, useForm } from "react-hook-form";
 
-import { yupResolver } from '@hookform/resolvers/yup';
-import { FormLoginType } from '@model/login';
-import { loginValidation } from '@validate/login';
+import { yupResolver } from "@hookform/resolvers/yup";
+import { FormLoginType } from "@model/login";
+import { loginValidation } from "@validate/login";
 
-import { Input } from './input';
+import { Input } from "./input";
 
-import { FormLoginProps } from '../type';
+import { FormLoginProps } from "../type";
 
 export const FormLogin = ({ onSubmit }: FormLoginProps) => {
   // state
-  const formMethod = useForm<FormLoginType>({
-    mode: 'all',
-    resolver: yupResolver(loginValidation),
-  });
 
   // function
+  const formMethod = useForm<FormLoginType>({
+    mode: "all",
+    resolver: yupResolver(loginValidation),
+  });
   const onSubmitKey = () => {
     formMethod.handleSubmit(onSubmit)();
   };
   // render
   return (
     <FormProvider {...formMethod}>
-      <Input<FormLoginType> name={'email'} label={'Email'} />
-      <Input<FormLoginType> name={'password'} label={'Password'} />
+      <Input<FormLoginType> name={"email"} label={"Email"} />
+      <Input<FormLoginType> name={"password"} label={"Password"} />
 
-      <Button title={'Submit'} onPress={onSubmitKey} />
+      <Button title={"Submit"} onPress={onSubmitKey} />
     </FormProvider>
   );
 };
