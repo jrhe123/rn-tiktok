@@ -1,4 +1,4 @@
-import Config from 'react-native-config';
+import Config from "react-native-config";
 
 export const ENVConfig = {
   APP_ENV: Config.APP_ENV,

@@ -1,10 +1,7 @@
 export interface ResponseBase<T = Record<string, unknown>> {
   code: number;
-
   msg?: string | null;
-
   data?: T;
-
   status: boolean;
 }
 
@@ -16,8 +13,8 @@ export interface ParamsNetwork {
 }
 
 export enum SLICE_NAME {
-  APP = 'APP_',
-  LOGIN = 'LOGIN_',
+  APP = "APP_",
+  LOGIN = "LOGIN_",
 }
 
 export type ValidateMessageObject = {
