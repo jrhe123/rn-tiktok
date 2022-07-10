@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { StyleProp, TextInputProps, TextStyle, ViewStyle } from 'react-native';
+import React from "react";
+import { StyleProp, TextInputProps, TextStyle, ViewStyle } from "react-native";
 
-import { UseFormTrigger } from 'react-hook-form';
+import { UseFormTrigger } from "react-hook-form";
 
-import { I18nKeys } from '@utils/i18n/locales';
+import { I18nKeys } from "@utils/i18n/locales";
 
 export interface InputBaseProps extends TextInputProps {
   /**
@@ -150,5 +150,5 @@ export interface TextFieldProps extends InputBaseProps {
    * Preset of text
    * @default flat
    */
-  typeInput: 'flat' | 'outline';
+  typeInput: "flat" | "outline";
 }

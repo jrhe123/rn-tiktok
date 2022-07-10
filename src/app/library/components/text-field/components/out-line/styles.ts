@@ -1,34 +1,34 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
 export const styles = StyleSheet.create({
   container: {
     paddingVertical: 15,
     borderWidth: StyleSheet.hairlineWidth * 2,
     borderRadius: 5,
-    borderColor: 'gray',
-    justifyContent: 'center',
+    borderColor: "gray",
+    justifyContent: "center",
   },
   input: {
-    color: '#000',
+    color: "#000",
     padding: 0,
-    borderBottomColor: 'transparent',
+    borderBottomColor: "transparent",
   },
   text: {
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
     zIndex: 4,
     left: 5,
   },
   wrapLabel: {
-    position: 'absolute',
-    alignSelf: 'flex-end',
+    position: "absolute",
+    alignSelf: "flex-end",
   },
   content: {
-    flexDirection: 'row',
-    alignItems: 'flex-start',
+    flexDirection: "row",
+    alignItems: "flex-start",
   },
   wrapPlaceHolder: {
-    position: 'absolute',
-    alignSelf: 'flex-end',
+    position: "absolute",
+    alignSelf: "flex-end",
     paddingLeft: 5,
   },
   flex: {
