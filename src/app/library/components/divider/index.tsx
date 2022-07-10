@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
-import { View, ViewStyle } from 'react-native';
+import React, { useMemo } from "react";
+import { View, ViewStyle } from "react-native";
 
-import { useTheme } from '@theme';
+import { useTheme } from "@theme";
 
-import { DividerProps } from './type';
+import { DividerProps } from "./type";
 
 export const Divider = ({
   height = 1,
   colorTheme,
-  color = '#bbb',
+  color = "#bbb",
 }: DividerProps) => {
   // state
   const theme = useTheme();
@@ -18,9 +18,9 @@ export const Divider = ({
     () => ({
       backgroundColor: colorTheme ? theme.colors[colorTheme] : color,
       height,
-      width: '100%',
+      width: "100%",
     }),
-    [color, colorTheme, height, theme.colors],
+    [color, colorTheme, height, theme.colors]
   );
 
   // render
