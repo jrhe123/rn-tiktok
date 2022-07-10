@@ -1,10 +1,10 @@
-import React, { memo, useReducer } from 'react';
+import React, { memo, useReducer } from "react";
 
-import type { PortalProviderProps } from './types';
+import type { PortalProviderProps } from "./types";
 
-import { PortalDispatchContext, PortalStateContext } from '../../context';
-import { INITIAL_STATE, reducer } from '../../state';
-import { PortalHost } from '../portal-host';
+import { PortalDispatchContext, PortalStateContext } from "../../context";
+import { INITIAL_STATE, reducer } from "../../state";
+import { PortalHost } from "../portal-host";
 
 const PortalProviderComponent = ({ children }: PortalProviderProps) => {
   const [state, dispatch] = useReducer(reducer, INITIAL_STATE);
@@ -19,4 +19,4 @@ const PortalProviderComponent = ({ children }: PortalProviderProps) => {
 };
 
 export const PortalProvider = memo(PortalProviderComponent);
-PortalProvider.displayName = 'PortalProvider';
+PortalProvider.displayName = "PortalProvider";

@@ -1,13 +1,13 @@
-import { useContext } from 'react';
+import { useContext } from "react";
 
-import { PortalStateContext } from '../context';
+import { PortalStateContext } from "../context";
 
 export const usePortalState = (hostName: string) => {
   const state = useContext(PortalStateContext);
 
   if (state === null) {
     throw new Error(
-      "'PortalStateContext' cannot be null, please add 'PortalProvider' to the root component.",
+      "'PortalStateContext' cannot be null, please add 'PortalProvider' to the root component."
     );
   }
 

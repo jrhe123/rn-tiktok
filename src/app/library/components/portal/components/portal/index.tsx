@@ -1,10 +1,10 @@
-import { memo, useEffect, useMemo } from 'react';
+import { memo, useEffect, useMemo } from "react";
 
-import { randomUniqueId } from '@common';
+import { randomUniqueId } from "@common";
 
-import type { PortalProps } from './types';
+import type { PortalProps } from "./types";
 
-import { usePortal } from '../../hooks';
+import { usePortal } from "../../hooks";
 
 const PortalComponent = ({
   name: _providedName,
@@ -17,7 +17,7 @@ const PortalComponent = ({
   const { addPortal, removePortal, updatePortal } = usePortal(hostName);
   const name = useMemo(
     () => _providedName || randomUniqueId(),
-    [_providedName],
+    [_providedName]
   );
 
   // effects
@@ -51,4 +51,4 @@ const PortalComponent = ({
 };
 
 export const Portal = memo(PortalComponent);
-Portal.displayName = 'Portal';
+Portal.displayName = "Portal";

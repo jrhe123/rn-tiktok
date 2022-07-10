@@ -1,6 +1,6 @@
-import { ReactNode } from 'react';
+import { ReactNode } from "react";
 
-import { ACTIONS } from './constants';
+import { ACTIONS } from "./constants";
 
 export interface AddPortalAction {
   type: ACTIONS;
@@ -8,6 +8,7 @@ export interface AddPortalAction {
   portalName: string;
   node: ReactNode;
 }
+
 export interface UpdatePortalAction {
   type: ACTIONS;
   hostName: string;

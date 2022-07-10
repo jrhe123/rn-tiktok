@@ -1,14 +1,14 @@
-import { ReactNode, useCallback, useContext } from 'react';
+import { ReactNode, useCallback, useContext } from "react";
 
-import { PortalDispatchContext } from '../context';
-import { ACTIONS } from '../state';
+import { PortalDispatchContext } from "../context";
+import { ACTIONS } from "../state";
 
-export const usePortal = (hostName = 'root') => {
+export const usePortal = (hostName = "root") => {
   const dispatch = useContext(PortalDispatchContext);
 
   if (dispatch === null) {
     throw new Error(
-      "'PortalDispatchContext' cannot be null, please add 'PortalProvider' to the root component.",
+      "'PortalDispatchContext' cannot be null, please add 'PortalProvider' to the root component."
     );
   }
 
