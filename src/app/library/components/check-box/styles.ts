@@ -1,18 +1,18 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet } from "react-native";
 
-import { ColorDefault } from '@theme/color';
+import { ColorDefault } from "@theme/color";
 const DIMENSIONS = { width: 16, height: 16 };
 export const styles = StyleSheet.create({
   root: {
-    flexDirection: 'row',
+    flexDirection: "row",
     paddingVertical: 4,
-    alignSelf: 'flex-start',
+    alignSelf: "flex-start",
   },
   outline: {
     ...DIMENSIONS,
     marginTop: 2,
-    justifyContent: 'center',
-    alignItems: 'center',
+    justifyContent: "center",
+    alignItems: "center",
     borderWidth: StyleSheet.hairlineWidth,
     borderColor: ColorDefault.primary,
     borderRadius: 1,

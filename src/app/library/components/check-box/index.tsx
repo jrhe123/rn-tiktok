@@ -1,15 +1,15 @@
-import React, { useCallback, useState } from 'react';
-import { TouchableOpacity, View } from 'react-native';
+import React, { useCallback, useState } from "react";
+import { TouchableOpacity, View } from "react-native";
 
-import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
-import { useMix, useSharedTransition } from '@animated';
-import { execFunc } from '@common';
+import { useMix, useSharedTransition } from "@animated";
+import { execFunc } from "@common";
 
-import { styles } from './styles';
-import { CheckboxProps } from './type';
+import { styles } from "./styles";
+import { CheckboxProps } from "./type";
 
-import { Text } from '../text';
+import { Text } from "../text";
 
 export const CheckBox = ({
   text,
@@ -30,11 +30,11 @@ export const CheckBox = ({
 
   // function
   const onPress = useCallback(() => {
-    if (typeof value === 'boolean') {
+    if (typeof value === "boolean") {
       execFunc(onToggle, !value);
     } else {
       execFunc(onToggle, !localValue);
-      setLocalValue(v => !v);
+      setLocalValue((v) => !v);
     }
   }, [localValue, onToggle, value]);
 
@@ -50,7 +50,8 @@ export const CheckBox = ({
       activeOpacity={1}
       disabled={disable}
       onPress={onPress}
-      style={[styles.root, style]}>
+      style={[styles.root, style]}
+    >
       <>
         <View style={[styles.outline, outlineStyleOverwrite]}>
           <Animated.View style={[styles.fill, fillStyle, styleAnimated]} />
