@@ -1,9 +1,9 @@
-import React from 'react';
-import { FlatList, RefreshControl } from 'react-native';
+import React from "react";
+import { FlatList, RefreshControl } from "react-native";
 
-import { execFunc } from '@common';
+import { execFunc } from "@common";
 
-import { ListViewProps } from './type';
+import { ListViewProps } from "./type";
 
 export const ListView = (props: ListViewProps) => {
   // state
