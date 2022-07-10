@@ -1,12 +1,12 @@
-import React, { memo, useCallback, useMemo } from 'react';
-import { useWindowDimensions, View, ViewStyle } from 'react-native';
+import React, { memo, useCallback, useMemo } from "react";
+import { useWindowDimensions, View, ViewStyle } from "react-native";
 
-import isEqual from 'react-fast-compare';
+import isEqual from "react-fast-compare";
 
-import { BASE_ITEM_HEIGHT } from './constants';
-import { styles } from './styles';
+import { BASE_ITEM_HEIGHT } from "./constants";
+import { styles } from "./styles";
 
-import { Spacer } from '../spacer';
+import { Spacer } from "../spacer";
 
 type RowOverLayProps = {
   width: number | string;
@@ -21,21 +21,21 @@ const RowOverLay = memo(
         width,
         height,
         borderRadius,
-        backgroundColor: 'black',
+        backgroundColor: "black",
       }),
-      [borderRadius, height, width],
+      [borderRadius, height, width]
     );
     // render
     return <View style={[row]} />;
   },
-  isEqual,
+  isEqual
 );
 
 const ItemBase = memo(() => {
   // state
   const renderImage = useMemo<boolean>(
     () => Boolean(Math.round(Math.random() + 0.15)),
-    [],
+    []
   );
 
   // render
@@ -53,11 +53,11 @@ const ItemBase = memo(() => {
         </View>
       </View>
       <Spacer height={5} />
-      <RowOverLay width={'100%'} />
+      <RowOverLay width={"100%"} />
       <Spacer height={5} />
-      <RowOverLay width={'100%'} />
+      <RowOverLay width={"100%"} />
       <Spacer height={5} />
-      <RowOverLay width={'100%'} />
+      <RowOverLay width={"100%"} />
       <Spacer height={10} />
       {renderImage && <View style={[styles.imageOverlay]} />}
     </View>
@@ -72,7 +72,7 @@ const BaseContentComponent = () => {
       Array(Math.ceil(screenHeight / BASE_ITEM_HEIGHT))
         .fill(0)
         .map((_, i) => i),
-    [screenHeight],
+    [screenHeight]
   );
 
   // function
