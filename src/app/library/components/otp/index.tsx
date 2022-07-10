@@ -1,10 +1,10 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { Text, TextInput, TouchableWithoutFeedback, View } from 'react-native';
+import React, { useEffect, useRef, useState } from "react";
+import { Text, TextInput, TouchableWithoutFeedback, View } from "react-native";
 
-import { styles } from './styles';
-import { OtpProps } from './type';
+import { styles } from "./styles";
+import { OtpProps } from "./type";
 
-import { Spacer } from '../spacer';
+import { Spacer } from "../spacer";
 
 export const Otp = ({
   length,
@@ -12,14 +12,14 @@ export const Otp = ({
   onOtpValid,
   onOtpInValid,
   textStyle = {},
-  defaultOtp = '',
+  defaultOtp = "",
   wrapInputStyle = {},
   containerStyle = {},
   wrapInputActiveStyle = {},
   ...rest
 }: OtpProps) => {
   // state
-  const [otp, setOtp] = useState('');
+  const [otp, setOtp] = useState("");
   const _inputRef = useRef<TextInput>(null);
   const [isFocused, setIsFocused] = useState<boolean>(false);
 
@@ -49,7 +49,7 @@ export const Otp = ({
   useEffect(() => {
     if (defaultOtp) {
       setOtp(
-        defaultOtp.length > length ? defaultOtp.slice(0, length) : defaultOtp,
+        defaultOtp.length > length ? defaultOtp.slice(0, length) : defaultOtp
       );
     }
   }, [defaultOtp, length]);
@@ -71,11 +71,11 @@ export const Otp = ({
           value={otp}
           onFocus={onFocus}
           onBlur={onBlur}
-          autoCapitalize={'none'}
+          autoCapitalize={"none"}
           autoFocus={false}
-          underlineColorAndroid={'transparent'}
+          underlineColorAndroid={"transparent"}
           onChangeText={onOtpChange}
-          selectionColor={'transparent'}
+          selectionColor={"transparent"}
           style={styles.input}
           {...rest}
         />
@@ -95,12 +95,13 @@ export const Otp = ({
                           styles.otpViewActive,
                           wrapInputActiveStyle,
                         ],
-                    ]}>
+                    ]}
+                  >
                     <Text
                       children={
                         index <= otp.length - 1
                           ? textEntry?.charAt(0) ?? otp.charAt(index)
-                          : ''
+                          : ""
                       }
                       style={[styles.otpText, textStyle]}
                     />
