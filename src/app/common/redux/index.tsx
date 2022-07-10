@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { createRef, forwardRef, useImperativeHandle } from 'react';
+import React, { createRef, forwardRef, useImperativeHandle } from "react";
 
-import { useDispatch } from 'react-redux';
+import { useDispatch } from "react-redux";
 
-import { RootState } from '@store/all-reducers';
+import { RootState } from "@store/all-reducers";
 
-import { useSelector } from '../hooks';
+import { useSelector } from "../hooks";
 
 type ActionBase<T = any> = {
   type: string;
@@ -15,7 +15,7 @@ type ActionBase<T = any> = {
 const RXStoreComponent = forwardRef((_, ref) => {
   // state
   const dispatchRx = useDispatch();
-  const store = useSelector(x => x);
+  const store = useSelector((x) => x);
 
   // effect
   useImperativeHandle(
@@ -28,7 +28,7 @@ const RXStoreComponent = forwardRef((_, ref) => {
         return store[state];
       },
     }),
-    [dispatchRx, store],
+    [dispatchRx, store]
   );
   return null;
 });
