@@ -1,12 +1,12 @@
-import React from 'react';
-import { StyleProp, ViewStyle } from 'react-native';
+import React from "react";
+import { StyleProp, ViewStyle } from "react-native";
 
-import FastImage, { FastImageProps, ImageStyle } from 'react-native-fast-image';
+import FastImage, { FastImageProps, ImageStyle } from "react-native-fast-image";
 
-import { CustomOmit } from '@common';
+import { CustomOmit } from "@common";
 
 export interface ImageProps
-  extends CustomOmit<FastImageProps, 'source' | 'style' | 'resizeMode'> {
+  extends CustomOmit<FastImageProps, "source" | "style" | "resizeMode"> {
   /**
    * Overwrite image style
    * @default undefined
