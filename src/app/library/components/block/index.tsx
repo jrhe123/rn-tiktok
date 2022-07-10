@@ -1,10 +1,10 @@
-import React, { forwardRef, useMemo } from 'react';
-import { StyleProp, StyleSheet, View, ViewStyle } from 'react-native';
+import React, { forwardRef, useMemo } from "react";
+import { StyleProp, StyleSheet, View, ViewStyle } from "react-native";
 
-import { propsToStyle } from '@common';
-import { useTheme } from '@theme';
+import { propsToStyle } from "@common";
+import { useTheme } from "@theme";
 
-import { BlockProps } from './type';
+import { BlockProps } from "./type";
 
 const styles = StyleSheet.create({
   block: {
@@ -75,7 +75,7 @@ export const Block = forwardRef(
       style = {},
       ...rest
     }: BlockProps,
-    ref: React.ForwardedRef<View>,
+    ref: React.ForwardedRef<View>
   ) => {
     // state
     const theme = useTheme();
@@ -85,13 +85,13 @@ export const Block = forwardRef(
         block === true && styles.block,
         border === true && {
           borderWidth: 1,
-          borderColor: '#bbb',
+          borderColor: "#bbb",
         },
         colorTheme && { backgroundColor: theme.colors[colorTheme] },
         borderColorTheme && { borderColor: theme.colors[borderColorTheme] },
-        middle && { alignItems: 'center' },
+        middle && { alignItems: "center" },
         shadow && {
-          shadowColor: '#000',
+          shadowColor: "#000",
           shadowOffset: {
             width: 0,
             height: 2,
@@ -214,12 +214,12 @@ export const Block = forwardRef(
         borderRightWidth,
         borderTopWidth,
         style,
-      ],
+      ]
     );
 
     // render
     return (
       <View style={[styleComponent]} {...rest} ref={ref} children={children} />
     );
-  },
+  }
 );
