@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from "react";
 import {
   LayoutChangeEvent,
   LayoutRectangle,
@@ -6,19 +6,19 @@ import {
   Text,
   View,
   ViewStyle,
-} from 'react-native';
+} from "react-native";
 
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 
-import { sharedTiming, useInterpolate, useSharedTransition } from '@animated';
-import { useTheme } from '@theme';
-import { ColorDefault } from '@theme/color';
+import { sharedTiming, useInterpolate, useSharedTransition } from "@animated";
+import { useTheme } from "@theme";
+import { ColorDefault } from "@theme/color";
 
-import { styles } from './styles';
-import { HelperTextProps } from './type';
+import { styles } from "./styles";
+import { HelperTextProps } from "./type";
 
 export const HelperText = ({
   msg,
@@ -35,7 +35,7 @@ export const HelperText = ({
     x: 0,
     y: 0,
   });
-  const [currentMessage, setCurrentMessage] = useState<string>(msg ?? '');
+  const [currentMessage, setCurrentMessage] = useState<string>(msg ?? "");
   const progress = useSharedTransition(visible);
   const height = useSharedValue(0);
   const opacity = useInterpolate(progress, [0, 1], [0, 1]);
@@ -49,7 +49,7 @@ export const HelperText = ({
   const textStyle = useMemo<StyleProp<ViewStyle>>(
     () => [
       { height: measured.height },
-      type === 'error'
+      type === "error"
         ? {
             color: colorThemeError
               ? theme.colors[colorThemeError]
@@ -61,7 +61,7 @@ export const HelperText = ({
               : ColorDefault.info,
           },
     ],
-    [colorThemeError, colorThemeInfo, measured.height, theme.colors, type],
+    [colorThemeError, colorThemeInfo, measured.height, theme.colors, type]
   );
 
   // effect
@@ -90,9 +90,10 @@ export const HelperText = ({
   return (
     <View style={[styles.container]}>
       <Animated.View
-        pointerEvents={'none'}
+        pointerEvents={"none"}
         onLayout={_onLayoutContent}
-        style={[styles.hiddenView]}>
+        style={[styles.hiddenView]}
+      >
         <Text style={[styles.text]}>{currentMessage}</Text>
       </Animated.View>
       <Animated.View style={[style]}>
