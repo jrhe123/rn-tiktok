@@ -1,14 +1,14 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
-const { execSync } = require('child_process');
+const { execSync } = require("child_process");
 
-const { loadEnvFile } = require('./common');
+const { loadEnvFile } = require("./common");
 (async function () {
-  if (process.platform !== 'darwin') {
-    console.log('This script is only for macOS');
+  if (process.platform !== "darwin") {
+    console.log("This script is only for macOS");
     return;
   }
   const envJson = await loadEnvFile();
-  const simulator = 'iPhone 11';
+  const simulator = "iPhone 11";
   try {
     // if simulator is not booted, it will throw an error
     execSync(`xcrun simctl list devices | grep "${simulator}" | grep "Booted"`);
@@ -23,16 +23,16 @@ const { loadEnvFile } = require('./common');
   const deviceId = execSync("xcrun simctl list | egrep '(Booted)' ")
     .toString()
     .trim()
-    .split('\n')
-    .find(x => x.includes(simulator))
-    .replace('(Booted)', '')
-    .replace(simulator, '')
+    .split("\n")
+    .find((x) => x.includes(simulator))
+    .replace("(Booted)", "")
+    .replace(simulator, "")
     .trim()
-    .replace('(', '')
-    .replace(')', '');
+    .replace("(", "")
+    .replace(")", "");
 
   execSync(
     `xcrun simctl push ${deviceId} ${envJson.BUNDLE_IDENTIFIER} notification-ios-config.apns`,
-    { stdio: 'inherit' },
+    { stdio: "inherit" }
   );
 })();
