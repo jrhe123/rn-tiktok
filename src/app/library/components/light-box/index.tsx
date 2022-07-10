@@ -1,17 +1,17 @@
-import React, { memo, useCallback, useRef, useState } from 'react';
-import { TouchableOpacity, useWindowDimensions, View } from 'react-native';
+import React, { memo, useCallback, useRef, useState } from "react";
+import { TouchableOpacity, useWindowDimensions, View } from "react-native";
 
-import isEqual from 'react-fast-compare';
-import { OnLoadEvent, Source } from 'react-native-fast-image';
+import isEqual from "react-fast-compare";
+import { OnLoadEvent, Source } from "react-native-fast-image";
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 
-import { imageTransitionRef } from './image-transition';
-import { styles } from './styles';
+import { imageTransitionRef } from "./image-transition";
+import { styles } from "./styles";
 
-import { Image } from '../image';
+import { Image } from "../image";
 
 interface LightBoxProps {
   source: Source | number;
@@ -25,7 +25,7 @@ const LightBoxComponent = ({ source }: LightBoxProps) => {
     {
       width: 0,
       height: 0,
-    },
+    }
   );
   const { width: widthDevice } = useWindowDimensions();
   const imageOpacity = useSharedValue(1);
@@ -60,8 +60,8 @@ const LightBoxComponent = ({ source }: LightBoxProps) => {
 
   //reanimated style
   const imageStyle = useAnimatedStyle(() => ({
-    width: '100%',
-    height: '100%',
+    width: "100%",
+    height: "100%",
     opacity: imageOpacity.value,
   }));
 
@@ -75,7 +75,7 @@ const LightBoxComponent = ({ source }: LightBoxProps) => {
               onLoad={_onLoadedImage}
               style={[styles.img]}
               source={source}
-              resizeMode={'cover'}
+              resizeMode={"cover"}
             />
           </Animated.View>
         </TouchableOpacity>

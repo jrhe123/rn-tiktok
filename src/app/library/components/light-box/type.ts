@@ -1,5 +1,5 @@
-import { Source } from 'react-native-fast-image';
-import Animated from 'react-native-reanimated';
+import { Source } from "react-native-fast-image";
+import Animated from "react-native-reanimated";
 
 export interface GestureHOCProps {
   image: Measure;
