@@ -1,18 +1,18 @@
-import React, { useMemo, useState } from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
+import React, { useMemo, useState } from "react";
+import { TouchableWithoutFeedback } from "react-native";
 
-import Animated, { useAnimatedStyle } from 'react-native-reanimated';
+import Animated, { useAnimatedStyle } from "react-native-reanimated";
 
 import {
   useInterpolate,
   useInterpolateColor,
   useSharedTransition,
-} from '@animated';
-import { execFunc } from '@common';
+} from "@animated";
+import { execFunc } from "@common";
 
-import { ACTIVE_COLOR, SIZE, STROKE_WIDTH, UN_ACTIVE_COLOR } from './constants';
-import { styles } from './styles';
-import { RadioButtonProps } from './type';
+import { ACTIVE_COLOR, SIZE, STROKE_WIDTH, UN_ACTIVE_COLOR } from "./constants";
+import { styles } from "./styles";
+import { RadioButtonProps } from "./type";
 
 export const RadioButton = ({
   value,
@@ -31,16 +31,16 @@ export const RadioButton = ({
   const color = useInterpolateColor(
     progress,
     [0, 1],
-    [unActiveColor, activeColor],
+    [unActiveColor, activeColor]
   );
 
   // function
   const onPress = () => {
-    if (typeof value === 'boolean') {
+    if (typeof value === "boolean") {
       execFunc(onToggle, !value);
     } else {
       execFunc(onToggle, !localValue);
-      setLocalValue(v => !v);
+      setLocalValue((v) => !v);
     }
   };
 
@@ -52,7 +52,7 @@ export const RadioButton = ({
       borderRadius: (sizeDot + 10) / 2,
       borderWidth: strokeWidth,
     }),
-    [sizeDot, strokeWidth],
+    [sizeDot, strokeWidth]
   );
 
   // reanimated style
@@ -71,7 +71,7 @@ export const RadioButton = ({
   return (
     <TouchableWithoutFeedback onPress={onPress}>
       <Animated.View style={[styles.wrap, wrapStyle, wrapAnimaStyle]}>
-        <Animated.View pointerEvents={'none'} style={[styles.dot, dotStyle]} />
+        <Animated.View pointerEvents={"none"} style={[styles.dot, dotStyle]} />
       </Animated.View>
     </TouchableWithoutFeedback>
   );
