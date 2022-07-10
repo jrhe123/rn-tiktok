@@ -1,5 +1,5 @@
-import React, { Component, useEffect } from 'react';
-import { useWindowDimensions } from 'react-native';
+import React, { Component, useEffect } from "react";
+import { useWindowDimensions } from "react-native";
 
 import Animated, {
   AnimationCallback,
@@ -15,10 +15,10 @@ import Animated, {
   WithSpringConfig,
   withTiming,
   WithTimingConfig,
-} from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+} from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { sharedClamp, sharedMax, sharedMin } from './math';
+import { sharedClamp, sharedMax, sharedMin } from "./math";
 
 /**
  * Interpolate number
@@ -27,7 +27,7 @@ export const useInterpolate = (
   progress: Animated.SharedValue<number>,
   input: number[],
   output: number[],
-  type?: Animated.Extrapolate,
+  type?: Animated.Extrapolate
 ) => useDerivedValue(() => interpolate(progress.value, input, output, type));
 
 /**
@@ -37,11 +37,11 @@ export const useInterpolateColor = (
   progress: Animated.SharedValue<number>,
   input: number[],
   output: (number | string)[],
-  colorSpace?: 'RGB' | 'HSV' | undefined,
+  colorSpace?: "RGB" | "HSV" | undefined
 ) => {
-  'worklet';
+  "worklet";
   return useDerivedValue(() =>
-    interpolateColor(progress.value, input, output, colorSpace),
+    interpolateColor(progress.value, input, output, colorSpace)
   );
 };
 
@@ -51,9 +51,9 @@ export const useInterpolateColor = (
 export const useMix = (
   progress: Animated.SharedValue<number>,
   x: number,
-  y: number,
+  y: number
 ) => {
-  'worklet';
+  "worklet";
   return useDerivedValue(() => x + progress.value * (y - x));
 };
 
@@ -62,7 +62,7 @@ export const useMix = (
  */
 export const useRadian = (value: Animated.SharedValue<number>) =>
   useDerivedValue(() => {
-    'worklet';
+    "worklet";
     return `${value.value}deg`;
   });
 
@@ -72,34 +72,34 @@ export const useRadian = (value: Animated.SharedValue<number>) =>
 export const useShareClamp = (
   value: Animated.SharedValue<number>,
   lowerValue: number,
-  upperValue: number,
+  upperValue: number
 ) => {
-  'worklet';
+  "worklet";
   return useDerivedValue(() =>
-    sharedClamp(value.value, lowerValue, upperValue),
+    sharedClamp(value.value, lowerValue, upperValue)
   );
 };
 /**
  * Return min number of args
  */
 export const useMin = (...args: Animated.SharedValue<number>[]) => {
-  'worklet';
-  return useDerivedValue(() => sharedMin(...args.map(x => x.value)));
+  "worklet";
+  return useDerivedValue(() => sharedMin(...args.map((x) => x.value)));
 };
 
 /**
  * Return max number of args
  */
 export const useMax = (...args: Animated.SharedValue<number>[]) => {
-  'worklet';
-  return useDerivedValue(() => sharedMax(...args.map(x => x.value)));
+  "worklet";
+  return useDerivedValue(() => sharedMax(...args.map((x) => x.value)));
 };
 
 /**
  * Return view inside screen or not
  */
 export function useInsideView<T extends Component>(
-  wrapHeight: number | undefined = undefined,
+  wrapHeight: number | undefined = undefined
 ): [React.RefObject<T>, Animated.SharedValue<boolean>] {
   const { height } = useWindowDimensions();
   const { top } = useSafeAreaInsets();
@@ -164,10 +164,10 @@ export const useTiming = ({
             duration: 500,
             easing: Easing.bezier(0.33, 0.01, 0, 1),
           },
-          config,
+          config
         ),
-        callback,
-      ),
+        callback
+      )
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

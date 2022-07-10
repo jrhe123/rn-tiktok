@@ -4,9 +4,9 @@
 export const sharedClamp = (
   value: number,
   lowerValue: number,
-  upperValue: number,
+  upperValue: number
 ) => {
-  'worklet';
+  "worklet";
   return Math.min(Math.max(lowerValue, value), upperValue);
 };
 
@@ -15,7 +15,7 @@ export const sharedClamp = (
  * returns the result of subtracting their values in the exact order on UI thread
  */
 export const sharedSub = (...args: number[]) => {
-  'worklet';
+  "worklet";
   if (args.length <= 0) {
     return 0;
   }
@@ -28,7 +28,7 @@ export const sharedSub = (...args: number[]) => {
  * Get min number of array parameters on UI thread.
  */
 export const sharedMin = (...args: number[]) => {
-  'worklet';
+  "worklet";
   return args.reduce((accumulator, curr) => Math.min(curr, accumulator));
 };
 
@@ -36,7 +36,7 @@ export const sharedMin = (...args: number[]) => {
  * Get max number of array parameters on UI thread.
  */
 export const sharedMax = (...args: number[]) => {
-  'worklet';
+  "worklet";
   return args.reduce((accumulator, curr) => Math.max(accumulator, curr));
 };
 
@@ -46,12 +46,12 @@ export const sharedMax = (...args: number[]) => {
 export const SharedSnapPoint = (
   value: number,
   velocity: number,
-  points: number[],
+  points: number[]
 ) => {
-  'worklet';
+  "worklet";
   const point = value + velocity * 0.2;
   const diffPoint = (p: number) => Math.abs(point - p);
-  const deltas = points.map(p => diffPoint(p));
+  const deltas = points.map((p) => diffPoint(p));
   const minDelta = sharedMin(...deltas);
   return points.reduce((acc, p) => (diffPoint(p) === minDelta ? p : acc), 0);
 };
@@ -60,7 +60,7 @@ export const SharedSnapPoint = (
  * Convert radian to degree on UI thread.
  */
 export const sharedToDeg = (rad: number) => {
-  'worklet';
+  "worklet";
   return (rad * 180) / Math.PI;
 };
 
@@ -68,7 +68,7 @@ export const sharedToDeg = (rad: number) => {
  * Convert degree to radian on UI thread.
  */
 export const sharedToRad = (deg: number) => {
-  'worklet';
+  "worklet";
   return (deg * Math.PI) / 180;
 };
 
@@ -76,7 +76,7 @@ export const sharedToRad = (deg: number) => {
  * Calculator the average value of an array parameters UI thread.
  */
 export const sharedAvg = (...args: number[]) => {
-  'worklet';
+  "worklet";
   return args.reduce((a, v) => a + v, 0) / args.length;
 };
 
@@ -84,7 +84,7 @@ export const sharedAvg = (...args: number[]) => {
  * Round number of UI thread.
  */
 export const sharedRound = (value: number, precision = 0) => {
-  'worklet';
+  "worklet";
   const p = Math.pow(10, precision);
   return Math.round(value * p) / p;
 };
@@ -93,6 +93,6 @@ export const sharedRound = (value: number, precision = 0) => {
  * Convert boolean to 0 or 1 on UI thead
  */
 export const sharedBin = (value: boolean): 0 | 1 => {
-  'worklet';
+  "worklet";
   return value ? 1 : 0;
 };

@@ -5,7 +5,7 @@ import {
   WithSpringConfig,
   withTiming,
   WithTimingConfig,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 
 /**
  * Updates position by running timing based animation from a given position to a destination determined by toValue.
@@ -13,9 +13,9 @@ import {
 export const sharedTiming = (
   toValue: number,
   config?: WithTimingConfig,
-  callBack?: AnimationCallback,
+  callBack?: AnimationCallback
 ) => {
-  'worklet';
+  "worklet";
   return withTiming(
     toValue,
     Object.assign(
@@ -23,9 +23,9 @@ export const sharedTiming = (
         duration: 500,
         easing: Easing.bezier(0.33, 0.01, 0, 1),
       },
-      config,
+      config
     ),
-    callBack,
+    callBack
   );
 };
 
@@ -35,8 +35,8 @@ export const sharedTiming = (
 export const sharedSpring = (
   toValue: number,
   config?: WithSpringConfig,
-  callBack?: AnimationCallback,
+  callBack?: AnimationCallback
 ) => {
-  'worklet';
+  "worklet";
   return withSpring(toValue, config, callBack);
 };
