@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import en from './source/en.json';
+import en from "./source/en.json";
 
 export const resources = { en };
 
