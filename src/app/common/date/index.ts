@@ -1,4 +1,4 @@
-import moment, { Moment } from 'moment';
+import moment, { Moment } from "moment";
 
 /**
  * Return 2 date is same month.
@@ -24,14 +24,14 @@ export function sameDate(a: Moment, b: Moment) {
  * Greater than equal.
  */
 function isGTE(a: Moment, b: Moment) {
-  return a.diff(b, 'day') > -1;
+  return a.diff(b, "day") > -1;
 }
 
 /**
  * Less than equal.
  */
 function isLTE(a: Moment, b: Moment) {
-  return b.diff(a, 'day') > -1;
+  return b.diff(a, "day") > -1;
 }
 
 /**
@@ -45,7 +45,7 @@ function daysFromTo(a: Moment | Date, b: Moment | Date) {
   for (
     ;
     localFrom <= localTo;
-    localFrom = moment(localFrom).add(1, 'day').toDate().getTime()
+    localFrom = moment(localFrom).add(1, "day").toDate().getTime()
   ) {
     days.push(moment(localFrom));
   }
@@ -73,7 +73,7 @@ function daysInMonth(_date: string | Date | Moment | number) {
 export function getDaysByMonth(
   mDate: string | Date | Moment | number,
   firstDayOfWeek: number,
-  showSixWeeks?: boolean,
+  showSixWeeks?: boolean
 ) {
   const days = daysInMonth(mDate);
   let before: Moment[] = [];
@@ -87,20 +87,20 @@ export function getDaysByMonth(
 
   if (from.day() !== fdow) {
     // subtract if current date not equals first day of week
-    from.add(-(from.day() + 7 - fdow) % 7, 'day');
+    from.add(-(from.day() + 7 - fdow) % 7, "day");
   }
 
   const to = moment(days[days.length - 1]);
   const day = to.day();
   if (day !== ldow) {
     // add if laste date not equals last day of week
-    to.add((ldow + 7 - day) % 7, 'day');
+    to.add((ldow + 7 - day) % 7, "day");
   }
 
   const daysForSixWeeks = (daysBefore + days.length) / 6 >= 6;
   // check size days pluss days before divide 6 enough or not 6 weeks
   if (showSixWeeks && !daysForSixWeeks) {
-    to.add(7, 'day');
+    to.add(7, "day");
   }
   if (isLTE(from, moment(days[0]))) {
     before = daysFromTo(from, days[0]);
@@ -118,7 +118,7 @@ export function getTimeDifference(date: Date | string): {
   count: number | null;
   tx: string;
 } {
-  const timeDifference = moment().diff(moment.utc(date).local(), 'seconds');
+  const timeDifference = moment().diff(moment.utc(date).local(), "seconds");
 
   const yearTime = 60 * 60 * 24 * 365;
   const monthTime = 60 * 60 * 24 * 30;
@@ -134,40 +134,40 @@ export function getTimeDifference(date: Date | string): {
 
   switch (true) {
     case yearCalculator > 1:
-      return { count: yearCalculator, tx: 'txYearsAgo' };
+      return { count: yearCalculator, tx: "txYearsAgo" };
     case yearCalculator > 0:
-      return { count: yearCalculator, tx: 'txYearAgo' };
+      return { count: yearCalculator, tx: "txYearAgo" };
 
     case monthCalculator > 1:
-      return { count: monthCalculator, tx: 'txMonthsAgo' };
+      return { count: monthCalculator, tx: "txMonthsAgo" };
     case monthCalculator > 0:
-      return { count: monthCalculator, tx: 'txMonthAgo' };
+      return { count: monthCalculator, tx: "txMonthAgo" };
 
     case dayCalculator > 1:
-      return { count: dayCalculator, tx: 'txDaysAgo' };
+      return { count: dayCalculator, tx: "txDaysAgo" };
     case dayCalculator > 0:
-      return { count: dayCalculator, tx: 'txDayAgo' };
+      return { count: dayCalculator, tx: "txDayAgo" };
 
     case hourCalculator > 1:
-      return { count: hourCalculator, tx: 'txHoursAgo' };
+      return { count: hourCalculator, tx: "txHoursAgo" };
     case hourCalculator > 0:
-      return { count: hourCalculator, tx: 'txHourAgo' };
+      return { count: hourCalculator, tx: "txHourAgo" };
 
     case minutesCalculator > 1:
-      return { count: minutesCalculator, tx: 'txMinutesAgo' };
+      return { count: minutesCalculator, tx: "txMinutesAgo" };
     case minutesCalculator > 0:
-      return { count: minutesCalculator, tx: 'txMinuteAgo' };
+      return { count: minutesCalculator, tx: "txMinuteAgo" };
 
     case timeDifference > 1:
-      return { count: timeDifference, tx: 'txSecondsAgo' };
+      return { count: timeDifference, tx: "txSecondsAgo" };
     default:
-      return { count: null, tx: 'txFewSecondsAgo' };
+      return { count: null, tx: "txFewSecondsAgo" };
   }
 }
 export const dayBetweenRange = ({
   endDate,
   startDate,
-  format = 'DD/MM/YYYY',
+  format = "DD/MM/YYYY",
 }: {
   startDate?: string;
   endDate?: string;
@@ -175,5 +175,5 @@ export const dayBetweenRange = ({
 }) => {
   const mStartDate = moment(startDate, format);
   const mEndDate = moment(endDate, format);
-  return mEndDate.diff(mStartDate, 'days') + 1;
+  return mEndDate.diff(mStartDate, "days") + 1;
 };
