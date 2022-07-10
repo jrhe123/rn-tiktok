@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { memo, useEffect, useMemo, useState } from 'react';
-import { ViewStyle } from 'react-native';
+import React, { memo, useEffect, useMemo, useState } from "react";
+import { ViewStyle } from "react-native";
 
-import Animated, { runOnJS } from 'react-native-reanimated';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import Animated, { runOnJS } from "react-native-reanimated";
+import { useSafeAreaInsets } from "react-native-safe-area-context";
 
-import { sharedTiming } from '@animated';
-import { VectorIcon, VectorIconIcon } from '@assets/vector-icon/vector-icon';
-import { useMessageYupTranslation } from '@hooks';
+import { sharedTiming } from "@animated";
+import { VectorIcon, VectorIconIcon } from "@assets/vector-icon/vector-icon";
+import { useMessageYupTranslation } from "@hooks";
 
 import {
   BG_ERROR,
@@ -15,12 +15,12 @@ import {
   BG_SUCCESS,
   BG_WARN,
   DURATION_ANIMATED,
-} from './constants';
-import { styles } from './styles';
-import { SnackBarItemProps, TYPE_MESSAGE, TypeMessage } from './type';
+} from "./constants";
+import { styles } from "./styles";
+import { SnackBarItemProps, TYPE_MESSAGE, TypeMessage } from "./type";
 
-import { Spacer } from '../spacer';
-import { Text } from '../text';
+import { Spacer } from "../spacer";
+import { Text } from "../text";
 
 const getColor = (typeMessage: TypeMessage): string => {
   switch (typeMessage) {
@@ -40,17 +40,17 @@ const getColor = (typeMessage: TypeMessage): string => {
 const getIcon = (typeMessage: TypeMessage): VectorIconIcon => {
   switch (typeMessage) {
     case TYPE_MESSAGE.SUCCESS:
-      return 'bx_success';
+      return "bx_success";
 
     case TYPE_MESSAGE.LINK:
     case TYPE_MESSAGE.WARN:
-      return 'bx_info_circle';
+      return "bx_info_circle";
 
     case TYPE_MESSAGE.ERROR:
-      return 'bx_error';
+      return "bx_error";
 
     default:
-      return 'bx_info_circle';
+      return "bx_info_circle";
   }
 };
 
@@ -68,12 +68,12 @@ export const SnackItem = memo(
         backgroundColor: getColor(item.type),
         paddingTop: insets.top,
       }),
-      [insets.top, item.type],
+      [insets.top, item.type]
     );
 
     // function
     const CustomEnteringAnimation = (values: any) => {
-      'worklet';
+      "worklet";
       const animations = {
         // your animations
         transform: [
@@ -95,7 +95,7 @@ export const SnackItem = memo(
     };
 
     const CustomExitAnimation = (values: any) => {
-      'worklet';
+      "worklet";
       const animations = {
         // your animations
         transform: [
@@ -138,7 +138,8 @@ export const SnackItem = memo(
       <Animated.View
         entering={CustomEnteringAnimation}
         exiting={CustomExitAnimation}
-        style={[styles.itemBar, containStyle]}>
+        style={[styles.itemBar, containStyle]}
+      >
         <VectorIcon icon={getIcon(item.type)} color="white" />
         <Spacer width={10} />
         <Text style={[styles.text]} preset="linkMedium" color="white">
@@ -147,5 +148,5 @@ export const SnackItem = memo(
       </Animated.View>
     ) : null;
   },
-  () => true,
+  () => true
 );
