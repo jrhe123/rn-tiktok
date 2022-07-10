@@ -1,12 +1,12 @@
-import React, { memo } from 'react';
-import { Text, TouchableOpacity, View } from 'react-native';
+import React, { memo } from "react";
+import { Text, TouchableOpacity, View } from "react-native";
 
-import isEqual from 'react-fast-compare';
+import isEqual from "react-fast-compare";
 
-import { styles } from './styles';
-import { ItemProps } from './type';
+import { styles } from "./styles";
+import { ItemProps } from "./type";
 
-import { Icon } from '../icon';
+import { Icon } from "../icon";
 
 const DropDownItemComponent = ({
   item,
@@ -20,7 +20,7 @@ const DropDownItemComponent = ({
 }: ItemProps) => {
   // function
   const _onItemPress = () => {
-    onPressItem && item && onPressItem(item.value ?? '');
+    onPressItem && item && onPressItem(item.value ?? "");
   };
 
   // render
@@ -31,14 +31,16 @@ const DropDownItemComponent = ({
           styles.container,
           containerStyleItem,
           selected && activeItemStyle,
-        ]}>
+        ]}
+      >
         <Text
-          style={[styles.labelStyle, labelStyle, selected && activeLabelStyle]}>
+          style={[styles.labelStyle, labelStyle, selected && activeLabelStyle]}
+        >
           {item.label}
         </Text>
         <View style={[styles.wrapIcon]}>
           {selected &&
-            (customTickIcon ? customTickIcon() : <Icon icon={'check'} />)}
+            (customTickIcon ? customTickIcon() : <Icon icon={"check"} />)}
         </View>
       </View>
     </TouchableOpacity>
