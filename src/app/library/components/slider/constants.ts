@@ -1,5 +1,5 @@
-const ACTIVE_COLOR = '#0057e7';
-const IN_ACTIVE_COLOR = '#dfe6e9';
+const ACTIVE_COLOR = "#0057e7";
+const IN_ACTIVE_COLOR = "#dfe6e9";
 const HEIGHT_SLIDER = 3;
 const THUMB_SIZE = 15;
 const LOWER_BOUND = 0;
