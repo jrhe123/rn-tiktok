@@ -3,19 +3,19 @@ import React, {
   useCallback,
   useImperativeHandle,
   useState,
-} from 'react';
-import { Text, View } from 'react-native';
+} from "react";
+import { Text, View } from "react-native";
 
-import { useTranslation } from 'react-i18next';
+import { useTranslation } from "react-i18next";
 
-import { execFunc } from '@common';
+import { execFunc } from "@common";
 
-import { styles } from './styles';
-import { ActionSheetProps, OptionData } from './type';
+import { styles } from "./styles";
+import { ActionSheetProps, OptionData } from "./type";
 
-import { Button } from '../button';
-import { Divider } from '../divider';
-import { Modal } from '../modal';
+import { Button } from "../button";
+import { Divider } from "../divider";
+import { Modal } from "../modal";
 
 export const ActionSheet = forwardRef((props: ActionSheetProps, ref) => {
   // state
@@ -30,8 +30,8 @@ export const ActionSheet = forwardRef((props: ActionSheetProps, ref) => {
     onBackDropPress: onBackDropPressOverwrite,
     textCancelStyle: textCancelStyleOverwrite,
     onPressOption,
-    textCancel = t('dialog:cancel'),
-    backDropColor = 'rgba(0,0,0,.5)',
+    textCancel = t("dialog:cancel"),
+    backDropColor = "rgba(0,0,0,.5)",
     closeOnBackDropPress = true,
     option = [],
   } = props;
@@ -47,7 +47,7 @@ export const ActionSheet = forwardRef((props: ActionSheetProps, ref) => {
         setActionVisible(false);
       },
     }),
-    [],
+    []
   );
   // function
   const onPress = useCallback(
@@ -57,7 +57,7 @@ export const ActionSheet = forwardRef((props: ActionSheetProps, ref) => {
         onPressOption && onPressOption(item, index);
       };
     },
-    [onPressOption],
+    [onPressOption]
   );
 
   const onCancel = useCallback(() => {
@@ -78,12 +78,13 @@ export const ActionSheet = forwardRef((props: ActionSheetProps, ref) => {
       style={[styles.modal]}
       hasGesture={false}
       backdropOpacity={1}
-      animatedIn={'slideInUp'}
-      animatedOut={'slideOutDown'}
+      animatedIn={"slideInUp"}
+      animatedOut={"slideOutDown"}
       onBackdropPress={onBackDropPress}
       onBackButtonPress={onCancel}
       isVisible={actionVisible}
-      backdropColor={backDropColor}>
+      backdropColor={backDropColor}
+    >
       <View style={[styles.wrap, rootStyle]}>
         <View style={[styles.wrapOption, wrapOptionStyle]}>
           {title &&
@@ -92,7 +93,7 @@ export const ActionSheet = forwardRef((props: ActionSheetProps, ref) => {
             ) : (
               <>
                 <View style={[styles.wrapTitle]}>
-                  <Text style={[styles.title]} children={title + ''} />
+                  <Text style={[styles.title]} children={title + ""} />
                 </View>
                 <Divider />
               </>

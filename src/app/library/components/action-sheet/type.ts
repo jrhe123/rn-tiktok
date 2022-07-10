@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from 'react';
-import { StyleProp, TextStyle, ViewStyle } from 'react-native';
+import React from "react";
+import { StyleProp, TextStyle, ViewStyle } from "react-native";
 
 export interface OptionData {
   /**
