@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react';
-import { StyleProp, TouchableOpacity } from 'react-native';
+import React, { useMemo } from "react";
+import { StyleProp, TouchableOpacity } from "react-native";
 
-import FastImage, { ImageStyle } from 'react-native-fast-image';
+import FastImage, { ImageStyle } from "react-native-fast-image";
 
-import { icons } from '@assets/icon';
-import { useTheme } from '@theme';
+import { icons } from "@assets/icon";
+import { useTheme } from "@theme";
 
-import { IconProps } from './type';
+import { IconProps } from "./type";
 
 const SIZE = 24;
 
@@ -16,7 +16,7 @@ export const Icon = ({
   colorTheme,
   onPress,
   size = SIZE,
-  resizeMode = 'contain',
+  resizeMode = "contain",
 }: IconProps) => {
   // state
 
@@ -24,14 +24,15 @@ export const Icon = ({
   // style
   const style = useMemo<StyleProp<ImageStyle>>(
     () => [{ width: size, height: size }],
-    [size],
+    [size]
   );
 
   // render
   return (
     <TouchableOpacity
-      disabled={typeof onPress !== 'function'}
-      onPress={onPress}>
+      disabled={typeof onPress !== "function"}
+      onPress={onPress}
+    >
       <FastImage
         style={style}
         tintColor={colorTheme ? theme.colors[colorTheme] : color}
