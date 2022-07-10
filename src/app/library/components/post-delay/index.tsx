@@ -1,13 +1,13 @@
-import React, { useEffect, useRef, useState } from 'react';
-import { StyleSheet } from 'react-native';
+import React, { useEffect, useRef, useState } from "react";
+import { StyleSheet } from "react-native";
 
 import {
   Transition,
   Transitioning,
   TransitioningView,
-} from 'react-native-reanimated';
+} from "react-native-reanimated";
 
-import { PostDelayProps } from './type';
+import { PostDelayProps } from "./type";
 
 const styles = StyleSheet.create({
   container: {
@@ -53,7 +53,8 @@ export const PostDelay = ({ children, durationMs }: PostDelayProps) => {
     <Transitioning.View
       style={[styles.container]}
       transition={transition(durationMs)}
-      ref={postDelayViewRef}>
+      ref={postDelayViewRef}
+    >
       {loaded ? children : null}
     </Transitioning.View>
   );
