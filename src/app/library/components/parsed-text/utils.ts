@@ -1,8 +1,8 @@
 /* eslint-disable no-useless-escape */
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { CustomTextProps, MatchedPart, ParsedText, Pattern } from './type';
+import { CustomTextProps, MatchedPart, ParsedText, Pattern } from "./type";
 
-import { CustomOmit } from '../../../common/type/index';
+import { CustomOmit } from "../../../common/type/index";
 
 export const PATTERNS = {
   url: /(https?:\/\/|www\.)[-a-zA-Z0-9@:%._\+~#=]{1,256}\.(xn--)?[a-z0-9-]{2,20}\b([-a-zA-Z0-9@:%_\+\[\],.~#?&\/=]*[-a-zA-Z0-9@:%_\+\]~#?&\/=])*/i,
@@ -12,12 +12,12 @@ export const PATTERNS = {
 type Parsed = Array<Partial<MatchedPart & ParsedText>>;
 export const textExtraction = (
   text: string,
-  patterns: Array<CustomOmit<Pattern, 'lastIndex'> & CustomTextProps>,
+  patterns: Array<CustomOmit<Pattern, "lastIndex"> & CustomTextProps>
 ) => {
-  let parsedTexts: Parsed = [{ children: text ?? '' }];
+  let parsedTexts: Parsed = [{ children: text ?? "" }];
   patterns.forEach((pattern: any) => {
     const newParts: Parsed = [];
-    parsedTexts.forEach(parsedText => {
+    parsedTexts.forEach((parsedText) => {
       if (parsedText._matched) {
         newParts.push(parsedText);
         return;
@@ -32,7 +32,7 @@ export const textExtraction = (
         indexOfMatchedString = matches.index;
         parts.push({ children: previousText });
         parts.push(
-          getMatchedPart(pattern, matches[0], matches, indexOfMatchedString),
+          getMatchedPart(pattern, matches[0], matches, indexOfMatchedString)
         );
         textLeft = textLeft.substr(matches.index + matches[0].length);
         indexOfMatchedString += matches[0].length - 1;
@@ -43,23 +43,23 @@ export const textExtraction = (
     });
     parsedTexts = newParts;
   });
-  parsedTexts.forEach(parsedText => delete parsedText._matched);
+  parsedTexts.forEach((parsedText) => delete parsedText._matched);
 
-  return parsedTexts.filter(t => !!t.children);
+  return parsedTexts.filter((t) => !!t.children);
 };
 function getMatchedPart(
   pattern: Record<string, unknown>,
   text: string,
   matches: RegExpExecArray,
-  index: number,
+  index: number
 ): MatchedPart & { children: string } {
   const props: MatchedPart = {} as MatchedPart;
   Object.keys(pattern).forEach((key: string) => {
-    if (key === 'pattern') {
+    if (key === "pattern") {
       return;
     }
 
-    if (key === 'onPress' || key === 'onLongPress') {
+    if (key === "onPress" || key === "onLongPress") {
       // Support onPress / onLongPress functions
       props[key] = () => {
         (pattern as any)[key](text, index);
@@ -70,7 +70,7 @@ function getMatchedPart(
     }
   });
   let customChildren = text;
-  if (pattern.renderText && typeof pattern.renderText === 'function') {
+  if (pattern.renderText && typeof pattern.renderText === "function") {
     customChildren = pattern.renderText(text);
   }
   return {
