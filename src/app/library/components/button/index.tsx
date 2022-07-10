@@ -1,12 +1,12 @@
-import React, { useMemo } from 'react';
-import { StyleProp, TouchableOpacity, ViewStyle } from 'react-native';
+import React, { useMemo } from "react";
+import { StyleProp, TouchableOpacity, ViewStyle } from "react-native";
 
-import { useTheme } from '@theme';
+import { useTheme } from "@theme";
 
-import { stylesText, stylesView } from './preset';
-import { ButtonProps } from './type';
+import { stylesText, stylesView } from "./preset";
+import { ButtonProps } from "./type";
 
-import { Text } from '../text';
+import { Text } from "../text";
 
 export const Button = (props: ButtonProps) => {
   // state
@@ -20,7 +20,7 @@ export const Button = (props: ButtonProps) => {
     buttonColorTheme,
     style: styleOverride = {},
     textStyle: textStyleOverride = {},
-    preset = 'default',
+    preset = "default",
     ...rest
   } = props;
   const theme = useTheme();
@@ -34,14 +34,15 @@ export const Button = (props: ButtonProps) => {
           : buttonColor,
       },
     ],
-    [buttonColor, buttonColorTheme, theme.colors],
+    [buttonColor, buttonColorTheme, theme.colors]
   );
 
   // render
   return (
     <TouchableOpacity
       style={[stylesView[preset], viewStyle, styleOverride]}
-      {...rest}>
+      {...rest}
+    >
       {children || (
         <Text
           t18n={t18n}
