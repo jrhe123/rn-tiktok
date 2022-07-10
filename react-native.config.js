@@ -1,6 +1,6 @@
 module.exports = {
   dependencies: {
-    'react-native-vector-icons': {
+    "react-native-vector-icons": {
       platforms: {
         ios: null,
       },
@@ -11,5 +11,5 @@ module.exports = {
     ios: {},
     android: {},
   },
-  assets: ['./src/app/assets/fonts'],
+  assets: ["./src/app/assets/fonts"],
 };
