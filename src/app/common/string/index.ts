@@ -1,50 +1,50 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable no-useless-escape */
-import { processColor } from 'react-native';
+import { processColor } from "react-native";
 
-import equals from 'react-fast-compare';
+import equals from "react-fast-compare";
 
-import { ValidateMessageObject } from '@config/type';
+import { ValidateMessageObject } from "@config/type";
 
-import { KANA_FULL_HALF_MAP } from '../constant';
+import { KANA_FULL_HALF_MAP } from "../constant";
 
 export const onChangeAlias = (value: string | number): string => {
-  let str = value + '';
+  let str = value + "";
   str = str.toLowerCase();
-  str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, 'a');
-  str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, 'e');
-  str = str.replace(/ì|í|ị|ỉ|ĩ/g, 'i');
-  str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, 'o');
-  str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, 'u');
-  str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, 'y');
-  str = str.replace(/đ/g, 'd');
+  str = str.replace(/à|á|ạ|ả|ã|â|ầ|ấ|ậ|ẩ|ẫ|ă|ằ|ắ|ặ|ẳ|ẵ/g, "a");
+  str = str.replace(/è|é|ẹ|ẻ|ẽ|ê|ề|ế|ệ|ể|ễ/g, "e");
+  str = str.replace(/ì|í|ị|ỉ|ĩ/g, "i");
+  str = str.replace(/ò|ó|ọ|ỏ|õ|ô|ồ|ố|ộ|ổ|ỗ|ơ|ờ|ớ|ợ|ở|ỡ/g, "o");
+  str = str.replace(/ù|ú|ụ|ủ|ũ|ư|ừ|ứ|ự|ử|ữ/g, "u");
+  str = str.replace(/ỳ|ý|ỵ|ỷ|ỹ/g, "y");
+  str = str.replace(/đ/g, "d");
   str = str.replace(
     /!|@|%|\^|\*|\(|\)|\+|\=|\<|\>|\?|\/|,|\.|\:|\;|\'|\"|\&|\#|\[|\]|~|\$|_|`|-|{|}|\||\\/g,
-    ' ',
+    " "
   );
-  str = str.replace(/ + /g, ' ');
+  str = str.replace(/ + /g, " ");
   str = str.trim();
   return str;
 };
-export const padStart = (value: any, maxPad = 2, stringPad = '0') => {
-  const stringP = Array(maxPad).fill(stringPad).join('');
+export const padStart = (value: any, maxPad = 2, stringPad = "0") => {
+  const stringP = Array(maxPad).fill(stringPad).join("");
   return String(stringP + value).slice(-maxPad);
 };
-export const padEnd = (value: any, maxPad = 2, stringPad = '0') => {
-  const stringP = Array(maxPad).fill(stringPad).join('');
+export const padEnd = (value: any, maxPad = 2, stringPad = "0") => {
+  const stringP = Array(maxPad).fill(stringPad).join("");
   return String(value + stringP).slice(0, maxPad);
 };
-export const replaceAll = (source = '', textReplace = '', textInstead = '') => {
+export const replaceAll = (source = "", textReplace = "", textInstead = "") => {
   return source.split(textReplace).join(textInstead);
 };
-export const removeHtmlTag = (source = '') => {
-  return source.replace(/<\/?[^>]+(>|$)/g, '');
+export const removeHtmlTag = (source = "") => {
+  return source.replace(/<\/?[^>]+(>|$)/g, "");
 };
 export const compareValue = (val1: any, val2: any) => {
   return equals(val1, val2);
 };
-export const removeChar = (source = '') => {
-  return source.replace(/\D/g, '');
+export const removeChar = (source = "") => {
+  return source.replace(/\D/g, "");
 };
 export const trimArray = (sourceArr: Array<unknown> = []): Array<unknown> => {
   return sourceArr.map((element: any) => {
@@ -52,9 +52,9 @@ export const trimArray = (sourceArr: Array<unknown> = []): Array<unknown> => {
       return trimArray(element);
     }
     switch (typeof element) {
-      case 'string':
+      case "string":
         return element.trim();
-      case 'object':
+      case "object":
         return trimObject(element);
       default:
         return element;
@@ -71,10 +71,10 @@ export const trimObject = (source: any) => {
     if (Array.isArray(newObject[key])) {
       newObject[key] = trimArray(newObject[key]);
     }
-    if (typeof newObject[key] === 'string') {
+    if (typeof newObject[key] === "string") {
       newObject[key] = newObject[key].trim();
     }
-    if (typeof newObject[key] === 'object') {
+    if (typeof newObject[key] === "object") {
       newObject[key] = trimObject(newObject[key]);
     }
   });
@@ -82,42 +82,42 @@ export const trimObject = (source: any) => {
 };
 export const toFullWidth = (value: string) => {
   const kanaHalfFullMap: Record<string, string> = {};
-  Object.keys(KANA_FULL_HALF_MAP).forEach(key => {
+  Object.keys(KANA_FULL_HALF_MAP).forEach((key) => {
     kanaHalfFullMap[KANA_FULL_HALF_MAP[key]] = key;
   });
   const reg = new RegExp(
-    '(' + Object.keys(kanaHalfFullMap).join('|') + ')',
-    'g',
+    "(" + Object.keys(kanaHalfFullMap).join("|") + ")",
+    "g"
   );
   return value
     .replace(reg, function (match) {
       return kanaHalfFullMap[match];
     })
-    .replace(/ﾞ/g, '゛')
-    .replace(/ﾟ/g, '゜');
+    .replace(/ﾞ/g, "゛")
+    .replace(/ﾟ/g, "゜");
 };
 
 export const toHalfWidth = (source: string) => {
   const reg = new RegExp(
-    '(' + Object.keys(KANA_FULL_HALF_MAP).join('|') + ')',
-    'g',
+    "(" + Object.keys(KANA_FULL_HALF_MAP).join("|") + ")",
+    "g"
   );
   return source
     .replace(reg, function (match) {
       return KANA_FULL_HALF_MAP[match];
     })
-    .replace(/゛/g, 'ﾞ')
-    .replace(/゜/g, 'ﾟ');
+    .replace(/゛/g, "ﾞ")
+    .replace(/゜/g, "ﾟ");
 };
 interface ResultHandleTagToArrayText {
   text: string;
   bold: boolean;
 }
 export const onHandleTagToArrayText = (
-  source = '',
-  char = '#',
+  source = "",
+  char = "#"
 ): Array<ResultHandleTagToArrayText> => {
-  const textSplit = source.split(' ');
+  const textSplit = source.split(" ");
   const arrText: ResultHandleTagToArrayText[] = [];
   textSplit.forEach((text: string, i: number) => {
     const textData = { text: text, bold: false };
@@ -128,10 +128,10 @@ export const onHandleTagToArrayText = (
       arrText.push({ text: text, bold: false });
     }
     if (
-      (text === '' && i !== textSplit.length - 1) ||
+      (text === "" && i !== textSplit.length - 1) ||
       i !== textSplit.length - 1
     ) {
-      arrText.push({ text: ' ', bold: false });
+      arrText.push({ text: " ", bold: false });
     }
   });
   return arrText;
@@ -145,29 +145,29 @@ export const onDetectUrlInTextToArray = (text: string): Array<TextUrl> => {
     /((?:[a-z]+:\/\/)?(?:(?:[a-z0-9\-]+\.)+(?:[a-z]{2}|aero|arpa|biz|com|coop|edu|gov|info|int|jobs|mil|museum|name|nato|net|org|pro|travel|local|internal))(?::[0-9]{1,5})?(?:\/[a-z0-9_\-.~]+)*(?:\/(?:[a-z0-9_\-.]*)(?:\?[a-z0-9+_\-.%=&amp;]*)?)?(?:#[a-zA-Z0-9!$&'(?:)*+.=-_~:@/?]*)?)(?:\s+|$)/;
   return text
     .split(detectUrls)
-    .map(x =>
+    .map((x) =>
       detectUrls.test(x)
         ? { isLink: true, source: x }
-        : { isLink: false, source: x },
+        : { isLink: false, source: x }
     );
 };
-export const removeJapanChar = (text = '') => {
+export const removeJapanChar = (text = "") => {
   const regex =
     /[\u3000-\u303F]|[\u3040-\u309F]|[\u30A0-\u30FF]|[\uFF00-\uFFEF]|[\u4E00-\u9FAF]|[\u2605-\u2606]|[\u2190-\u2195]|\u203B/g;
-  return text.replace(regex, '');
+  return text.replace(regex, "");
 };
 export const randomUniqueId = () => {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+  return "xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx".replace(/[xy]/g, function (c) {
     // eslint-disable-next-line no-bitwise
     const r = (Math.random() * 16) | 0,
       // eslint-disable-next-line no-bitwise
-      v = c === 'x' ? r : (r & 0x3) | 0x8;
+      v = c === "x" ? r : (r & 0x3) | 0x8;
     return v.toString(16);
   });
 };
 export const hexStringFromCSSColor = (color: string) => {
   const processedColor = processColor(color);
-  const colorStr = `${(processedColor ?? '').toString(16)}`;
+  const colorStr = `${(processedColor ?? "").toString(16)}`;
   const withoutAlpha = colorStr.substring(2, colorStr.length);
   const alpha = colorStr.substring(0, 2);
   return `#${withoutAlpha}${alpha}`;
@@ -175,7 +175,7 @@ export const hexStringFromCSSColor = (color: string) => {
 
 export const checkPasswordContainUserName = (
   username: string,
-  password: string,
+  password: string
 ) => {
   const numConsecutiveChars = 3;
 
