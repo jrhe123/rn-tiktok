@@ -1,14 +1,14 @@
-import React from "react";
+import React from 'react';
 import {
   NativeScrollEvent,
   NativeSyntheticEvent,
   StyleProp,
   ViewStyle,
-} from "react-native";
+} from 'react-native';
 
-import { Edge } from "react-native-safe-area-context";
+import { Edge } from 'react-native-safe-area-context';
 
-import { CustomOmit } from "@common";
+import { CustomOmit } from '@common';
 
 export type ScreenProps = {
   /**
@@ -32,7 +32,7 @@ export type ScreenProps = {
    * Status bar style
    * @default dark-content
    */
-  statusBarStyle?: "light-content" | "dark-content";
+  statusBarStyle?: 'light-content' | 'dark-content';
 
   /**
    * Using safe area on ios
@@ -79,7 +79,7 @@ export type ScreenProps = {
    * Inset for safe area view
    * @default undefined
    */
-  excludeEdges?: "all" | Edge[];
+  excludeEdges?: 'all' | Edge[];
 
   /**
    * Animated onScroll
@@ -90,13 +90,13 @@ export type ScreenProps = {
 
 export type InsetComponentProps = Pick<
   ScreenProps,
-  | "statusColor"
-  | "unsafe"
-  | "hiddenStatusBar"
-  | "bottomInsetColor"
-  | "leftInsetColor"
-  | "rightInsetColor"
-  | "statusBarStyle"
+  | 'statusColor'
+  | 'unsafe'
+  | 'hiddenStatusBar'
+  | 'bottomInsetColor'
+  | 'leftInsetColor'
+  | 'rightInsetColor'
+  | 'statusBarStyle'
 > & {
   edges: Edge[];
 };
@@ -112,7 +112,7 @@ export interface InsetProps {
 }
 export type ScreenComponentProps = CustomOmit<
   ScreenProps,
-  "unsafe" | "scroll" | "excludeEdges"
+  'unsafe' | 'scroll' | 'excludeEdges'
 > & {
   edges: Edge[];
   actualUnsafe: boolean;

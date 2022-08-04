@@ -1,12 +1,12 @@
-import React from "react";
+import React from 'react';
 
-import Animated from "react-native-reanimated";
+import Animated from 'react-native-reanimated';
 export interface CollapsibleProps {
   /**
    * Custom master content
    */
   renderMasterView?: (
-    progress: Animated.SharedValue<number>
+    progress: Animated.SharedValue<number>,
   ) => React.ReactNode;
 
   /**

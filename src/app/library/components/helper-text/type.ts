@@ -1,4 +1,4 @@
-import { Colors } from "@theme";
+import { Colors } from '@theme';
 
 export interface HelperTextProps {
   /**
@@ -10,7 +10,7 @@ export interface HelperTextProps {
   /**
    * Type of helper text
    */
-  type: "info" | "error";
+  type: 'info' | 'error';
 
   /**
    * Text for text component

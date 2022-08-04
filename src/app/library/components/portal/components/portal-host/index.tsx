@@ -1,8 +1,8 @@
-import React, { memo, useEffect } from "react";
+import React, { memo, useEffect } from 'react';
 
-import type { PortalHostProps } from "./types";
+import type { PortalHostProps } from './types';
 
-import { usePortal, usePortalState } from "../../hooks";
+import { usePortal, usePortalState } from '../../hooks';
 
 const PortalHostComponent = ({ name }: PortalHostProps) => {
   // state
@@ -19,8 +19,8 @@ const PortalHostComponent = ({ name }: PortalHostProps) => {
   }, []);
 
   // render
-  return <>{state.map((item) => item.node)}</>;
+  return <>{state.map(item => item.node)}</>;
 };
 
 export const PortalHost = memo(PortalHostComponent);
-PortalHost.displayName = "PortalHost";
+PortalHost.displayName = 'PortalHost';

@@ -1,28 +1,28 @@
-import React, { memo, useMemo } from "react";
-import { Dimensions, useWindowDimensions, View, ViewStyle } from "react-native";
+import React, { memo, useMemo } from 'react';
+import { Dimensions, useWindowDimensions, View, ViewStyle } from 'react-native';
 
-import equals from "react-fast-compare";
+import equals from 'react-fast-compare';
 
-import { styles } from "./styles";
-import { WallpaperProps } from "./type";
+import { styles } from './styles';
+import { WallpaperProps } from './type';
 
-import { LocalImage } from "../local-image";
+import { LocalImage } from '../local-image';
 
-const deviceH = Dimensions.get("screen").height;
+const deviceH = Dimensions.get('screen').height;
 
 const WallpaperComponent = ({
-  backgroundImage = "bg_wallpaper",
+  backgroundImage = 'bg_wallpaper',
 }: WallpaperProps) => {
   // state
   const { width } = useWindowDimensions();
   const containerStyle = useMemo<ViewStyle>(
     () => ({ width, height: deviceH }),
-    [width]
+    [width],
   );
 
   // render
   return (
-    <View pointerEvents={"none"} style={[styles.container, containerStyle]}>
+    <View pointerEvents={'none'} style={[styles.container, containerStyle]}>
       <LocalImage source={backgroundImage} />
     </View>
   );

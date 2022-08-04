@@ -1,30 +1,30 @@
-import React from "react";
+import React from 'react';
 import {
   ColorValue,
   FlexAlignType,
   StyleProp,
   ViewProps,
   ViewStyle,
-} from "react-native";
+} from 'react-native';
 
-import { NullableStyleProps } from "@common";
-import { Colors } from "@theme";
+import { NullableStyleProps } from '@common';
+import { Colors } from '@theme';
 
-type Direction = "row" | "column" | "column-reverse" | "row-reverse";
+type Direction = 'row' | 'column' | 'column-reverse' | 'row-reverse';
 
 type JustifyContent =
-  | "center"
-  | "flex-end"
-  | "flex-start"
-  | "space-around"
-  | "space-between"
-  | "space-evenly";
+  | 'center'
+  | 'flex-end'
+  | 'flex-start'
+  | 'space-around'
+  | 'space-between'
+  | 'space-evenly';
 
-type Position = "absolute" | "relative";
+type Position = 'absolute' | 'relative';
 
-type FlexWrap = "wrap" | "nowrap" | "wrap-reverse";
+type FlexWrap = 'wrap' | 'nowrap' | 'wrap-reverse';
 
-type OverFlow = "visible" | "hidden" | "scroll";
+type OverFlow = 'visible' | 'hidden' | 'scroll';
 
 export type ShadowConfig = {
   shadowColor?: ColorValue | undefined;
@@ -67,7 +67,7 @@ export interface BlockProps extends ViewProps {
 
   borderRightColor?: NullableStyleProps<string>;
 
-  borderStyle?: "solid" | "dotted" | "dashed";
+  borderStyle?: 'solid' | 'dotted' | 'dashed';
 
   borderTopColor?: NullableStyleProps<string>;
 
@@ -110,7 +110,7 @@ export interface BlockProps extends ViewProps {
    * Using align self
    * @default undefined
    */
-  alignSelf?: NullableStyleProps<"auto" | FlexAlignType>;
+  alignSelf?: NullableStyleProps<'auto' | FlexAlignType>;
 
   /**
    * Using margin left

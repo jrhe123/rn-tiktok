@@ -1,23 +1,23 @@
-import React, { useEffect, useState } from "react";
-import { LayoutChangeEvent, View } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { LayoutChangeEvent, View } from 'react-native';
 
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
   useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
-import { sharedClamp, sharedSpring, useInterpolate } from "@animated";
-import { onCheckType } from "@common";
+import { sharedClamp, sharedSpring, useInterpolate } from '@animated';
+import { onCheckType } from '@common';
 
-import { FIXED_AFTER, LOWER_BOUND, THUMB_SIZE, UPPER_BOUND } from "./constants";
-import { styles } from "./styles";
-import { SliderProps } from "./type";
+import { FIXED_AFTER, LOWER_BOUND, THUMB_SIZE, UPPER_BOUND } from './constants';
+import { styles } from './styles';
+import { SliderProps } from './type';
 
-import { Text } from "../text";
+import { Text } from '../text';
 
 export const SliderLinear = ({
   onChangeLinear,
@@ -26,10 +26,10 @@ export const SliderLinear = ({
   initialLinear = 50,
 }: SliderProps) => {
   if (lowerBound >= upperBound) {
-    throw Error("lowerBound must be less than upperBound");
+    throw Error('lowerBound must be less than upperBound');
   }
-  if (onChangeLinear && !onCheckType(onChangeLinear, "function")) {
-    throw Error("onChangeLinear must be function");
+  if (onChangeLinear && !onCheckType(onChangeLinear, 'function')) {
+    throw Error('onChangeLinear must be function');
   }
   // state
   const [width, setWidth] = useState<number>(0);
@@ -38,17 +38,17 @@ export const SliderLinear = ({
   const progress = useSharedValue(0);
 
   const translateX = useDerivedValue(() =>
-    sharedClamp(translationX.value, -THUMB_SIZE, width - THUMB_SIZE)
+    sharedClamp(translationX.value, -THUMB_SIZE, width - THUMB_SIZE),
   );
   const progressValue = useInterpolate(
     translateX,
     [-THUMB_SIZE, width - THUMB_SIZE],
-    [lowerBound, upperBound]
+    [lowerBound, upperBound],
   );
   // function
   const gestureHandler = Gesture.Pan()
-    .onChange((e) => {
-      "worklet";
+    .onChange(e => {
+      'worklet';
       translationX.value += e.changeX;
     })
     .onEnd(() => {
@@ -82,10 +82,10 @@ export const SliderLinear = ({
 
   useAnimatedReaction(
     () => progressValue.value,
-    (result) => {
+    result => {
       const value1 = parseFloat(result.toFixed(FIXED_AFTER));
       progress.value = value1;
-    }
+    },
   );
 
   // reanimated style

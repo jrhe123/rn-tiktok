@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useImperativeHandle,
   useMemo,
-} from "react";
+} from 'react';
 import {
   Keyboard,
   StyleProp,
@@ -13,20 +13,20 @@ import {
   useWindowDimensions,
   View,
   ViewStyle,
-} from "react-native";
+} from 'react-native';
 
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
   useAnimatedStyle,
   useSharedValue,
   withTiming,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
-import { sharedClamp, sharedTiming } from "@animated";
-import { CustomOmit, isIos, onCheckType } from "@common";
-import { useDisableBackHandler } from "@hooks";
-import { AppModule } from "@native-module";
+import { sharedClamp, sharedTiming } from '@animated';
+import { CustomOmit, isIos, onCheckType } from '@common';
+import { useDisableBackHandler } from '@hooks';
+import { AppModule } from '@native-module';
 
 import {
   ANIMATED_IN_DURATION,
@@ -34,10 +34,10 @@ import {
   BACK_DROP_OPACITY,
   MAX_TRANSLATE,
   SWIPE_THRESHOLD,
-} from "./constants";
-import { styles } from "./styles";
-import { ModalProps } from "./type";
-import { withAnimated } from "./untils";
+} from './constants';
+import { styles } from './styles';
+import { ModalProps } from './type';
+import { withAnimated } from './untils';
 
 export const ModalContent = forwardRef(
   (
@@ -47,9 +47,9 @@ export const ModalContent = forwardRef(
       customBackDrop,
       swipingDirection,
       hasGesture = true,
-      animatedIn = "fadeIn",
-      animatedOut = "fadeOut",
-      backdropColor = "black",
+      animatedIn = 'fadeIn',
+      animatedOut = 'fadeOut',
+      backdropColor = 'black',
       moveContentWhenDrag = false,
       swipeThreshold = SWIPE_THRESHOLD,
       backdropOpacity = BACK_DROP_OPACITY,
@@ -66,8 +66,8 @@ export const ModalContent = forwardRef(
       onModalWillHide,
       onModalWillShow,
       onBackButtonPress: onBackAndroidPress,
-    }: CustomOmit<ModalProps, "isVisible"> & { onSetClose: () => void },
-    ref
+    }: CustomOmit<ModalProps, 'isVisible'> & { onSetClose: () => void },
+    ref,
   ) => {
     // state
     const { height: screenHeight, width: screenWidth } = useWindowDimensions();
@@ -79,7 +79,7 @@ export const ModalContent = forwardRef(
           height: screenHeight + (isIos ? 0 : 25),
         },
       ],
-      [screenHeight, screenWidth]
+      [screenHeight, screenWidth],
     );
     // reanimated state
     const translateY = useSharedValue(0);
@@ -93,19 +93,19 @@ export const ModalContent = forwardRef(
       () => [
         StyleSheet.absoluteFillObject,
         {
-          width: "100%",
-          height: "100%",
+          width: '100%',
+          height: '100%',
           backgroundColor: backdropColor,
         },
       ],
-      [backdropColor]
+      [backdropColor],
     );
 
     const reBackdropStyle = useAnimatedStyle(
       () => ({
         opacity: reBackdropOpacity.value,
       }),
-      []
+      [],
     );
 
     const reContentStyle = useAnimatedStyle(() => {
@@ -126,41 +126,41 @@ export const ModalContent = forwardRef(
           { translateX: translateX.value },
         ],
       }),
-      []
+      [],
     );
 
     // function
     const onEndAnimatedClose = useCallback(
       (isFinished?: boolean) => {
-        "worklet";
+        'worklet';
         if (isFinished) {
           progressIn.value = 0;
-          if (typeof onSetClose === "function") {
+          if (typeof onSetClose === 'function') {
             runOnJS(onSetClose)();
           }
-          if (typeof onModalHide === "function") {
+          if (typeof onModalHide === 'function') {
             runOnJS(onModalHide)();
           }
         }
       },
-      [onModalHide, onSetClose, progressIn]
+      [onModalHide, onSetClose, progressIn],
     );
 
     const onEndAnimatedOpen = useCallback(
       (isFinished?: boolean) => {
-        "worklet";
+        'worklet';
         if (isFinished) {
-          if (typeof onModalShow === "function") {
+          if (typeof onModalShow === 'function') {
             runOnJS(onModalShow)();
           }
         }
       },
-      [onModalShow]
+      [onModalShow],
     );
 
     const openModal = useCallback(() => {
       isOut.value = false;
-      if (onCheckType(onModalWillShow, "function")) {
+      if (onCheckType(onModalWillShow, 'function')) {
         onModalWillShow();
       }
       reBackdropOpacity.value = sharedTiming(backdropOpacity, {
@@ -172,7 +172,7 @@ export const ModalContent = forwardRef(
         {
           duration: animatedInDuration,
         },
-        onEndAnimatedOpen
+        onEndAnimatedOpen,
       );
     }, [
       animatedInDuration,
@@ -187,7 +187,7 @@ export const ModalContent = forwardRef(
 
     const closeModal = useCallback(() => {
       isOut.value = true;
-      if (onCheckType(onModalWillHide, "function")) {
+      if (onCheckType(onModalWillHide, 'function')) {
         onModalWillHide();
       }
       reBackdropOpacity.value = withTiming(0, {
@@ -199,7 +199,7 @@ export const ModalContent = forwardRef(
         {
           duration: animatedOutDuration,
         },
-        onEndAnimatedClose
+        onEndAnimatedClose,
       );
     }, [
       animatedOutDuration,
@@ -216,13 +216,13 @@ export const ModalContent = forwardRef(
         if (swipingDirection && moveContentWhenDrag) {
           translateY.value = sharedClamp(
             translationY,
-            swipingDirection.includes("up") ? -MAX_TRANSLATE : 0,
-            swipingDirection.includes("down") ? MAX_TRANSLATE : 0
+            swipingDirection.includes('up') ? -MAX_TRANSLATE : 0,
+            swipingDirection.includes('down') ? MAX_TRANSLATE : 0,
           );
           translateX.value = sharedClamp(
             translationX,
-            swipingDirection.includes("left") ? -MAX_TRANSLATE : 0,
-            swipingDirection.includes("right") ? MAX_TRANSLATE : 0
+            swipingDirection.includes('left') ? -MAX_TRANSLATE : 0,
+            swipingDirection.includes('right') ? MAX_TRANSLATE : 0,
           );
         }
       })
@@ -231,19 +231,19 @@ export const ModalContent = forwardRef(
           const actualDx = Math.abs(
             sharedClamp(
               translationX,
-              swipingDirection.includes("left") ? -MAX_TRANSLATE : 0,
-              swipingDirection.includes("right") ? MAX_TRANSLATE : 0
-            )
+              swipingDirection.includes('left') ? -MAX_TRANSLATE : 0,
+              swipingDirection.includes('right') ? MAX_TRANSLATE : 0,
+            ),
           );
           const actualDy = Math.abs(
             sharedClamp(
               translationY,
-              swipingDirection.includes("up") ? -MAX_TRANSLATE : 0,
-              swipingDirection.includes("down") ? MAX_TRANSLATE : 0
-            )
+              swipingDirection.includes('up') ? -MAX_TRANSLATE : 0,
+              swipingDirection.includes('down') ? MAX_TRANSLATE : 0,
+            ),
           );
           if (actualDy > swipeThreshold || actualDx > swipeThreshold) {
-            if (typeof onSwipeComplete === "function") {
+            if (typeof onSwipeComplete === 'function') {
               runOnJS(onSwipeComplete)();
             }
           }
@@ -264,7 +264,7 @@ export const ModalContent = forwardRef(
     };
 
     const onBackButtonPress = () => {
-      if (onCheckType(onBackAndroidPress, "function")) {
+      if (onCheckType(onBackAndroidPress, 'function')) {
         onBackAndroidPress();
       }
       return true;
@@ -274,8 +274,7 @@ export const ModalContent = forwardRef(
       return (
         <Animated.View
           pointerEvents="box-none"
-          style={[styles.content, style, reContentStyle]}
-        >
+          style={[styles.content, style, reContentStyle]}>
           <Animated.View style={[wrapContentStyle]}>
             {hasGesture && (
               <GestureDetector gesture={gestureHandle}>
@@ -305,7 +304,7 @@ export const ModalContent = forwardRef(
           Keyboard.dismiss();
         },
       }),
-      [closeModal]
+      [closeModal],
     );
 
     useDisableBackHandler(true, onBackButtonPress);
@@ -326,7 +325,7 @@ export const ModalContent = forwardRef(
         {contentView()}
       </View>
     );
-  }
+  },
 );
 
 export type ModalContent = {

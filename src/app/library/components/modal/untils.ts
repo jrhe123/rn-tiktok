@@ -1,68 +1,68 @@
-import { ViewStyle } from "react-native";
+import { ViewStyle } from 'react-native';
 
-import Animated, { interpolate } from "react-native-reanimated";
+import Animated, { interpolate } from 'react-native-reanimated';
 
 export type TypeIn =
-  | "fadeIn"
-  | "fadeInDown"
-  | "fadeInDownBig"
-  | "fadeInUp"
-  | "fadeInUpBig"
-  | "fadeInLeft"
-  | "fadeInLeftBig"
-  | "fadeInRight"
-  | "fadeInRightBig"
-  | "lightSpeedIn"
-  | "slideInDown"
-  | "slideInUp"
-  | "slideInLeft"
-  | "slideInRight"
-  | "zoomIn"
-  | "zoomInDown"
-  | "zoomInUp"
-  | "zoomInLeft"
-  | "zoomInRight"
-  | "bounceIn"
-  | "bounceInUp"
-  | "bounceInDown"
-  | "bounceInRight"
-  | "bounceInLeft"
-  | "bounce"
-  | "flash"
-  | "jello"
-  | "pulse"
-  | "rotate"
-  | "shake"
-  | "swing"
-  | "rubberBand"
-  | "tada"
-  | "wobble";
+  | 'fadeIn'
+  | 'fadeInDown'
+  | 'fadeInDownBig'
+  | 'fadeInUp'
+  | 'fadeInUpBig'
+  | 'fadeInLeft'
+  | 'fadeInLeftBig'
+  | 'fadeInRight'
+  | 'fadeInRightBig'
+  | 'lightSpeedIn'
+  | 'slideInDown'
+  | 'slideInUp'
+  | 'slideInLeft'
+  | 'slideInRight'
+  | 'zoomIn'
+  | 'zoomInDown'
+  | 'zoomInUp'
+  | 'zoomInLeft'
+  | 'zoomInRight'
+  | 'bounceIn'
+  | 'bounceInUp'
+  | 'bounceInDown'
+  | 'bounceInRight'
+  | 'bounceInLeft'
+  | 'bounce'
+  | 'flash'
+  | 'jello'
+  | 'pulse'
+  | 'rotate'
+  | 'shake'
+  | 'swing'
+  | 'rubberBand'
+  | 'tada'
+  | 'wobble';
 
 export type TypeOut =
-  | "fadeOut"
-  | "fadeOutDown"
-  | "fadeOutDownBig"
-  | "fadeOutUp"
-  | "fadeOutUpBig"
-  | "fadeOutLeft"
-  | "fadeOutLeftBig"
-  | "fadeOutRight"
-  | "fadeOutRightBig"
-  | "lightSpeedOut"
-  | "slideOutDown"
-  | "slideOutUp"
-  | "slideOutLeft"
-  | "slideOutRight"
-  | "zoomOut"
-  | "zoomOutDown"
-  | "zoomOutUp"
-  | "zoomOutLeft"
-  | "zoomOutRight"
-  | "bounceOut"
-  | "bounceOutUp"
-  | "bounceOutDown"
-  | "bounceOutRight"
-  | "bounceOutLeft";
+  | 'fadeOut'
+  | 'fadeOutDown'
+  | 'fadeOutDownBig'
+  | 'fadeOutUp'
+  | 'fadeOutUpBig'
+  | 'fadeOutLeft'
+  | 'fadeOutLeftBig'
+  | 'fadeOutRight'
+  | 'fadeOutRightBig'
+  | 'lightSpeedOut'
+  | 'slideOutDown'
+  | 'slideOutUp'
+  | 'slideOutLeft'
+  | 'slideOutRight'
+  | 'zoomOut'
+  | 'zoomOutDown'
+  | 'zoomOutUp'
+  | 'zoomOutLeft'
+  | 'zoomOutRight'
+  | 'bounceOut'
+  | 'bounceOutUp'
+  | 'bounceOutDown'
+  | 'bounceOutRight'
+  | 'bounceOutLeft';
 
 type AnimatedOption = {
   screenHeight: number;
@@ -79,10 +79,10 @@ const withAnimatedIn = ({
   typeIn,
   screenWidth,
 }: AnimatedOption): ViewStyle => {
-  "worklet";
+  'worklet';
   const withInterpolate = (
     outputRange: number[] = [0, 1],
-    inputRange: number[] = [0, 1]
+    inputRange: number[] = [0, 1],
   ) => interpolate(progress.value, inputRange, outputRange);
 
   const fadeInOpacity = withInterpolate([0, 1]);
@@ -90,50 +90,50 @@ const withAnimatedIn = ({
 
   switch (typeIn) {
     // fade
-    case "fadeIn":
+    case 'fadeIn':
       return { opacity: fadeInOpacity };
-    case "fadeInDown":
+    case 'fadeInDown':
       return {
         opacity: fadeInOpacity,
         transform: [{ translateY: withInterpolate([-100, 0]) }],
       };
-    case "fadeInDownBig":
+    case 'fadeInDownBig':
       return {
         opacity: fadeInOpacity,
         transform: [{ translateY: withInterpolate([-500, 0]) }],
       };
-    case "fadeInUp":
+    case 'fadeInUp':
       return {
         opacity: fadeInOpacity,
         transform: [{ translateY: withInterpolate([100, 0]) }],
       };
-    case "fadeInUpBig":
+    case 'fadeInUpBig':
       return {
         opacity: fadeInOpacity,
         transform: [{ translateY: withInterpolate([500, 0]) }],
       };
-    case "fadeInLeft":
+    case 'fadeInLeft':
       return {
         opacity: fadeInOpacity,
         transform: [{ translateX: withInterpolate([-100, 0]) }],
       };
-    case "fadeInLeftBig":
+    case 'fadeInLeftBig':
       return {
         opacity: fadeInOpacity,
         transform: [{ translateX: withInterpolate([-500, 0]) }],
       };
-    case "fadeInRight":
+    case 'fadeInRight':
       return {
         opacity: fadeInOpacity,
         transform: [{ translateX: withInterpolate([100, 0]) }],
       };
-    case "fadeInRightBig":
+    case 'fadeInRightBig':
       return {
         opacity: fadeInOpacity,
         transform: [{ translateX: withInterpolate([500, 0]) }],
       };
     // light speed
-    case "lightSpeedIn":
+    case 'lightSpeedIn':
       return {
         opacity: withInterpolate([0, 1, 1, 1], [0, 0.6, 0.8, 1]),
         transform: [
@@ -141,34 +141,34 @@ const withAnimatedIn = ({
             translateX: withInterpolate([200, 0, 0, 0], [0, 0.6, 0.8, 1]),
           },
           {
-            skewX: withInterpolate([-30, 20, -5, 0], [0, 0.6, 0.8, 1]) + "deg",
+            skewX: withInterpolate([-30, 20, -5, 0], [0, 0.6, 0.8, 1]) + 'deg',
           },
         ],
       };
     // slide
-    case "slideInDown":
+    case 'slideInDown':
       return {
         transform: [{ translateY: withInterpolate([-screenHeight, 0]) }],
       };
-    case "slideInUp":
+    case 'slideInUp':
       return {
         transform: [{ translateY: withInterpolate([screenHeight, 0]) }],
       };
-    case "slideInLeft":
+    case 'slideInLeft':
       return {
         transform: [{ translateX: withInterpolate([-screenWidth, 0]) }],
       };
-    case "slideInRight":
+    case 'slideInRight':
       return {
         transform: [{ translateX: withInterpolate([screenWidth, 0]) }],
       };
     // zoom
-    case "zoomIn":
+    case 'zoomIn':
       return {
         opacity: withInterpolate([0, 1, 1], [0, 0.5, 1]),
         transform: [{ scale: withInterpolate([0.3, 1]) }],
       };
-    case "zoomInDown":
+    case 'zoomInDown':
       return {
         opacity: withInterpolate([0, 1, 1], [0, 0.6, 1]),
         transform: [
@@ -178,7 +178,7 @@ const withAnimatedIn = ({
           },
         ],
       };
-    case "zoomInUp":
+    case 'zoomInUp':
       return {
         opacity: withInterpolate([0, 1, 1], [0, 0.6, 1]),
         transform: [
@@ -188,7 +188,7 @@ const withAnimatedIn = ({
           },
         ],
       };
-    case "zoomInLeft":
+    case 'zoomInLeft':
       return {
         opacity: withInterpolate([0, 1, 1], [0, 0.6, 1]),
         transform: [
@@ -198,7 +198,7 @@ const withAnimatedIn = ({
           },
         ],
       };
-    case "zoomInRight":
+    case 'zoomInRight':
       return {
         opacity: withInterpolate([0, 1, 1], [0, 0.6, 1]),
         transform: [
@@ -209,83 +209,83 @@ const withAnimatedIn = ({
         ],
       };
     // bounce
-    case "bounceIn":
+    case 'bounceIn':
       return {
         opacity: bounceInOpacity,
         transform: [
           {
             scale: withInterpolate(
               [0.3, 1.1, 0.9, 1.03, 1, 1],
-              [0, 0.2, 0.4, 0.6, 0.8, 1]
+              [0, 0.2, 0.4, 0.6, 0.8, 1],
             ),
           },
         ],
       };
-    case "bounceInUp":
+    case 'bounceInUp':
       return {
         opacity: bounceInOpacity,
         transform: [
           {
             translateY: withInterpolate(
               [800, -25, 10, -5, 0],
-              [0, 0.6, 0.75, 0.9, 1]
+              [0, 0.6, 0.75, 0.9, 1],
             ),
           },
         ],
       };
-    case "bounceInDown":
+    case 'bounceInDown':
       return {
         opacity: bounceInOpacity,
         transform: [
           {
             translateY: withInterpolate(
               [-800, 25, -10, 5, 0],
-              [0, 0.6, 0.75, 0.9, 1]
+              [0, 0.6, 0.75, 0.9, 1],
             ),
           },
         ],
       };
-    case "bounceInRight":
+    case 'bounceInRight':
       return {
         opacity: bounceInOpacity,
         transform: [
           {
             translateX: withInterpolate(
               [600, -20, 8, -4, 0],
-              [0, 0.6, 0.75, 0.9, 1]
+              [0, 0.6, 0.75, 0.9, 1],
             ),
           },
         ],
       };
-    case "bounceInLeft":
+    case 'bounceInLeft':
       return {
         opacity: bounceInOpacity,
         transform: [
           {
             translateX: withInterpolate(
               [-600, 20, -8, 4, 0],
-              [0, 0.6, 0.75, 0.9, 1]
+              [0, 0.6, 0.75, 0.9, 1],
             ),
           },
         ],
       };
-    case "bounce":
+    case 'bounce':
       return {
         opacity: bounceInOpacity,
         transform: [
           {
             translateY: withInterpolate(
               [0, 0, -30, -30, 0, -15, 0, -4, 0],
-              [0, 0.2, 0.4, 0.43, 0.53, 0.7, 0.8, 0.9, 1]
+              [0, 0.2, 0.4, 0.43, 0.53, 0.7, 0.8, 0.9, 1],
             ),
           },
         ],
       };
-    case "flash":
+    case 'flash':
       return {
         opacity: withInterpolate([1, 0, 1, 0, 1], [0, 0.25, 0.5, 0.75, 1]),
       };
-    case "jello":
+    case 'jello':
       return {
         transform: [
           {
@@ -295,8 +295,8 @@ const withAnimatedIn = ({
                   0, 0, -12.5, 6.25, -3.125, 1.5625, -0.78125, 0.390625,
                   -0.1953125, 0,
                 ],
-                [0, 0.111, 0.222, 0.333, 0.444, 0.555, 0.666, 0.777, 0.888, 1]
-              ) + "deg",
+                [0, 0.111, 0.222, 0.333, 0.444, 0.555, 0.666, 0.777, 0.888, 1],
+              ) + 'deg',
           },
           {
             skewY:
@@ -305,27 +305,27 @@ const withAnimatedIn = ({
                   0, 0, -12.5, 6.25, -3.125, 1.5625, -0.78125, 0.390625,
                   -0.1953125, 0,
                 ],
-                [0, 0.111, 0.222, 0.333, 0.444, 0.555, 0.666, 0.777, 0.888, 1]
-              ) + "deg",
+                [0, 0.111, 0.222, 0.333, 0.444, 0.555, 0.666, 0.777, 0.888, 1],
+              ) + 'deg',
           },
         ],
       };
-    case "pulse":
+    case 'pulse':
       return {
         transform: [{ scale: withInterpolate([1, 1.05, 1], [0, 0.5, 1]) }],
       };
-    case "rotate":
+    case 'rotate':
       return {
         opacity: withInterpolate([0, 1], [0, 0.2]),
         transform: [
           {
             rotate:
               withInterpolate([0, 90, 180, 270, 360], [0, 0.25, 0.5, 0.75, 1]) +
-              "deg",
+              'deg',
           },
         ],
       };
-    case "swing":
+    case 'swing':
       return {
         opacity: withInterpolate([0, 1], [0, 0.2]),
         transform: [
@@ -333,73 +333,73 @@ const withAnimatedIn = ({
             rotate:
               withInterpolate(
                 [0, 15, -10, 5, -5, 0],
-                [0, 0.2, 0.4, 0.6, 0.8, 1]
-              ) + "deg",
+                [0, 0.2, 0.4, 0.6, 0.8, 1],
+              ) + 'deg',
           },
         ],
       };
-    case "rubberBand":
+    case 'rubberBand':
       return {
         opacity: withInterpolate([0, 1], [0, 0.1]),
         transform: [
           {
             scaleX: withInterpolate(
               [1, 1.25, 0.75, 1.15, 0.95, 1.05, 1],
-              [0, 0.3, 0.4, 0.5, 0.65, 0.75, 1]
+              [0, 0.3, 0.4, 0.5, 0.65, 0.75, 1],
             ),
           },
           {
             scaleY: withInterpolate(
               [1, 0.75, 1.25, 0.85, 1.05, 0.95, 1],
-              [0, 0.3, 0.4, 0.5, 0.65, 0.75, 1]
+              [0, 0.3, 0.4, 0.5, 0.65, 0.75, 1],
             ),
           },
         ],
       };
-    case "tada":
+    case 'tada':
       return {
         opacity: withInterpolate([0, 1], [0, 0.2]),
         transform: [
           {
             scale: withInterpolate(
               [1, 0.9, 0.9, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1],
-              [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+              [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
             ),
           },
           {
             rotate:
               withInterpolate(
                 [0, -3, -3, -3, 3, -3, 3, -3, 3, 3, 0],
-                [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
-              ) + "deg",
+                [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
+              ) + 'deg',
           },
         ],
       };
-    case "shake":
+    case 'shake':
       return {
         transform: [
           {
             translateX: withInterpolate(
               [0, -10, 10, -10, 10, -10, 10, -10, 10, -10, 0],
-              [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1]
+              [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1],
             ),
           },
         ],
       };
-    case "wobble":
+    case 'wobble':
       return {
         transform: [
           {
             rotate:
               withInterpolate(
                 [0, -5, 3, -3, 2, -1, 0],
-                [0, 0.15, 0.3, 0.45, 0.6, 0.75, 1]
-              ) + "deg",
+                [0, 0.15, 0.3, 0.45, 0.6, 0.75, 1],
+              ) + 'deg',
           },
           {
             translateX: withInterpolate(
               [0, -25, 20, -15, 10, -5, 0],
-              [0, 0.15, 0.3, 0.45, 0.6, 0.75, 1]
+              [0, 0.15, 0.3, 0.45, 0.6, 0.75, 1],
             ),
           },
         ],
@@ -415,10 +415,10 @@ const withAnimatedOut = ({
   typeOut,
   screenWidth,
 }: AnimatedOption): ViewStyle => {
-  "worklet";
+  'worklet';
   const withInterpolate = (
     outputRange: number[] = [0, 1],
-    inputRange: number[] = [0, 1]
+    inputRange: number[] = [0, 1],
   ) => interpolate(progress.value, inputRange, outputRange);
 
   const fadeOutOpacity = withInterpolate([0, 1]);
@@ -426,50 +426,50 @@ const withAnimatedOut = ({
 
   switch (typeOut) {
     // fade
-    case "fadeOut":
+    case 'fadeOut':
       return { opacity: fadeOutOpacity };
-    case "fadeOutDown":
+    case 'fadeOutDown':
       return {
         opacity: fadeOutOpacity,
         transform: [{ translateY: withInterpolate([100, 0]) }],
       };
-    case "fadeOutDownBig":
+    case 'fadeOutDownBig':
       return {
         opacity: fadeOutOpacity,
         transform: [{ translateY: withInterpolate([500, 0]) }],
       };
-    case "fadeOutUp":
+    case 'fadeOutUp':
       return {
         opacity: fadeOutOpacity,
         transform: [{ translateY: withInterpolate([-100, 0]) }],
       };
-    case "fadeOutUpBig":
+    case 'fadeOutUpBig':
       return {
         opacity: fadeOutOpacity,
         transform: [{ translateY: withInterpolate([-500, 0]) }],
       };
-    case "fadeOutLeft":
+    case 'fadeOutLeft':
       return {
         opacity: fadeOutOpacity,
         transform: [{ translateX: withInterpolate([100, 0]) }],
       };
-    case "fadeOutLeftBig":
+    case 'fadeOutLeftBig':
       return {
         opacity: fadeOutOpacity,
         transform: [{ translateX: withInterpolate([500, 0]) }],
       };
-    case "fadeOutRight":
+    case 'fadeOutRight':
       return {
         opacity: fadeOutOpacity,
         transform: [{ translateX: withInterpolate([-100, 0]) }],
       };
-    case "fadeOutRightBig":
+    case 'fadeOutRightBig':
       return {
         opacity: fadeOutOpacity,
         transform: [{ translateX: withInterpolate([-500, 0]) }],
       };
     // light speed
-    case "lightSpeedOut":
+    case 'lightSpeedOut':
       return {
         opacity: withInterpolate([0, 1]),
         transform: [
@@ -477,34 +477,34 @@ const withAnimatedOut = ({
             translateX: withInterpolate([200, 0]),
           },
           {
-            skewX: withInterpolate([30, 0]) + "deg",
+            skewX: withInterpolate([30, 0]) + 'deg',
           },
         ],
       };
     // slide
-    case "slideOutDown":
+    case 'slideOutDown':
       return {
         transform: [{ translateY: withInterpolate([screenHeight, 0]) }],
       };
-    case "slideOutUp":
+    case 'slideOutUp':
       return {
         transform: [{ translateY: withInterpolate([-screenHeight, 0]) }],
       };
-    case "slideOutLeft":
+    case 'slideOutLeft':
       return {
         transform: [{ translateX: withInterpolate([-screenWidth, 0]) }],
       };
-    case "slideOutRight":
+    case 'slideOutRight':
       return {
         transform: [{ translateX: withInterpolate([screenWidth, 0]) }],
       };
     // zoom
-    case "zoomOut":
+    case 'zoomOut':
       return {
         opacity: withInterpolate([0, 1, 1], [0, 0.5, 1]),
         transform: [{ scale: withInterpolate([0.3, 1]) }],
       };
-    case "zoomOutUp":
+    case 'zoomOutUp':
       return {
         opacity: withInterpolate([0, 1, 1], [0, 0.6, 1]),
         transform: [
@@ -514,7 +514,7 @@ const withAnimatedOut = ({
           },
         ],
       };
-    case "zoomOutDown":
+    case 'zoomOutDown':
       return {
         opacity: withInterpolate([0, 1, 1], [0, 0.6, 1]),
         transform: [
@@ -524,7 +524,7 @@ const withAnimatedOut = ({
           },
         ],
       };
-    case "zoomOutLeft":
+    case 'zoomOutLeft':
       return {
         opacity: withInterpolate([0, 1, 1], [0, 0.6, 1]),
         transform: [
@@ -534,7 +534,7 @@ const withAnimatedOut = ({
           },
         ],
       };
-    case "zoomOutRight":
+    case 'zoomOutRight':
       return {
         opacity: withInterpolate([0, 1, 1], [0, 0.6, 1]),
         transform: [
@@ -545,62 +545,62 @@ const withAnimatedOut = ({
         ],
       };
     // bounce
-    case "bounceOut":
+    case 'bounceOut':
       return {
         opacity: bounceOutOpacity,
         transform: [
           {
             scale: withInterpolate(
               [0.3, 1.11, 1.11, 0.9, 1],
-              [0, 0.2, 0.5, 0.55, 1]
+              [0, 0.2, 0.5, 0.55, 1],
             ),
           },
         ],
       };
-    case "bounceOutUp":
+    case 'bounceOutUp':
       return {
         opacity: bounceOutOpacity,
         transform: [
           {
             translateY: withInterpolate(
               [-800, 20, 20, -10, 0],
-              [0, 0.2, 0.4, 0.45, 1]
+              [0, 0.2, 0.4, 0.45, 1],
             ),
           },
         ],
       };
-    case "bounceOutDown":
+    case 'bounceOutDown':
       return {
         opacity: bounceOutOpacity,
         transform: [
           {
             translateY: withInterpolate(
               [800, -20, -20, 10, 0],
-              [0, 0.2, 0.4, 0.45, 1]
+              [0, 0.2, 0.4, 0.45, 1],
             ),
           },
         ],
       };
-    case "bounceOutRight":
+    case 'bounceOutRight':
       return {
         opacity: bounceOutOpacity,
         transform: [
           {
             translateX: withInterpolate(
               [-600, 20, 20, -10, 0],
-              [0, 0.2, 0.4, 0.45, 1]
+              [0, 0.2, 0.4, 0.45, 1],
             ),
           },
         ],
       };
-    case "bounceOutLeft":
+    case 'bounceOutLeft':
       return {
         opacity: bounceOutOpacity,
         transform: [
           {
             translateX: withInterpolate(
               [600, -20, -20, 10, 0],
-              [0, 0.2, 0.4, 0.45, 1]
+              [0, 0.2, 0.4, 0.45, 1],
             ),
           },
         ],
@@ -611,7 +611,7 @@ const withAnimatedOut = ({
 };
 
 export const withAnimated = (data: AnimatedOption) => {
-  "worklet";
+  'worklet';
   if (data.isOut.value) {
     return withAnimatedOut(data);
   }

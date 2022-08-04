@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ACTIONS } from "./constants";
-import { ActionTypes, AddPortalAction } from "./types";
+import { ACTIONS } from './constants';
+import { ActionTypes, AddPortalAction } from './types';
 
-import { PortalType } from "../types";
+import { PortalType } from '../types';
 
 const registerHost = (
   state: Record<string, Array<PortalType>>,
-  hostName: string
+  hostName: string,
 ) => {
   if (!(hostName in state)) {
     state[hostName] = [];
@@ -16,7 +16,7 @@ const registerHost = (
 
 const deregisterHost = (
   state: Record<string, Array<PortalType>>,
-  hostName: string
+  hostName: string,
 ) => {
   delete state[hostName];
   return state;
@@ -26,7 +26,7 @@ const addOrUpdatePortal = (
   state: Record<string, Array<PortalType>>,
   hostName: string,
   portalName: string,
-  node: any
+  node: any,
 ) => {
   if (!(hostName in state)) {
     state = registerHost(state, hostName);
@@ -35,7 +35,7 @@ const addOrUpdatePortal = (
   /**
    * updated portal, if it was already added.
    */
-  const index = state[hostName].findIndex((item) => item.name === portalName);
+  const index = state[hostName].findIndex(item => item.name === portalName);
   if (index !== -1) {
     state[hostName][index].node = node;
   } else {
@@ -50,21 +50,19 @@ const addOrUpdatePortal = (
 const removePortal = (
   state: Record<string, Array<PortalType>>,
   hostName: string,
-  portalName: string
+  portalName: string,
 ) => {
   if (!(hostName in state)) {
     return state;
   }
 
-  const newHostName = state[hostName].filter(
-    (item) => item.name !== portalName
-  );
+  const newHostName = state[hostName].filter(item => item.name !== portalName);
   return { ...state, hostName: newHostName };
 };
 
 export const reducer = (
   state: Record<string, Array<PortalType>>,
-  action: ActionTypes
+  action: ActionTypes,
 ) => {
   const clonedState = { ...state };
   switch (action.type) {
@@ -78,13 +76,13 @@ export const reducer = (
         clonedState,
         action.hostName,
         (action as AddPortalAction).portalName,
-        (action as AddPortalAction).node
+        (action as AddPortalAction).node,
       );
     case ACTIONS.REMOVE_PORTAL:
       return removePortal(
         clonedState,
         action.hostName,
-        (action as AddPortalAction).portalName
+        (action as AddPortalAction).portalName,
       );
     default:
       return state;

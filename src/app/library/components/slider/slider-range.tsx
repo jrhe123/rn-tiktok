@@ -4,17 +4,17 @@ import React, {
   useEffect,
   useImperativeHandle,
   useState,
-} from "react";
-import { LayoutChangeEvent, View } from "react-native";
+} from 'react';
+import { LayoutChangeEvent, View } from 'react-native';
 
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   runOnJS,
   useAnimatedReaction,
   useAnimatedStyle,
   useDerivedValue,
   useSharedValue,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
 import {
   sharedClamp,
@@ -23,8 +23,8 @@ import {
   sharedTiming,
   useInterpolate,
   useMin,
-} from "@animated";
-import { onCheckType } from "@common";
+} from '@animated';
+import { onCheckType } from '@common';
 
 import {
   FIXED_AFTER,
@@ -32,11 +32,11 @@ import {
   LOWER_BOUND,
   THUMB_SIZE,
   UPPER_BOUND,
-} from "./constants";
-import { stylesRange as styles } from "./styles";
-import { ArgsChangeRange, SliderRangeProps } from "./type";
+} from './constants';
+import { stylesRange as styles } from './styles';
+import { ArgsChangeRange, SliderRangeProps } from './type';
 
-import { Text } from "../text";
+import { Text } from '../text';
 
 export const SliderRange = forwardRef(
   (
@@ -46,19 +46,19 @@ export const SliderRange = forwardRef(
       upperBound = UPPER_BOUND,
       initialRange = INITIAL_RANGE,
     }: SliderRangeProps,
-    ref
+    ref,
   ) => {
     if (lowerBound >= upperBound) {
-      throw Error("lowerBound must be less than upperBound");
+      throw Error('lowerBound must be less than upperBound');
     }
-    if (!onCheckType(onChangeRange, "function")) {
-      throw Error("onChangeRange must be function");
+    if (!onCheckType(onChangeRange, 'function')) {
+      throw Error('onChangeRange must be function');
     }
-    if (initialRange.some((x) => x > upperBound || x < lowerBound)) {
-      throw Error("initialRange must be within range");
+    if (initialRange.some(x => x > upperBound || x < lowerBound)) {
+      throw Error('initialRange must be within range');
     }
     if (initialRange.length < 2 || initialRange[0] === initialRange[1]) {
-      throw Error("initialRange must be format [min,max]");
+      throw Error('initialRange must be format [min,max]');
     }
 
     // state
@@ -74,50 +74,50 @@ export const SliderRange = forwardRef(
 
     const translationLeftX = useSharedValue(0);
     const translateLeftX = useDerivedValue(() =>
-      sharedClamp(translationLeftX.value, -THUMB_SIZE, width - THUMB_SIZE)
+      sharedClamp(translationLeftX.value, -THUMB_SIZE, width - THUMB_SIZE),
     );
 
     const leftThumbValue = useInterpolate(
       translateLeftX,
       [-THUMB_SIZE, width - THUMB_SIZE],
-      [lowerBound, upperBound]
+      [lowerBound, upperBound],
     );
 
     const translationRightX = useSharedValue(0);
     const translateRightX = useDerivedValue(() =>
-      sharedClamp(translationRightX.value, -THUMB_SIZE, width - THUMB_SIZE)
+      sharedClamp(translationRightX.value, -THUMB_SIZE, width - THUMB_SIZE),
     );
     const rightThumbValue = useInterpolate(
       translateRightX,
       [-THUMB_SIZE, width - THUMB_SIZE],
-      [lowerBound, upperBound]
+      [lowerBound, upperBound],
     );
     const leftTrack = useMin(translateLeftX, translateRightX);
     const rightTrack = useDerivedValue(() =>
       sharedSub(
         width - THUMB_SIZE,
-        sharedMax(translateLeftX.value, translateRightX.value)
-      )
+        sharedMax(translateLeftX.value, translateRightX.value),
+      ),
     );
 
     // function
     const onFinalize = () => {
-      "worklet";
+      'worklet';
       const isRevert = translationLeftX.value > translateRightX.value;
       if (onChangeRange) {
         runOnJS(onChangeRange)({ ...resultChange.value, reverted: isRevert });
       }
     };
     const gestureHandlerThumbLeft = Gesture.Pan()
-      .onChange((e) => {
-        "worklet";
+      .onChange(e => {
+        'worklet';
         translationLeftX.value += e.changeX;
       })
       .onFinalize(onFinalize);
 
     const gestureHandlerThumbRight = Gesture.Pan()
-      .onChange((e) => {
-        "worklet";
+      .onChange(e => {
+        'worklet';
         translationRightX.value += e.changeX;
       })
       .onFinalize(onFinalize);
@@ -130,7 +130,7 @@ export const SliderRange = forwardRef(
       }: LayoutChangeEvent) => {
         setWidth(widthWrap);
       },
-      []
+      [],
     );
 
     const runAnimation = useCallback(
@@ -144,13 +144,13 @@ export const SliderRange = forwardRef(
         translationLeftX.value = sharedTiming(left - THUMB_SIZE);
         translationRightX.value = sharedTiming(right - THUMB_SIZE);
       },
-      [lowerBound, translationLeftX, translationRightX, upperBound, width]
+      [lowerBound, translationLeftX, translationRightX, upperBound, width],
     );
 
     // effect
     useAnimatedReaction(
       () => ({ v1: leftThumbValue.value, v2: rightThumbValue.value }),
-      (res) => {
+      res => {
         const value1 = parseFloat(res.v1.toFixed(FIXED_AFTER));
         const value2 = parseFloat(res.v2.toFixed(FIXED_AFTER));
         resultChange.value = {
@@ -158,7 +158,7 @@ export const SliderRange = forwardRef(
           upper: parseFloat(Math.max(value1, value2).toFixed(FIXED_AFTER)),
           reverted: false,
         };
-      }
+      },
     );
 
     useEffect(() => {
@@ -186,11 +186,11 @@ export const SliderRange = forwardRef(
           console.log(JSON.stringify(args));
           runAnimation(
             args.reverted ? args.upper : args.lower,
-            !args.reverted ? args.upper : args.lower
+            !args.reverted ? args.upper : args.lower,
           );
         },
       }),
-      [runAnimation]
+      [runAnimation],
     );
 
     // reanimated style
@@ -227,7 +227,7 @@ export const SliderRange = forwardRef(
         </View>
       </View>
     );
-  }
+  },
 );
 
 export type SliderRange = {

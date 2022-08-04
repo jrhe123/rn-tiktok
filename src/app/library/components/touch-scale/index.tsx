@@ -1,16 +1,16 @@
-import React, { useCallback } from "react";
-import { GestureResponderEvent, TouchableWithoutFeedback } from "react-native";
+import React, { useCallback } from 'react';
+import { GestureResponderEvent, TouchableWithoutFeedback } from 'react-native';
 
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
-import { sharedTiming } from "@animated";
-import { onCheckType } from "@common";
+import { sharedTiming } from '@animated';
+import { onCheckType } from '@common';
 
-import { styles } from "./styles";
-import { TouchableScaleProps } from "./type";
+import { styles } from './styles';
+import { TouchableScaleProps } from './type';
 
 export const TouchableScale = (props: TouchableScaleProps) => {
   // props
@@ -30,21 +30,21 @@ export const TouchableScale = (props: TouchableScaleProps) => {
   const _onPressIn = useCallback(
     (e: GestureResponderEvent) => {
       scale.value = sharedTiming(minScale, { duration: 150 });
-      if (onCheckType(onPressIn, "function")) {
+      if (onCheckType(onPressIn, 'function')) {
         onPressIn(e);
       }
     },
-    [minScale, onPressIn, scale]
+    [minScale, onPressIn, scale],
   );
 
   const _onPressOut = useCallback(
     (e: GestureResponderEvent) => {
       scale.value = sharedTiming(1, { duration: 150 });
-      if (onCheckType(onPressOut, "function")) {
+      if (onCheckType(onPressOut, 'function')) {
         onPressOut(e);
       }
     },
-    [onPressOut, scale]
+    [onPressOut, scale],
   );
 
   //reanimated style
@@ -57,15 +57,13 @@ export const TouchableScale = (props: TouchableScaleProps) => {
     <TouchableWithoutFeedback
       {...rest}
       onPressIn={_onPressIn}
-      onPressOut={_onPressOut}
-    >
+      onPressOut={_onPressOut}>
       <Animated.View
         style={[
           styles.container,
           overwriteContainerStyle,
           containerAnimatedStyle,
-        ]}
-      >
+        ]}>
         {children}
       </Animated.View>
     </TouchableWithoutFeedback>

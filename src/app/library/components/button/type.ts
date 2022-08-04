@@ -1,15 +1,15 @@
-import React from "react";
+import React from 'react';
 import {
   StyleProp,
   TextStyle,
   TouchableOpacityProps,
   ViewStyle,
-} from "react-native";
+} from 'react-native';
 
-import { Colors } from "@theme";
-import { I18nKeys } from "@utils/i18n/locales";
+import { Colors } from '@theme';
+import { I18nKeys } from '@utils/i18n/locales';
 
-import { ButtonPresetNames } from "./preset";
+import { ButtonPresetNames } from './preset';
 
 export interface ButtonProps extends TouchableOpacityProps {
   /**

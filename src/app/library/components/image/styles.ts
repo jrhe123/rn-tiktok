@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,10 +9,10 @@ export const styles = StyleSheet.create({
   },
   viewError: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "#bbb",
+    backgroundColor: '#bbb',
   },
   viewOnLoad: {
     ...StyleSheet.absoluteFillObject,
-    backgroundColor: "#bbb",
+    backgroundColor: '#bbb',
   },
 });

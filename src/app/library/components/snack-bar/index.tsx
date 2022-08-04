@@ -5,15 +5,15 @@ import React, {
   useEffect,
   useImperativeHandle,
   useState,
-} from "react";
-import { StyleSheet, View } from "react-native";
+} from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { randomUniqueId } from "@common";
+import { randomUniqueId } from '@common';
 
-import { DURATION_HIDE } from "./constants";
-import { SnackItem } from "./snack-bar-item";
-import { styles } from "./styles";
-import { Item, TypeMessage } from "./type";
+import { DURATION_HIDE } from './constants';
+import { SnackItem } from './snack-bar-item';
+import { styles } from './styles';
+import { Item, TypeMessage } from './type';
 
 const SnackBarComponent = forwardRef((_, ref) => {
   useImperativeHandle(
@@ -22,13 +22,13 @@ const SnackBarComponent = forwardRef((_, ref) => {
       show: ({
         interval = DURATION_HIDE,
         msg,
-        type = "success",
+        type = 'success',
       }: {
         msg: string;
         interval: number;
         type: TypeMessage;
       }) => {
-        setQueueData((d) =>
+        setQueueData(d =>
           d.concat([
             {
               id: randomUniqueId(),
@@ -36,11 +36,11 @@ const SnackBarComponent = forwardRef((_, ref) => {
               type,
               interval,
             },
-          ])
+          ]),
         );
       },
     }),
-    []
+    [],
   );
 
   // state
@@ -51,10 +51,10 @@ const SnackBarComponent = forwardRef((_, ref) => {
   const onPop = useCallback(
     (item: Item) => {
       const newData = queueData.length <= 0 ? [] : [queueData[0]];
-      setQueueData((d) => d.filter((x) => x.id !== item.id));
+      setQueueData(d => d.filter(x => x.id !== item.id));
       setData(newData);
     },
-    [queueData]
+    [queueData],
   );
 
   const _renderItem = (item: Item) => (
@@ -71,9 +71,8 @@ const SnackBarComponent = forwardRef((_, ref) => {
   // render
   return (
     <View
-      pointerEvents={"box-none"}
-      style={[StyleSheet.absoluteFillObject, styles.container]}
-    >
+      pointerEvents={'box-none'}
+      style={[StyleSheet.absoluteFillObject, styles.container]}>
       {data.map(_renderItem)}
     </View>
   );

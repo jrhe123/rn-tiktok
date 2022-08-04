@@ -1,42 +1,42 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import {
   StatusBar,
   useWindowDimensions,
   View,
   ViewProps,
   ViewStyle,
-} from "react-native";
+} from 'react-native';
 
-import Animated from "react-native-reanimated";
+import Animated from 'react-native-reanimated';
 import {
   Edge,
   SafeAreaView,
   SafeAreaViewProps,
   useSafeAreaInsets,
-} from "react-native-safe-area-context";
+} from 'react-native-safe-area-context';
 
-import { useTheme } from "@theme";
+import { useTheme } from '@theme';
 
-import { styles } from "./styles";
+import { styles } from './styles';
 import {
   InsetComponentProps,
   InsetProps,
   ScreenComponentProps,
   ScreenProps,
-} from "./type";
+} from './type';
 
-const INSETS: Edge[] = ["top", "bottom", "left", "right"];
+const INSETS: Edge[] = ['top', 'bottom', 'left', 'right'];
 
 const getEdges = (
-  excludeEdges: ScreenProps["excludeEdges"],
-  hiddenStatusBar: boolean
+  excludeEdges: ScreenProps['excludeEdges'],
+  hiddenStatusBar: boolean,
 ) => {
-  if (excludeEdges === "all") {
+  if (excludeEdges === 'all') {
     return [];
   }
-  const actualEdges = INSETS.filter((x) => !(excludeEdges ?? []).includes(x));
+  const actualEdges = INSETS.filter(x => !(excludeEdges ?? []).includes(x));
   if (hiddenStatusBar) {
-    return actualEdges.filter((x) => x !== "top");
+    return actualEdges.filter(x => x !== 'top');
   }
   return actualEdges;
 };
@@ -61,7 +61,7 @@ const Inset = ({
       bottom,
       right,
     }),
-    [bottom, color, height, left, right, top, width]
+    [bottom, color, height, left, right, top, width],
   );
   // render
   return <View style={[styles.insets, style]} />;
@@ -85,11 +85,11 @@ const InsetComponent = ({
     <>
       <StatusBar
         hidden={hiddenStatusBar}
-        backgroundColor={"transparent"}
+        backgroundColor={'transparent'}
         translucent
-        barStyle={statusBarStyle || "light-content"}
+        barStyle={statusBarStyle || 'light-content'}
       />
-      {!unsafe && edges.includes("top") && (
+      {!unsafe && edges.includes('top') && (
         <Inset
           color={statusColor}
           top={0}
@@ -97,7 +97,7 @@ const InsetComponent = ({
           width={screenWidth}
         />
       )}
-      {!unsafe && edges.includes("left") && (
+      {!unsafe && edges.includes('left') && (
         <Inset
           color={leftInsetColor}
           left={0}
@@ -105,7 +105,7 @@ const InsetComponent = ({
           width={inset.left}
         />
       )}
-      {!unsafe && edges.includes("right") && (
+      {!unsafe && edges.includes('right') && (
         <Inset
           color={rightInsetColor}
           right={0}
@@ -113,7 +113,7 @@ const InsetComponent = ({
           width={inset.right}
         />
       )}
-      {!unsafe && edges.includes("bottom") && (
+      {!unsafe && edges.includes('bottom') && (
         <Inset
           color={bottomInsetColor}
           bottom={0}
@@ -127,7 +127,7 @@ const InsetComponent = ({
 
 function ScreenWithoutScrolling(
   Wrapper: React.ComponentType<ViewProps | SafeAreaViewProps>,
-  props: ScreenComponentProps
+  props: ScreenComponentProps,
 ) {
   // state
   const { colors } = useTheme();
@@ -154,8 +154,7 @@ function ScreenWithoutScrolling(
           styles.inner,
           style,
           backgroundColor ? { backgroundColor } : {},
-        ]}
-      >
+        ]}>
         <View style={[styles.flex]} children={children} />
       </Wrapper>
       <InsetComponent
@@ -174,7 +173,7 @@ function ScreenWithoutScrolling(
 
 function ScreenWithScrolling(
   Wrapper: React.ComponentType<ViewProps | SafeAreaViewProps>,
-  props: ScreenComponentProps
+  props: ScreenComponentProps,
 ) {
   // state
   const { colors } = useTheme();
@@ -213,7 +212,7 @@ function ScreenWithScrolling(
           showsVerticalScrollIndicator={false}
           showsHorizontalScrollIndicator={false}
           keyboardShouldPersistTaps="handled"
-          overScrollMode={"never"}
+          overScrollMode={'never'}
           style={[styles.inner, backgroundColor ? { backgroundColor } : {}]}
           contentContainerStyle={[style]}
           children={children}
@@ -227,15 +226,15 @@ export const Screen = (props: ScreenProps) => {
   // state
   const edges = useMemo<Edge[]>(
     () => getEdges(props.excludeEdges, props?.hiddenStatusBar ?? false),
-    [props.excludeEdges, props.hiddenStatusBar]
+    [props.excludeEdges, props.hiddenStatusBar],
   );
   const actualUnsafe = useMemo<boolean>(
     () => props.unsafe || edges.length <= 0,
-    [edges.length, props.unsafe]
+    [edges.length, props.unsafe],
   );
   const Wrapper = useMemo(
     () => (actualUnsafe ? View : SafeAreaView),
-    [actualUnsafe]
+    [actualUnsafe],
   );
   // render
   if (props.scroll) {

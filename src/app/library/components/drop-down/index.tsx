@@ -4,7 +4,7 @@ import React, {
   useEffect,
   useMemo,
   useState,
-} from "react";
+} from 'react';
 import {
   LayoutChangeEvent,
   ListRenderItemInfo,
@@ -14,27 +14,27 @@ import {
   useWindowDimensions,
   View,
   ViewStyle,
-} from "react-native";
+} from 'react-native';
 
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList } from 'react-native-gesture-handler';
 import Animated, {
   measure,
   runOnUI,
   useAnimatedRef,
   useAnimatedStyle,
   useSharedValue,
-} from "react-native-reanimated";
-import { useSafeAreaInsets } from "react-native-safe-area-context";
+} from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
-import { useMix, useRadian, useSharedTransition } from "@animated";
-import { onCheckType } from "@common";
+import { useMix, useRadian, useSharedTransition } from '@animated';
+import { onCheckType } from '@common';
 
-import { DropDownItem } from "./drop-down-item";
-import { styles } from "./styles";
-import { DropDownProps, RowDropDown } from "./type";
+import { DropDownItem } from './drop-down-item';
+import { styles } from './styles';
+import { DropDownProps, RowDropDown } from './type';
 
-import { Icon } from "../icon";
-import { Modal } from "../modal";
+import { Icon } from '../icon';
+import { Modal } from '../modal';
 
 const setLayoutOnUI = (
   ref: React.RefObject<View>,
@@ -43,9 +43,9 @@ const setLayoutOnUI = (
     height: number;
     x: number;
     y: number;
-  }>
+  }>,
 ) => {
-  "worklet";
+  'worklet';
   const { width, height, pageX, pageY } = measure(ref);
   wrapMeasured.value = { width, height, x: pageX, y: pageY };
 };
@@ -70,8 +70,8 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
     onChangeItem,
     multiple = false,
     showArrow = true,
-    placeHolder = "Select an item",
-    multipleText = "%d items have been selected",
+    placeHolder = 'Select an item',
+    multipleText = '%d items have been selected',
   } = props;
 
   // state
@@ -82,7 +82,7 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
   const _refDrop = useAnimatedRef<View>();
   const [isVisible, setIsVisible] = useState(false);
   const [selectedValue, setSelectedValue] = useState<string | Array<string>>(
-    ""
+    '',
   );
 
   const isRenderOnBottom = useMemo(() => {
@@ -108,28 +108,28 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
 
   const onPressItem = useCallback(
     (value: string) => {
-      setSelectedValue((d) => {
+      setSelectedValue(d => {
         if (multiple && Array.isArray(d)) {
-          const item = d.find((x) => x === value);
+          const item = d.find(x => x === value);
           if (item) {
-            return d.filter((x) => x !== value);
+            return d.filter(x => x !== value);
           } else {
             return d.concat(value);
           }
         } else {
-          return value === d ? "" : value;
+          return value === d ? '' : value;
         }
       });
       if (!multiple) {
         hideDrop();
       }
     },
-    [hideDrop, multiple]
+    [hideDrop, multiple],
   );
 
   const onCheckSelected = (item: RowDropDown): boolean => {
     if (multiple && Array.isArray(selectedValue)) {
-      const itemSelect = selectedValue.find((x) => x === item.value);
+      const itemSelect = selectedValue.find(x => x === item.value);
       return itemSelect !== undefined;
     } else {
       return selectedValue === item.value;
@@ -162,7 +162,7 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
 
   const onToggle = useCallback(() => {
     runOnUI(setLayoutOnUI)(_refDrop, wrapMeasured);
-    setIsVisible((val) => !val);
+    setIsVisible(val => !val);
   }, [_refDrop, wrapMeasured]);
 
   const getTextPlaceHolder = useCallback((): string => {
@@ -171,18 +171,18 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
         return placeHolder;
       }
       if (selectedValue.length === 1) {
-        const item = data.find((x) => x.value === selectedValue[0]);
+        const item = data.find(x => x.value === selectedValue[0]);
         if (item) {
           return item.label;
         }
         return placeHolder;
       }
-      return multipleText.replace("%d", selectedValue.length + "");
+      return multipleText.replace('%d', selectedValue.length + '');
     } else {
       if (selectedValue.length <= 0) {
         return placeHolder;
       }
-      const item = data.find((x) => x.value === selectedValue);
+      const item = data.find(x => x.value === selectedValue);
       if (item) {
         return item.label;
       }
@@ -196,35 +196,35 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
 
   // effect
   useEffect(() => {
-    if (typeof defaultValue === "string") {
+    if (typeof defaultValue === 'string') {
       setSelectedValue(defaultValue);
     } else if (
       Array.isArray(defaultValue) &&
-      defaultValue.every((x) => typeof x === "string")
+      defaultValue.every(x => typeof x === 'string')
     ) {
       setSelectedValue(defaultValue);
     } else {
-      setSelectedValue(multiple ? [] : "");
+      setSelectedValue(multiple ? [] : '');
     }
   }, [defaultValue, multiple]);
 
   useEffect(() => {
-    if (onCheckType(onChangeItem, "function")) {
+    if (onCheckType(onChangeItem, 'function')) {
       if (Array.isArray(selectedValue)) {
         onChangeItem(
           selectedValue,
           data.reduce((prev, current, _, arr) => {
-            const index = arr.findIndex((x) => x.value === current.value);
+            const index = arr.findIndex(x => x.value === current.value);
             if (index >= 0) {
               prev.push(index);
             }
             return prev;
-          }, [] as number[])
+          }, [] as number[]),
         );
       } else {
         onChangeItem(
           selectedValue,
-          data.findIndex((x) => x.value === selectedValue)
+          data.findIndex(x => x.value === selectedValue),
         );
       }
     }
@@ -244,7 +244,7 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
             bottom: -wrapMeasured.value.y,
           },
     ],
-    [dropDownStyle, isRenderOnBottom, wrapMeasured.value]
+    [dropDownStyle, isRenderOnBottom, wrapMeasured.value],
   );
 
   // reanimated style
@@ -252,7 +252,7 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
     () => ({
       transform: [{ rotate: rotate.value }],
     }),
-    []
+    [],
   );
 
   // render
@@ -263,8 +263,7 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
           <View style={[styles.wrapPlaceholder, containerStyle]}>
             <Text
               style={[styles.placeHolder, placeholderStyle]}
-              numberOfLines={1}
-            >
+              numberOfLines={1}>
               {getTextPlaceHolder()}
             </Text>
             {showArrow &&
@@ -272,7 +271,7 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
                 renderArrow(progress)
               ) : (
                 <Animated.View style={[arrowStyle]}>
-                  <Icon icon={"arrow_down"} />
+                  <Icon icon={'arrow_down'} />
                 </Animated.View>
               ))}
           </View>
@@ -288,11 +287,10 @@ export const DropDown = forwardRef((props: DropDownProps, _) => {
         onModalShow={onOpen}
         onModalHide={onClose}
         hasGesture={false}
-        animatedIn={"fadeIn"}
-        animatedOut={"fadeOut"}
+        animatedIn={'fadeIn'}
+        animatedOut={'fadeOut'}
         style={[styles.modal]}
-        isVisible={isVisible}
-      >
+        isVisible={isVisible}>
         <View onLayout={onLayoutDrop} style={contentModalStyle}>
           <FlatList
             data={data}

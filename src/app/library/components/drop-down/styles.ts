@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { sizeScale } from "@common";
+import { sizeScale } from '@common';
 
 export const styles = StyleSheet.create({
   labelStyle: {
@@ -8,10 +8,10 @@ export const styles = StyleSheet.create({
     paddingRight: sizeScale(5),
   },
   container: {
-    width: "100%",
+    width: '100%',
     paddingVertical: 5,
-    flexDirection: "row",
-    alignItems: "center",
+    flexDirection: 'row',
+    alignItems: 'center',
   },
   wrapIcon: {
     minHeight: sizeScale(24),
@@ -21,33 +21,33 @@ export const styles = StyleSheet.create({
     paddingRight: sizeScale(5),
   },
   wrapView: {
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     borderRadius: sizeScale(3),
     flex: 1,
-    width: "100%",
+    width: '100%',
     borderBottomWidth: StyleSheet.hairlineWidth,
     borderTopWidth: StyleSheet.hairlineWidth,
-    borderBottomColor: "transparent",
-    borderTopColor: "transparent",
+    borderBottomColor: 'transparent',
+    borderTopColor: 'transparent',
   },
   wrapViewBottomOpened: {
     borderBottomLeftRadius: 0,
     borderBottomRightRadius: 0,
-    borderBottomColor: "#bbb",
+    borderBottomColor: '#bbb',
   },
   wrapViewTopOpened: {
     borderTopLeftRadius: 0,
     borderTopRightRadius: 0,
-    borderTopColor: "#bbb",
+    borderTopColor: '#bbb',
   },
   dropStyle: {
-    backgroundColor: "#FFFFFF",
-    position: "absolute",
-    overflow: "hidden",
+    backgroundColor: '#FFFFFF',
+    position: 'absolute',
+    overflow: 'hidden',
     // minHeight: 50,
     maxHeight: sizeScale(250),
     paddingHorizontal: sizeScale(10),
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 1,
@@ -68,8 +68,8 @@ export const styles = StyleSheet.create({
   wrapPlaceholder: {
     paddingHorizontal: sizeScale(10),
     paddingVertical: sizeScale(10),
-    alignItems: "center",
-    flexDirection: "row",
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   modal: {
     justifyContent: undefined,

@@ -1,36 +1,36 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
+import React from 'react';
 import {
   StyleProp,
   TextProps as TextProperties,
   TextStyle,
-} from "react-native";
+} from 'react-native';
 
-import { NullableStyleProps } from "@common";
-import { Colors } from "@theme";
-import { FontFamily } from "@theme/typography";
-import { I18nKeys } from "@utils/i18n/locales";
+import { NullableStyleProps } from '@common';
+import { Colors } from '@theme';
+import { FontFamily } from '@theme/typography';
+import { I18nKeys } from '@utils/i18n/locales';
 
-import { TextPresetNames } from "./preset";
+import { TextPresetNames } from './preset';
 
 type FontWeight =
-  | "normal"
-  | "bold"
-  | "100"
-  | "200"
-  | "300"
-  | "400"
-  | "500"
-  | "600"
-  | "700"
-  | "800"
-  | "900"
+  | 'normal'
+  | 'bold'
+  | '100'
+  | '200'
+  | '300'
+  | '400'
+  | '500'
+  | '600'
+  | '700'
+  | '800'
+  | '900'
   | undefined;
-type TextAlign = "auto" | "left" | "right" | "center" | "justify";
-type TextTransform = "none" | "capitalize" | "uppercase" | "lowercase";
+type TextAlign = 'auto' | 'left' | 'right' | 'center' | 'justify';
+type TextTransform = 'none' | 'capitalize' | 'uppercase' | 'lowercase';
 
 export interface TextProps extends TextProperties {
-  fontStyle?: NullableStyleProps<"normal" | "italic">;
+  fontStyle?: NullableStyleProps<'normal' | 'italic'>;
 
   letterSpacing?: NullableStyleProps<number>;
 

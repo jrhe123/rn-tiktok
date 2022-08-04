@@ -1,17 +1,17 @@
-import React, { useMemo, useState } from "react";
-import { LayoutChangeEvent, ViewStyle } from "react-native";
+import React, { useMemo, useState } from 'react';
+import { LayoutChangeEvent, ViewStyle } from 'react-native';
 
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
-import { sharedTiming, useInterpolate, useShareClamp } from "@animated";
+import { sharedTiming, useInterpolate, useShareClamp } from '@animated';
 
-import { styles } from "./styles";
-import { ProgressLinearProps } from "./type";
+import { styles } from './styles';
+import { ProgressLinearProps } from './type';
 
-import { COLOR_BG, COLOR_FG, STROKE_WIDTH } from "../constant";
+import { COLOR_BG, COLOR_FG, STROKE_WIDTH } from '../constant';
 
 export const ProgressLinear = ({
   progress,
@@ -27,7 +27,7 @@ export const ProgressLinear = ({
   const translateX = useInterpolate(
     actualProgress,
     [0, 100],
-    [-widthProgress, 0]
+    [-widthProgress, 0],
   );
 
   // style
@@ -40,7 +40,7 @@ export const ProgressLinear = ({
         borderRadius: radius,
       },
     ],
-    [bg, radius, strokeWidth]
+    [bg, radius, strokeWidth],
   );
   const fgStyle = useMemo<ViewStyle[]>(
     () => [
@@ -50,7 +50,7 @@ export const ProgressLinear = ({
         borderRadius: radius,
       },
     ],
-    [fg, radius]
+    [fg, radius],
   );
 
   // function

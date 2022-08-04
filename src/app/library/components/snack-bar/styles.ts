@@ -1,6 +1,6 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { sizeScale } from "@common";
+import { sizeScale } from '@common';
 
 export const styles = StyleSheet.create({
   container: {
@@ -9,11 +9,11 @@ export const styles = StyleSheet.create({
   itemBar: {
     paddingHorizontal: sizeScale(15),
     paddingVertical: sizeScale(13),
-    position: "absolute",
-    width: "100%",
+    position: 'absolute',
+    width: '100%',
     // alignSelf: 'center',
-    alignItems: "center",
-    flexDirection: "row",
+    alignItems: 'center',
+    flexDirection: 'row',
   },
   text: {
     marginTop: sizeScale(-2),

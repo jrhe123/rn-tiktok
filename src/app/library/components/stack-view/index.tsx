@@ -1,13 +1,13 @@
-import React, { forwardRef } from "react";
+import React, { forwardRef } from 'react';
 
-import Animated from "react-native-reanimated";
+import Animated from 'react-native-reanimated';
 
-import { StackViewProps } from "./type";
+import { StackViewProps } from './type';
 
 export const StackView = forwardRef(
   (
     { children, ...rest }: StackViewProps,
-    ref: React.ForwardedRef<Animated.ScrollView>
+    ref: React.ForwardedRef<Animated.ScrollView>,
   ) => {
     // render
     return (
@@ -16,10 +16,9 @@ export const StackView = forwardRef(
         showsVerticalScrollIndicator={false}
         showsHorizontalScrollIndicator={false}
         scrollEventThrottle={16}
-        {...rest}
-      >
+        {...rest}>
         {children}
       </Animated.ScrollView>
     );
-  }
+  },
 );

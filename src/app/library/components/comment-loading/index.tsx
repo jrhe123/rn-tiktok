@@ -1,17 +1,17 @@
-import React, { useMemo } from "react";
-import { useWindowDimensions, View } from "react-native";
+import React, { useMemo } from 'react';
+import { useWindowDimensions, View } from 'react-native';
 
-import { useAsyncState, useInterval } from "@hooks";
+import { useAsyncState, useInterval } from '@hooks';
 
 import {
   DELAY_MS,
   DURATION,
   MIN_HEIGHT_ITEM,
   OVERLAY_COLOR,
-} from "./constants";
-import { ItemComment } from "./item-comment";
-import { styles } from "./styles";
-import { CommentLoadingProps } from "./type";
+} from './constants';
+import { ItemComment } from './item-comment';
+import { styles } from './styles';
+import { CommentLoadingProps } from './type';
 
 export const CommentLoading = ({
   overlayColor = OVERLAY_COLOR,
@@ -24,7 +24,7 @@ export const CommentLoading = ({
       Array(Math.ceil(screenHeight / MIN_HEIGHT_ITEM))
         .fill(0)
         .map((_, i) => i),
-    [screenHeight]
+    [screenHeight],
   );
 
   // function
@@ -36,10 +36,10 @@ export const CommentLoading = ({
 
   useInterval(() => {
     setReRender(
-      (v) => !v,
+      v => !v,
       () => {
-        setReRender((v) => !v);
-      }
+        setReRender(v => !v);
+      },
     );
   }, DELAY_MS * listItem.length - 1 + DURATION);
 

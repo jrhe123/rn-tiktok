@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react';
 import {
   StyleProp,
   TouchableWithoutFeedbackProps,
   ViewStyle,
-} from "react-native";
+} from 'react-native';
 export interface TouchableScaleProps extends TouchableWithoutFeedbackProps {
   /**
    * Children of Touchable

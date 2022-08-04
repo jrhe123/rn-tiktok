@@ -1,14 +1,14 @@
-import React, { memo } from "react";
-import { Text, View } from "react-native";
+import React, { memo } from 'react';
+import { Text, View } from 'react-native';
 
-import equals from "react-fast-compare";
+import equals from 'react-fast-compare';
 
-import { onCheckType } from "@common";
+import { onCheckType } from '@common';
 
-import { styles } from "./styles";
-import { SelectItemProps } from "./type";
+import { styles } from './styles';
+import { SelectItemProps } from './type';
 
-import { Button } from "../button";
+import { Button } from '../button';
 
 const SelectItemComponent = ({
   item,
@@ -19,7 +19,7 @@ const SelectItemComponent = ({
 }: SelectItemProps) => {
   // function
   const _onPress = () => {
-    if (onCheckType(onPress, "function")) {
+    if (onCheckType(onPress, 'function')) {
       onPress(item, index);
     }
   };
@@ -33,7 +33,7 @@ const SelectItemComponent = ({
         ) : (
           <Text
             style={[styles.text, textItemStyle]}
-            children={item.text ?? ""}
+            children={item.text ?? ''}
           />
         )}
       </View>

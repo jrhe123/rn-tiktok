@@ -1,23 +1,23 @@
-import React, { useState } from "react";
-import { StyleSheet, View } from "react-native";
+import React, { useState } from 'react';
+import { StyleSheet, View } from 'react-native';
 
-import { Blurhash } from "react-native-blurhash";
-import FastImage, { OnLoadEvent } from "react-native-fast-image";
-import Animated, { useAnimatedStyle } from "react-native-reanimated";
+import { Blurhash } from 'react-native-blurhash';
+import FastImage, { OnLoadEvent } from 'react-native-fast-image';
+import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 
-import { useSharedTransition } from "@animated";
-import { execFunc, onCheckType } from "@common";
-import { useAsyncState, useMounted } from "@hooks";
+import { useSharedTransition } from '@animated';
+import { execFunc, onCheckType } from '@common';
+import { useAsyncState, useMounted } from '@hooks';
 
-import { styles } from "./styles";
-import { ImageProps } from "./type";
+import { styles } from './styles';
+import { ImageProps } from './type';
 
 const ImageComponent = ({
   style: styleOverride = {},
   source,
-  blurHashOnLoad = "L9AB*A%LPqys8_H=yDR5nMMeVXR5",
+  blurHashOnLoad = 'L9AB*A%LPqys8_H=yDR5nMMeVXR5',
   thumbBlurHash,
-  resizeMode = "cover",
+  resizeMode = 'cover',
   containerStyle,
   childrenError,
   childrenOnload,
@@ -87,7 +87,7 @@ const ImageComponent = ({
           {thumbBlurHash !== undefined && (
             <Blurhash
               onLoadEnd={onLoadThumbSucceeded}
-              blurhash={thumbBlurHash ?? ""}
+              blurhash={thumbBlurHash ?? ''}
               style={[StyleSheet.absoluteFillObject]}
             />
           )}
@@ -102,7 +102,7 @@ const ImageComponent = ({
           onLoad={onLoadImageSucceeded}
           style={[styles.img, styleOverride]}
           source={
-            onCheckType(source, "string")
+            onCheckType(source, 'string')
               ? { uri: source as string }
               : (source as number | Record<string, unknown>)
           }

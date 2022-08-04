@@ -1,15 +1,15 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
-import { sizeScale } from "@common";
-import { ColorDefault } from "@theme/color";
-import { FontDefault } from "@theme/typography";
+import { sizeScale } from '@common';
+import { ColorDefault } from '@theme/color';
+import { FontDefault } from '@theme/typography';
 
 export const stylesView = StyleSheet.create({
   primary: {
     borderRadius: 4,
     paddingVertical: 5,
     backgroundColor: ColorDefault.primary,
-    alignItems: "center",
+    alignItems: 'center',
   },
   outline: {
     borderRadius: 4,

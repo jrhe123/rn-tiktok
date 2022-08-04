@@ -1,6 +1,6 @@
-import { StyleProp, ViewStyle } from "react-native";
+import { StyleProp, ViewStyle } from 'react-native';
 
-import { I18nKeys } from "@utils/i18n/locales";
+import { I18nKeys } from '@utils/i18n/locales';
 
 export interface CheckboxProps {
   /**

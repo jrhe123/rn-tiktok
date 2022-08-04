@@ -1,18 +1,18 @@
-import React, { useCallback, useState } from "react";
-import { StyleSheet, TouchableWithoutFeedback } from "react-native";
+import React, { useCallback, useState } from 'react';
+import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 import Animated, {
   Extrapolate,
   useAnimatedStyle,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
 import {
   useInterpolate,
   useInterpolateColor,
   useMix,
   useSharedTransition,
-} from "@animated";
-import { execFunc } from "@common";
+} from '@animated';
+import { execFunc } from '@common';
 
 import {
   BORDER_OFF_COLOR,
@@ -24,8 +24,8 @@ import {
   ON_POSITION_IOS,
   THUMB_SIZE_IOS,
   WIDTH,
-} from "./constants";
-import { SwitchProps } from "./type";
+} from './constants';
+import { SwitchProps } from './type';
 
 const styles = StyleSheet.create({
   track: {
@@ -33,15 +33,15 @@ const styles = StyleSheet.create({
     height: THUMB_SIZE_IOS + MARGIN,
     borderRadius: BORDER_RADIUS_IOS,
     borderWidth: MARGIN / 2,
-    borderColor: "transparent",
+    borderColor: 'transparent',
   },
   thumb: {
-    position: "absolute",
+    position: 'absolute',
     width: THUMB_SIZE_IOS,
     height: THUMB_SIZE_IOS,
     borderColor: BORDER_OFF_COLOR,
     borderRadius: THUMB_SIZE_IOS / 2,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     shadowColor: BORDER_OFF_COLOR,
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 1,
@@ -55,7 +55,7 @@ export const Switch = ({
   value: overwriteValue,
   disable = false,
   initialValue = false,
-}: Omit<SwitchProps, "type">) => {
+}: Omit<SwitchProps, 'type'>) => {
   // state
   const [value, setValue] = useState<boolean>(initialValue);
 
@@ -66,21 +66,21 @@ export const Switch = ({
     progress,
     [0, 1],
     [OFF_POSITION_IOS, ON_POSITION_IOS],
-    Extrapolate.CLAMP
+    Extrapolate.CLAMP,
   );
   const backgroundColor = useInterpolateColor(
     progress,
     [0, 1],
-    [OFF_COLOR, ON_COLOR]
+    [OFF_COLOR, ON_COLOR],
   );
 
   // function
   const _onToggle = useCallback(() => {
-    if (typeof overwriteValue === "boolean") {
+    if (typeof overwriteValue === 'boolean') {
       execFunc(onToggle, overwriteValue);
     } else {
       execFunc(onToggle, !value);
-      setValue((v) => !v);
+      setValue(v => !v);
     }
   }, [onToggle, overwriteValue, value]);
 

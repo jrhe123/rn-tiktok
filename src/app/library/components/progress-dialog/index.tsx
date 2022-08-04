@@ -4,21 +4,21 @@ import React, {
   memo,
   useImperativeHandle,
   useState,
-} from "react";
-import { ActivityIndicator, View } from "react-native";
+} from 'react';
+import { ActivityIndicator, View } from 'react-native';
 
-import isEqual from "react-fast-compare";
+import isEqual from 'react-fast-compare';
 
-import { useDisableBackHandler, useDismissKeyboard } from "@hooks";
-import { useTheme } from "@theme";
+import { useDisableBackHandler, useDismissKeyboard } from '@hooks';
+import { useTheme } from '@theme';
 
-import { styles } from "./styles";
+import { styles } from './styles';
 
 const Spinner = memo(() => {
   // state
   const theme = useTheme();
   // render
-  return <ActivityIndicator color={theme.colors.background} size={"large"} />;
+  return <ActivityIndicator color={theme.colors.background} size={'large'} />;
 }, isEqual);
 
 const ProgressDialogComponent = forwardRef((_, ref) => {
@@ -36,7 +36,7 @@ const ProgressDialogComponent = forwardRef((_, ref) => {
         setVisible(false);
       },
     }),
-    []
+    [],
   );
 
   useDisableBackHandler(visible);

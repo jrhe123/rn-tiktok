@@ -1,19 +1,19 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   outer: {
-    backgroundColor: "transparent",
+    backgroundColor: 'transparent',
     flex: 1,
-    justifyContent: "flex-start",
+    justifyContent: 'flex-start',
   },
   inner: {
     flex: 1,
-    width: "100%",
+    width: '100%',
   },
   flex: {
     flex: 1,
   },
   insets: {
-    position: "absolute",
+    position: 'absolute',
   },
 });

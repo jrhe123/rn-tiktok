@@ -1,5 +1,5 @@
-import React, { useEffect, useMemo } from "react";
-import { Text, View } from "react-native";
+import React, { useEffect, useMemo } from 'react';
+import { Text, View } from 'react-native';
 
 import Animated, {
   Extrapolate,
@@ -7,15 +7,15 @@ import Animated, {
   useAnimatedProps,
   useDerivedValue,
   useSharedValue,
-} from "react-native-reanimated";
-import Svg, { Circle, CircleProps } from "react-native-svg";
+} from 'react-native-reanimated';
+import Svg, { Circle, CircleProps } from 'react-native-svg';
 
-import { sharedTiming } from "@animated";
+import { sharedTiming } from '@animated';
 
-import { styles } from "./styles";
-import { ProgressCircleProps } from "./type";
+import { styles } from './styles';
+import { ProgressCircleProps } from './type';
 
-import { COLOR_BG, COLOR_FG, RADIUS, STROKE_WIDTH } from "../constant";
+import { COLOR_BG, COLOR_FG, RADIUS, STROKE_WIDTH } from '../constant';
 
 const AnimatedCircle = Animated.createAnimatedComponent(Circle);
 const AnimatedText = Animated.createAnimatedComponent(Text);
@@ -33,7 +33,7 @@ export const ProgressCircle = ({
   // state
   const strokeDasharray = useMemo(
     () => `${radius * 2 * Math.PI} ${radius * 2 * Math.PI}`,
-    [radius]
+    [radius],
   );
   const progressValue = useSharedValue(0);
   const strokeDashoffset = useDerivedValue(
@@ -42,19 +42,19 @@ export const ProgressCircle = ({
         progressValue.value,
         [0, 100],
         [Math.PI * 2, 0],
-        Extrapolate.CLAMP
-      ) * radius
+        Extrapolate.CLAMP,
+      ) * radius,
   );
 
   // function
   const renderText = () => {
     if (progress < 0) {
-      return 0 + "";
+      return 0 + '';
     }
     if (progress > 100) {
-      return 100 + "";
+      return 100 + '';
     }
-    return progress + "";
+    return progress + '';
   };
 
   // effect
@@ -87,7 +87,7 @@ export const ProgressCircle = ({
             strokeWidth={strokeWidth}
           />
           <AnimatedCircle
-            strokeLinecap={round ? "round" : undefined}
+            strokeLinecap={round ? 'round' : undefined}
             strokeDasharray={strokeDasharray}
             r={radius}
             x={radius + strokeWidth / 2}

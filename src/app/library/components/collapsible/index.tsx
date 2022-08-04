@@ -1,16 +1,16 @@
-import React, { useEffect, useState } from "react";
-import { LayoutChangeEvent, LayoutRectangle, Text, View } from "react-native";
+import React, { useEffect, useState } from 'react';
+import { LayoutChangeEvent, LayoutRectangle, Text, View } from 'react-native';
 
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { TouchableOpacity } from 'react-native-gesture-handler';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
-import { sharedTiming, useSharedTransition } from "@animated";
+import { sharedTiming, useSharedTransition } from '@animated';
 
-import { styles } from "./styles";
-import { CollapsibleProps } from "./type";
+import { styles } from './styles';
+import { CollapsibleProps } from './type';
 
 export const Collapsible = ({
   children,
@@ -32,7 +32,7 @@ export const Collapsible = ({
 
   // function
   const onPress = () => {
-    setIsShow((v) => !v);
+    setIsShow(v => !v);
   };
 
   const onLayoutContent = (e: LayoutChangeEvent) => {
@@ -57,10 +57,9 @@ export const Collapsible = ({
   return (
     <View>
       <Animated.View
-        pointerEvents={"none"}
+        pointerEvents={'none'}
         onLayout={onLayoutContent}
-        style={[styles.base, styles.hiddenView]}
-      >
+        style={[styles.base, styles.hiddenView]}>
         {renderContent ? renderContent(progress) : children}
       </Animated.View>
       <TouchableOpacity onPress={onPress}>

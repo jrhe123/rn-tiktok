@@ -3,7 +3,7 @@ export interface SliderProps {
    * Type of slider
    * @default linear
    */
-  type: "linear" | "range";
+  type: 'linear' | 'range';
 
   /**
    * Min value of slider
@@ -42,7 +42,7 @@ export interface SliderProps {
 }
 export type SliderRangeProps = Omit<
   SliderProps,
-  "type" | "initialLinear" | "onChangeLinear"
+  'type' | 'initialLinear' | 'onChangeLinear'
 >;
 
 export type ArgsChangeRange = {

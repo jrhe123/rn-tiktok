@@ -1,18 +1,18 @@
-import React from "react";
-import { View } from "react-native";
+import React from 'react';
+import { View } from 'react-native';
 
-import FastImage from "react-native-fast-image";
+import FastImage from 'react-native-fast-image';
 
-import { images } from "@assets/image";
+import { images } from '@assets/image';
 
-import { styles } from "./styles";
-import { LocalImageProps } from "./type";
+import { styles } from './styles';
+import { LocalImageProps } from './type';
 
 export const LocalImage = ({
   source,
   containerStyle,
   style: styleOverride,
-  resizeMode = "cover",
+  resizeMode = 'cover',
 }: LocalImageProps) => {
   // render
   return (
@@ -20,7 +20,7 @@ export const LocalImage = ({
       <FastImage
         style={[styles.img, styleOverride]}
         resizeMode={resizeMode}
-        source={images[source ?? "default"]}
+        source={images[source ?? 'default']}
       />
     </View>
   );

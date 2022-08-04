@@ -1,30 +1,30 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { forwardRef, useEffect, useMemo, useState } from "react";
+import React, { forwardRef, useEffect, useMemo, useState } from 'react';
 import {
   LayoutChangeEvent,
   NativeSyntheticEvent,
   TextInput,
   TextInputChangeEventData,
   View,
-} from "react-native";
+} from 'react-native';
 
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 import Animated, {
   useAnimatedStyle,
   useDerivedValue,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
-import { useInterpolate, useSharedTransition } from "@animated";
-import { onCheckType } from "@common";
+import { useInterpolate, useSharedTransition } from '@animated';
+import { onCheckType } from '@common';
 
-import { styles } from "./styles";
-import { InputOutlineProps } from "./type";
+import { styles } from './styles';
+import { InputOutlineProps } from './type';
 
-import { Text } from "../../../text";
+import { Text } from '../../../text';
 
-const UN_ACTIVE_COLOR = "rgb(159,152,146)";
-const ACTIVE_COLOR = "rgb(0,87,231)";
-const ERROR_COLOR = "rgb(214,45,32)";
+const UN_ACTIVE_COLOR = 'rgb(159,152,146)';
+const ACTIVE_COLOR = 'rgb(0,87,231)';
+const ERROR_COLOR = 'rgb(214,45,32)';
 
 export const InputOutline = forwardRef<any, InputOutlineProps>((props, ref) => {
   // props
@@ -61,9 +61,9 @@ export const InputOutline = forwardRef<any, InputOutlineProps>((props, ref) => {
   // state
   const [t] = useTranslation();
   const [heightContainerInput, setHeightContainerInput] = useState(0);
-  const [localDefaultValue, setLocalDefaultValue] = useState("");
+  const [localDefaultValue, setLocalDefaultValue] = useState('');
   const [focused, setFocused] = useState(false);
-  const [value, setValue] = useState("");
+  const [value, setValue] = useState('');
 
   // reanimated
   const progress = useSharedTransition(focused || value.length > 0, {
@@ -106,14 +106,14 @@ export const InputOutline = forwardRef<any, InputOutlineProps>((props, ref) => {
   };
 
   const _onFocus = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-    if (onCheckType(onFocus, "function")) {
+    if (onCheckType(onFocus, 'function')) {
       onFocus(e);
     }
     setFocused(true);
   };
 
   const _onBlur = (e: NativeSyntheticEvent<TextInputChangeEventData>) => {
-    if (onCheckType(onBlur, "function")) {
+    if (onCheckType(onBlur, 'function')) {
       onBlur(e);
     }
     setFocused(false);
@@ -121,14 +121,14 @@ export const InputOutline = forwardRef<any, InputOutlineProps>((props, ref) => {
 
   const _onChangeText = (text: string) => {
     const actualText =
-      rxRemove !== undefined ? text.replace(rxRemove, "") : text;
+      rxRemove !== undefined ? text.replace(rxRemove, '') : text;
     setValue(actualText);
-    if (onCheckType(onChangeText, "function")) {
+    if (onCheckType(onChangeText, 'function')) {
       onChangeText(actualText);
     }
     if (
-      onCheckType(trigger, "function") &&
-      onCheckType(nameTrigger, "string")
+      onCheckType(trigger, 'function') &&
+      onCheckType(nameTrigger, 'string')
     ) {
       setTimeout(() => {
         trigger(nameTrigger);
@@ -147,12 +147,12 @@ export const InputOutline = forwardRef<any, InputOutlineProps>((props, ref) => {
   // string
   const labelText = useMemo(
     () => (labelTx && t(labelTx)) || label || undefined,
-    [labelTx, label, t]
+    [labelTx, label, t],
   );
 
   const placeHolder = useMemo(
-    () => (placeholderT18n && t(placeholderT18n)) || placeholder || "",
-    [placeholder, placeholderT18n, t]
+    () => (placeholderT18n && t(placeholderT18n)) || placeholder || '',
+    [placeholder, placeholderT18n, t],
   );
 
   // reanimated style
@@ -176,11 +176,10 @@ export const InputOutline = forwardRef<any, InputOutlineProps>((props, ref) => {
         styles.container,
         containerStyleOverwrite,
         containerAnimatedStyle,
-      ]}
-    >
+      ]}>
       <View style={[styles.content]}>
         {(placeholderT18n || placeholder) && value.length === 0 && (
-          <View style={[styles.wrapPlaceHolder]} pointerEvents={"none"}>
+          <View style={[styles.wrapPlaceHolder]} pointerEvents={'none'}>
             <Text
               t18n={placeholderT18n}
               text={placeHolder}
@@ -190,11 +189,10 @@ export const InputOutline = forwardRef<any, InputOutlineProps>((props, ref) => {
         )}
         {labelText && (
           <Animated.View
-            pointerEvents={"none"}
-            style={[styles.wrapLabel, wrapLabelStyle]}
-          >
+            pointerEvents={'none'}
+            style={[styles.wrapLabel, wrapLabelStyle]}>
             <Animated.Text style={[styles.text, labelStyle]}>
-              {labelText ?? ""}
+              {labelText ?? ''}
             </Animated.Text>
           </Animated.View>
         )}
@@ -203,7 +201,7 @@ export const InputOutline = forwardRef<any, InputOutlineProps>((props, ref) => {
             defaultValue={localDefaultValue}
             autoCorrect={false}
             editable={!disabled}
-            clearButtonMode={"never"}
+            clearButtonMode={'never'}
             selectionColor={activeTintBorderColor}
             style={[styles.input, inputStyleOverwrite]}
             ref={ref}

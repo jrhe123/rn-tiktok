@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
-import { TextStyle, ViewStyle } from "react-native";
+import React from 'react';
+import { TextStyle, ViewStyle } from 'react-native';
 
-import Animated from "react-native-reanimated";
+import Animated from 'react-native-reanimated';
 
 export interface RowDropDown {
   /**
@@ -67,11 +67,11 @@ export interface ItemProps {
 export interface DropDownProps
   extends Pick<
     ItemProps,
-    | "containerStyleItem"
-    | "labelStyle"
-    | "activeItemStyle"
-    | "activeLabelStyle"
-    | "customTickIcon"
+    | 'containerStyleItem'
+    | 'labelStyle'
+    | 'activeItemStyle'
+    | 'activeLabelStyle'
+    | 'customTickIcon'
   > {
   /**
    * The list item of dropdown

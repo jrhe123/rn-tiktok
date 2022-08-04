@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React from "react";
-import { FlatListProps, StyleProp, TextStyle } from "react-native";
+import React from 'react';
+import { FlatListProps, StyleProp, TextStyle } from 'react-native';
 
-import { CustomOmit } from "@common";
+import { CustomOmit } from '@common';
 
 export interface SelectOption {
   /**
@@ -70,7 +70,7 @@ export type SelectProps = {
    * @default undefined
    */
   useBottomInset?: boolean;
-} & CustomOmit<FlatListProps<SelectOption>, "renderItem">;
+} & CustomOmit<FlatListProps<SelectOption>, 'renderItem'>;
 export interface SelectItemProps {
   /**
    * Data item

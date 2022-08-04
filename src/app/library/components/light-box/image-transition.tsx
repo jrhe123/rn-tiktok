@@ -4,18 +4,18 @@ import React, {
   memo,
   useImperativeHandle,
   useState,
-} from "react";
-import { StyleSheet } from "react-native";
+} from 'react';
+import { StyleSheet } from 'react-native';
 
-import isEqual from "react-fast-compare";
+import isEqual from 'react-fast-compare';
 import Animated, {
   useAnimatedStyle,
   useSharedValue,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
-import { GestureHOC } from "./gesture-hoc";
-import { styles } from "./styles";
-import { ImageTransitionProps } from "./type";
+import { GestureHOC } from './gesture-hoc';
+import { styles } from './styles';
+import { ImageTransitionProps } from './type';
 
 const ImageTransitionComponent = forwardRef((_, ref) => {
   useImperativeHandle(
@@ -25,7 +25,7 @@ const ImageTransitionComponent = forwardRef((_, ref) => {
         setImage(data);
       },
     }),
-    []
+    [],
   );
 
   // state
@@ -63,5 +63,5 @@ export const imageTransitionRef = createRef<ImageTransition>();
 
 export const ImageTransition = memo(
   () => <ImageTransitionComponent ref={imageTransitionRef} />,
-  isEqual
+  isEqual,
 );

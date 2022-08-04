@@ -1,9 +1,9 @@
-import React, { memo, useCallback, useEffect } from "react";
-import { BackHandler, useWindowDimensions } from "react-native";
+import React, { memo, useCallback, useEffect } from 'react';
+import { BackHandler, useWindowDimensions } from 'react-native';
 
-import isEqual from "react-fast-compare";
-import FastImage from "react-native-fast-image";
-import { Gesture, GestureDetector } from "react-native-gesture-handler";
+import isEqual from 'react-fast-compare';
+import FastImage from 'react-native-fast-image';
+import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
   Extrapolate,
   interpolate,
@@ -13,12 +13,12 @@ import Animated, {
   useDerivedValue,
   useSharedValue,
   WithTimingConfig,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
-import { sharedTiming, useInterpolate, useVector } from "@animated";
+import { sharedTiming, useInterpolate, useVector } from '@animated';
 
-import { styles } from "./styles";
-import { GestureHOCProps } from "./type";
+import { styles } from './styles';
+import { GestureHOCProps } from './type';
 
 const timingConfig: WithTimingConfig = {
   duration: 300,
@@ -46,8 +46,8 @@ export const GestureHOC = memo(
           animatedProgress.value,
           [0, 1],
           [image.py, targetY.value],
-          Extrapolate.CLAMP
-        )
+          Extrapolate.CLAMP,
+        ),
     );
 
     const left = useDerivedValue(
@@ -57,32 +57,32 @@ export const GestureHOC = memo(
           animatedProgress.value,
           [0, 1],
           [image.px, targetX.value],
-          Extrapolate.CLAMP
-        )
+          Extrapolate.CLAMP,
+        ),
     );
     const width = useInterpolate(
       animatedProgress,
       [0, 1],
       [image.width, image.targetWidth],
-      Extrapolate.CLAMP
+      Extrapolate.CLAMP,
     );
     const height = useInterpolate(
       animatedProgress,
       [0, 1],
       [image.height, image.targetHeight],
-      Extrapolate.CLAMP
+      Extrapolate.CLAMP,
     );
 
     // function
     const onEndAnimatedClose = useCallback(
       (finished?: boolean) => {
-        "worklet";
+        'worklet';
         if (finished) {
           image.imageOpacity.value = 1;
           runOnJS(onClose)();
         }
       },
-      [image.imageOpacity, onClose]
+      [image.imageOpacity, onClose],
     );
 
     const closeLightBox = useCallback(() => {
@@ -94,7 +94,7 @@ export const GestureHOC = memo(
       animatedProgress.value = sharedTiming(
         0,
         timingConfig,
-        onEndAnimatedClose
+        onEndAnimatedClose,
       );
     }, [
       animatedProgress,
@@ -106,7 +106,7 @@ export const GestureHOC = memo(
       translateY,
     ]);
     const panGesture = Gesture.Pan()
-      .onUpdate((event) => {
+      .onUpdate(event => {
         translateX.value = event.translationX;
         translateY.value = event.translationY;
 
@@ -114,14 +114,14 @@ export const GestureHOC = memo(
           translateY.value,
           [-250, 0, 250],
           [0.8, 1, 0.8],
-          Extrapolate.CLAMP
+          Extrapolate.CLAMP,
         );
 
         backDropOpacity.value = interpolate(
           translateY.value,
           [-100, 0, 100],
           [0.6, 1, 0.6],
-          Extrapolate.CLAMP
+          Extrapolate.CLAMP,
         );
       })
       .onEnd(() => {
@@ -143,7 +143,7 @@ export const GestureHOC = memo(
     // effect
     useEffect(() => {
       runOnUI(() => {
-        "worklet";
+        'worklet';
         image.imageOpacity.value = 0;
         animatedProgress.value = sharedTiming(1, timingConfig);
         backDropOpacity.value = sharedTiming(1, timingConfig);
@@ -152,9 +152,9 @@ export const GestureHOC = memo(
     }, []);
 
     useEffect(() => {
-      BackHandler.addEventListener("hardwareBackPress", onBackButtonPress);
+      BackHandler.addEventListener('hardwareBackPress', onBackButtonPress);
       return () =>
-        BackHandler.removeEventListener("hardwareBackPress", onBackButtonPress);
+        BackHandler.removeEventListener('hardwareBackPress', onBackButtonPress);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
@@ -173,12 +173,12 @@ export const GestureHOC = memo(
         <Animated.View style={[imageStyle]}>
           <FastImage
             style={[styles.img]}
-            resizeMode={"cover"}
+            resizeMode={'cover'}
             source={source}
           />
         </Animated.View>
       </GestureDetector>
     );
   },
-  isEqual
+  isEqual,
 );

@@ -1,18 +1,18 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
   base: {
-    overflow: "hidden",
+    overflow: 'hidden',
   },
   hiddenView: {
-    position: "absolute",
+    position: 'absolute',
     zIndex: -999,
     opacity: 0,
   },
   header: {
     flex: 1,
     padding: 10,
-    justifyContent: "center",
-    alignItems: "center",
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 });

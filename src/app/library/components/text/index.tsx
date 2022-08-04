@@ -1,19 +1,19 @@
-import React, { useMemo } from "react";
+import React, { useMemo } from 'react';
 import {
   Text as ReactNativeText,
   StyleProp,
   StyleSheet,
   TextStyle,
-} from "react-native";
+} from 'react-native';
 
-import { useTranslation } from "react-i18next";
+import { useTranslation } from 'react-i18next';
 
-import { propsToStyle, sizeScale } from "@common";
-import { useTheme } from "@theme";
-import { FontDefault } from "@theme/typography";
+import { propsToStyle, sizeScale } from '@common';
+import { useTheme } from '@theme';
+import { FontDefault } from '@theme/typography';
 
-import { textPresets } from "./preset";
-import { TextProps } from "./type";
+import { textPresets } from './preset';
+import { TextProps } from './type';
 
 const styles = StyleSheet.create({
   flex: {
@@ -38,7 +38,7 @@ export const Text = ({
   t18nOptions,
   textTransform,
   letterSpacing,
-  preset = "default",
+  preset = 'default',
   style: styleOverride = {},
   ...rest
 }: TextProps) => {
@@ -47,11 +47,11 @@ export const Text = ({
   const [t] = useTranslation();
   const i18nText = useMemo(
     () => t18n && t(t18n, t18nOptions),
-    [t18n, t18nOptions, t]
+    [t18n, t18nOptions, t],
   );
   const content = useMemo(
     () => i18nText || text || children,
-    [i18nText, text, children]
+    [i18nText, text, children],
   );
 
   const styleComponent = useMemo<StyleProp<TextStyle>>(
@@ -62,7 +62,7 @@ export const Text = ({
         fontSize !== undefined && { fontSize: sizeScale(fontSize) },
         fontFamily !== undefined && { fontFamily: FontDefault[fontFamily] },
         colorTheme !== undefined && { color: theme.colors[colorTheme] },
-        center && { textAlign: "center" },
+        center && { textAlign: 'center' },
         propsToStyle([
           { fontWeight },
           { color },
@@ -89,15 +89,14 @@ export const Text = ({
       fontStyle,
       letterSpacing,
       lineHeight,
-    ]
+    ],
   );
   // render
   return (
     <ReactNativeText
       allowFontScaling={false}
       {...rest}
-      style={[styleComponent, styleOverride]}
-    >
+      style={[styleComponent, styleOverride]}>
       {content}
     </ReactNativeText>
   );

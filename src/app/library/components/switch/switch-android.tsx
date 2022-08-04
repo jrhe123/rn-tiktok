@@ -1,18 +1,18 @@
-import React, { useCallback, useState } from "react";
-import { StyleSheet, TouchableWithoutFeedback } from "react-native";
+import React, { useCallback, useState } from 'react';
+import { StyleSheet, TouchableWithoutFeedback } from 'react-native';
 
 import Animated, {
   Extrapolate,
   useAnimatedStyle,
-} from "react-native-reanimated";
+} from 'react-native-reanimated';
 
 import {
   useInterpolate,
   useInterpolateColor,
   useMix,
   useSharedTransition,
-} from "@animated";
-import { execFunc } from "@common";
+} from '@animated';
+import { execFunc } from '@common';
 
 import {
   BORDER_OFF_COLOR,
@@ -28,8 +28,8 @@ import {
   THUMB_SIZE_ANDROID,
   TRACK_HEIGHT,
   WIDTH,
-} from "./constants";
-import { SwitchProps } from "./type";
+} from './constants';
+import { SwitchProps } from './type';
 
 const styles = StyleSheet.create({
   wrap: {
@@ -43,13 +43,13 @@ const styles = StyleSheet.create({
     borderColor: BORDER_OFF_COLOR,
   },
   thumb: {
-    position: "absolute",
+    position: 'absolute',
     width: THUMB_SIZE_ANDROID,
     top: -(THUMB_SIZE_ANDROID - TRACK_HEIGHT + MARGIN) / 2,
     height: THUMB_SIZE_ANDROID,
     borderColor: BORDER_OFF_COLOR,
     borderRadius: THUMB_SIZE_ANDROID / 2,
-    backgroundColor: "#FFFFFF",
+    backgroundColor: '#FFFFFF',
     shadowColor: SHADOW_COLOR,
     shadowOffset: { width: 1, height: 2 },
     shadowOpacity: 1,
@@ -63,7 +63,7 @@ export const Switch = ({
   onToggle,
   disable = false,
   initialValue = false,
-}: Omit<SwitchProps, "type">) => {
+}: Omit<SwitchProps, 'type'>) => {
   // state
   const [value, setValue] = useState<boolean>(initialValue);
 
@@ -74,26 +74,26 @@ export const Switch = ({
     progress,
     [0, 1],
     [OFF_POSITION_ANDROID, ON_POSITION_ANDROID],
-    Extrapolate.CLAMP
+    Extrapolate.CLAMP,
   );
   const backgroundTrackColor = useInterpolateColor(
     progress,
     [0, 1],
-    [OFF_TRACK_COLOR, ON_TRACK_COLOR]
+    [OFF_TRACK_COLOR, ON_TRACK_COLOR],
   );
   const backgroundThumbColor = useInterpolateColor(
     progress,
     [0, 1],
-    [OFF_COLOR, ON_COLOR]
+    [OFF_COLOR, ON_COLOR],
   );
 
   // function
   const _onToggle = useCallback(() => {
-    if (typeof overwriteValue === "boolean") {
+    if (typeof overwriteValue === 'boolean') {
       execFunc(onToggle, overwriteValue);
     } else {
       execFunc(onToggle, !value);
-      setValue((v) => !v);
+      setValue(v => !v);
     }
   }, [onToggle, overwriteValue, value]);
 
