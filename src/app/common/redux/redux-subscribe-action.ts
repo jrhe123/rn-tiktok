@@ -1,6 +1,6 @@
-import { Action, Dispatch, Middleware, MiddlewareAPI } from "@reduxjs/toolkit";
+import { Action, Dispatch, Middleware, MiddlewareAPI } from '@reduxjs/toolkit';
 
-import { onCheckType } from "../method/index";
+import { onCheckType } from '../method/index';
 
 export type Listener = (action: Action) => void;
 type ActionListenerContainer = {
@@ -13,8 +13,8 @@ const _actionsSubscribedBefore: ActionListenerContainer[] = [];
 const _actionsSubscribedAfter: ActionListenerContainer[] = [];
 
 const _subscribe = (listener: Listener, listenerContainer: Listener[]) => {
-  if (!onCheckType(listener, "function")) {
-    throw new Error("Expected the listener to be a function.");
+  if (!onCheckType(listener, 'function')) {
+    throw new Error('Expected the listener to be a function.');
   }
   listenerContainer.push(listener);
   return () => {
@@ -31,13 +31,13 @@ export const subscribeAfter = (listener: Listener) => {
 };
 const _subscribeAction = (
   actionListenerContainer: ActionListenerContainer,
-  listenerContainer: ActionListenerContainer[]
+  listenerContainer: ActionListenerContainer[],
 ) => {
-  if (!onCheckType(actionListenerContainer.action, "string")) {
-    throw new Error("Expected the action to be a string.");
+  if (!onCheckType(actionListenerContainer.action, 'string')) {
+    throw new Error('Expected the action to be a string.');
   }
-  if (!onCheckType(actionListenerContainer.listener, "function")) {
-    throw new Error("Expected the listener to be a function.");
+  if (!onCheckType(actionListenerContainer.listener, 'function')) {
+    throw new Error('Expected the listener to be a function.');
   }
   listenerContainer.push(actionListenerContainer);
   return () => {
@@ -81,10 +81,10 @@ export const unsubscribeAll = () => {
 
 const _unsubscribeAction = (
   listenerContainer: ActionListenerContainer[],
-  filterAction: string
+  filterAction: string,
 ) => {
   const filteredListenerContainer = listenerContainer.filter(
-    ({ action }) => action !== filterAction
+    ({ action }) => action !== filterAction,
   );
   listenerContainer.length = 0;
   listenerContainer.push(...filteredListenerContainer);
@@ -106,7 +106,7 @@ export const unsubscribeActionAll = (action: string) => {
 const _callListeners = (action: Action, listenerContainer: Listener[]) => {
   for (let i = listenerContainer.length - 1; i >= 0; i--) {
     const listener = listenerContainer[i];
-    if (typeof action === "object") {
+    if (typeof action === 'object') {
       listener(action);
     }
   }
@@ -114,13 +114,13 @@ const _callListeners = (action: Action, listenerContainer: Listener[]) => {
 
 const _callActionListeners = (
   action: Action,
-  listenerContainer: ActionListenerContainer[]
+  listenerContainer: ActionListenerContainer[],
 ) => {
   for (let i = listenerContainer.length - 1; i >= 0; i--) {
     const listener = listenerContainer[i];
     if (
       action &&
-      onCheckType(action.type, "string") &&
+      onCheckType(action.type, 'string') &&
       listener.action === action.type
     ) {
       listener.listener(action);

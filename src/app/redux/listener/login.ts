@@ -1,7 +1,7 @@
-import { takeLatestListeners } from "@listener";
-import { ApiConstants, NetWorkService } from "@networking";
+import { takeLatestListeners } from '@listener';
+import { ApiConstants, NetWorkService } from '@networking';
 
-import { loginActions } from "../action-slice/login";
+import { loginActions } from '../action-slice/login';
 
 takeLatestListeners(true)({
   actionCreator: loginActions.onLogin,

@@ -1,13 +1,13 @@
-import { useEffect } from "react";
+import { useEffect } from 'react';
 import {
   EmitterSubscription,
   NativeEventEmitter,
   NativeModules,
-} from "react-native";
+} from 'react-native';
 
-import { CustomOmit, isIos } from "@common";
+import { CustomOmit, isIos } from '@common';
 
-import { hexStringFromCSSColor } from "../string";
+import { hexStringFromCSSColor } from '../string';
 
 const { AppModule } = NativeModules;
 
@@ -21,7 +21,7 @@ export const getDeviceId = (): string => {
   return AppModule.getDeviceId();
 };
 export const setAppBadges = (count: number) => {
-  if (typeof count !== "number" || !isIos) {
+  if (typeof count !== 'number' || !isIos) {
     return;
   }
   AppModule.setBadges(count);
@@ -33,7 +33,7 @@ export const clearCache = () => {
   AppModule.clearCache();
 };
 export const checkChannelExist = (channelId: string) => {
-  return new Promise<boolean>((rs) => {
+  return new Promise<boolean>(rs => {
     if (isIos) {
       rs(false);
     }
@@ -70,7 +70,7 @@ type Channel = {
   vibrate?: boolean;
 };
 export const createChannel = (channel: Channel) => {
-  const actualChannel: CustomOmit<Channel, "importance"> & {
+  const actualChannel: CustomOmit<Channel, 'importance'> & {
     importance?: number;
   } = {
     ...channel,
@@ -79,7 +79,7 @@ export const createChannel = (channel: Channel) => {
       ? ImportanceChannel[channel.importance] ?? ImportanceChannel.HIGH
       : undefined,
   };
-  return new Promise<boolean>((rs) => {
+  return new Promise<boolean>(rs => {
     if (isIos) {
       rs(false);
     }
@@ -107,7 +107,7 @@ type ImageResponse = {
   name: string;
 };
 export const fixRotation = ({ uri, height = 800, width = 600 }: Image) => {
-  return new Promise<ImageResponse>((rs) => {
+  return new Promise<ImageResponse>(rs => {
     if (isIos) {
       AppModule.fixRotation(
         uri,
@@ -117,13 +117,13 @@ export const fixRotation = ({ uri, height = 800, width = 600 }: Image) => {
           if (res) {
             rs({ uri: res.uri, name: res.name });
           } else {
-            rs({ uri: uri, name: "new_image.png" });
+            rs({ uri: uri, name: 'new_image.png' });
           }
-        }
+        },
       );
     } else {
       AppModule.fixRotation(uri, width, height, rs, () => {
-        rs({ uri: uri, name: "new_image.png" });
+        rs({ uri: uri, name: 'new_image.png' });
       });
     }
   });
@@ -136,7 +136,7 @@ export const usePhotosPermissionChange = (callback: () => void) => {
       subscription: EmitterSubscription;
     if (isIos) {
       photosChangeEvent = new NativeEventEmitter(AppModule);
-      subscription = photosChangeEvent.addListener("PhotosChange", callback);
+      subscription = photosChangeEvent.addListener('PhotosChange', callback);
     }
     return () => {
       if (isIos) {
@@ -162,13 +162,13 @@ export const setIQKeyboardOption = (options: {
   keyboardDistanceFromTextField?: number;
   enableAutoToolbar?: boolean;
   toolbarDoneBarButtonItemText?: string;
-  toolbarManageBehaviourBy?: "subviews" | "tag" | "position";
+  toolbarManageBehaviourBy?: 'subviews' | 'tag' | 'position';
   toolbarPreviousNextButtonEnable?: boolean;
   toolbarTintColor?: string;
   toolbarBarTintColor?: string;
   shouldShowToolbarPlaceholder?: boolean;
   overrideKeyboardAppearance?: boolean;
-  keyboardAppearance?: "default" | "light" | "dark";
+  keyboardAppearance?: 'default' | 'light' | 'dark';
   shouldResignOnTouchOutside?: boolean;
   shouldPlayInputClicks?: boolean;
   resignFirstResponder?: boolean;
@@ -180,12 +180,12 @@ export const setIQKeyboardOption = (options: {
   const actualOption = { ...options };
   if (options.toolbarBarTintColor) {
     actualOption.toolbarBarTintColor = hexStringFromCSSColor(
-      options.toolbarBarTintColor
+      options.toolbarBarTintColor,
     );
   }
   if (options.toolbarTintColor) {
     actualOption.toolbarTintColor = hexStringFromCSSColor(
-      options.toolbarTintColor
+      options.toolbarTintColor,
     );
   }
   AppModule.setIQKeyboardOption(actualOption);

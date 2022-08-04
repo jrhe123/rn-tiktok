@@ -1,21 +1,21 @@
-import { initReactI18next } from "react-i18next";
+import { initReactI18next } from 'react-i18next';
 
-import { ENVConfig } from "@config/env";
-import i18n, { LanguageDetectorAsyncModule, Resource } from "i18next";
+import { ENVConfig } from '@config/env';
+import i18n, { LanguageDetectorAsyncModule, Resource } from 'i18next';
 
-import { resources } from "./locales";
+import { resources } from './locales';
 
 const languageDetector: LanguageDetectorAsyncModule = {
-  type: "languageDetector",
+  type: 'languageDetector',
   async: true, // flags below detection to be async
   detect: (callback: (lng: string | readonly string[] | undefined) => void) => {
     callback(ENVConfig.DEFAULT_FALLBACK_LNG_I18n);
   },
   init: () => {
-    console.log("init I18n");
+    console.log('init I18n');
   },
   cacheUserLanguage: () => {
-    console.log("cacheUserLanguage I18n");
+    console.log('cacheUserLanguage I18n');
   },
 };
 
@@ -26,8 +26,8 @@ export const initOptionsI18n = (source: Resource) => {
     resources: source,
 
     // have a common namespace used around the full app
-    ns: ["common"],
-    defaultNS: "common",
+    ns: ['common'],
+    defaultNS: 'common',
     debug: false,
 
     // cache: {

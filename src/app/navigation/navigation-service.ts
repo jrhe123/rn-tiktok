@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { createRef } from "react";
+import { createRef } from 'react';
 
-import { RootStackParamList } from "@navigation/screen-types";
+import { RootStackParamList } from '@navigation/screen-types';
 import {
   CommonActions,
   NavigationContainerRef,
-} from "@react-navigation/native";
+} from '@react-navigation/native';
 
 export const navigationRef =
   createRef<NavigationContainerRef<RootStackParamList>>();
@@ -19,7 +19,7 @@ export function navigate<RouteName extends keyof RootStackParamList>(
 ) {
   navigationRef.current?.navigate(
     arg[0] as any,
-    arg.length > 1 ? arg[1] : undefined
+    arg.length > 1 ? arg[1] : undefined,
   );
 }
 
@@ -32,7 +32,7 @@ export function navigateMerge<RouteName extends keyof RootStackParamList>(
     : {
         name: RouteName;
         params: RootStackParamList[RouteName];
-      }
+      },
 ) {
   navigationRef.current?.navigate({
     key: options.name,

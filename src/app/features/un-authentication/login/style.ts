@@ -1,7 +1,7 @@
-import { useMemo } from "react";
-import { StyleSheet } from "react-native";
+import { useMemo } from 'react';
+import { StyleSheet } from 'react-native';
 
-import { useTheme } from "@theme";
+import { useTheme } from '@theme';
 
 export const useLoginStyle = () => {
   // state
@@ -15,6 +15,6 @@ export const useLoginStyle = () => {
           color: theme.colors.text,
         },
       }),
-    [theme.colors.text]
+    [theme.colors.text],
   );
 };

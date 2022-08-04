@@ -9,24 +9,24 @@ import React, {
   useMemo,
   useRef,
   useState,
-} from "react";
+} from 'react';
 import {
   BackHandler,
   EmitterSubscription,
   Keyboard,
   LayoutAnimation,
   Platform,
-} from "react-native";
+} from 'react-native';
 
-import isEqual from "react-fast-compare";
-import { useTranslation } from "react-i18next";
-import { useSelector as useReduxSelector } from "react-redux";
+import isEqual from 'react-fast-compare';
+import { useTranslation } from 'react-i18next';
+import { useSelector as useReduxSelector } from 'react-redux';
 
-import { onCheckType } from "@common";
-import { ValidateMessageObject } from "@config/type";
-import NetInfo, { NetInfoState } from "@react-native-community/netinfo";
-import { RootState } from "@store/all-reducers";
-import { AppTheme, useTheme } from "@theme";
+import { onCheckType } from '@common';
+import { ValidateMessageObject } from '@config/type';
+import NetInfo, { NetInfoState } from '@react-native-community/netinfo';
+import { RootState } from '@store/all-reducers';
+import { AppTheme, useTheme } from '@theme';
 
 type UseStateFull<T = any> = {
   value: T;
@@ -35,7 +35,7 @@ type UseStateFull<T = any> = {
 
 function useSelector<T>(
   selector: (state: RootState) => T,
-  equalityFn = isEqual
+  equalityFn = isEqual,
 ): T {
   return useReduxSelector<RootState, T>(selector, equalityFn);
 }
@@ -49,9 +49,9 @@ function useAnimatedState<T>(
   initialValue: T,
   config: ConfigAnimated = {
     duration: 500,
-    creationProp: "opacity",
-    type: "easeInEaseOut",
-  }
+    creationProp: 'opacity',
+    type: 'easeInEaseOut',
+  },
 ): [T, Dispatch<SetStateAction<T>>] {
   const [value, setValue] = useState<T>(initialValue);
 
@@ -61,12 +61,12 @@ function useAnimatedState<T>(
         LayoutAnimation.create(
           config.duration,
           LayoutAnimation.Types[config.type],
-          LayoutAnimation.Properties[config.creationProp]
-        )
+          LayoutAnimation.Properties[config.creationProp],
+        ),
       );
       setValue(newValue);
     },
-    [config]
+    [config],
   );
   return [value, onSetState];
 }
@@ -108,7 +108,7 @@ function useNetWorkStatus(): NetInfoTuple {
 }
 
 type UseArrayActions<T> = {
-  setValue: UseStateFull<T[]>["setValue"];
+  setValue: UseStateFull<T[]>['setValue'];
   add: (value: T | T[]) => void;
   push: (value: T | T[]) => void;
   pop: () => void;
@@ -121,7 +121,7 @@ type UseArrayActions<T> = {
       ? string
       : T extends { id: number }
       ? number
-      : unknown
+      : unknown,
   ) => void;
   modifyById: (
     id: T extends { id: string }
@@ -129,7 +129,7 @@ type UseArrayActions<T> = {
       : T extends { id: number }
       ? number
       : unknown,
-    newValue: Partial<T>
+    newValue: Partial<T>,
   ) => void;
   removeIndex: (index: number) => void;
 };
@@ -137,52 +137,52 @@ type UseArray<T = any> = [T[], UseArrayActions<T>];
 function useArray<T = any>(initial: T[]): UseArray<T> {
   const [value, setValue] = useState(initial);
 
-  const push = useCallback((a) => {
-    setValue((v) => [...v, ...(Array.isArray(a) ? a : [a])]);
+  const push = useCallback(a => {
+    setValue(v => [...v, ...(Array.isArray(a) ? a : [a])]);
   }, []);
 
   const unshift = useCallback(
-    (a) => setValue((v) => [...(Array.isArray(a) ? a : [a]), ...v]),
-    []
+    a => setValue(v => [...(Array.isArray(a) ? a : [a]), ...v]),
+    [],
   );
 
-  const pop = useCallback(() => setValue((v) => v.slice(0, -1)), []);
+  const pop = useCallback(() => setValue(v => v.slice(0, -1)), []);
 
-  const shift = useCallback(() => setValue((v) => v.slice(1)), []);
+  const shift = useCallback(() => setValue(v => v.slice(1)), []);
 
   const move = useCallback(
     (from: number, to: number) =>
-      setValue((it) => {
+      setValue(it => {
         const copy = it.slice();
         copy.splice(to < 0 ? copy.length + to : to, 0, copy.splice(from, 1)[0]);
         return copy;
       }),
-    []
+    [],
   );
 
   const clear = useCallback(() => setValue(() => []), []);
 
   const removeById = useCallback(
-    (id) => setValue((arr) => arr.filter((v: any) => v && v.id !== id)),
-    []
+    id => setValue(arr => arr.filter((v: any) => v && v.id !== id)),
+    [],
   );
 
   const removeIndex = useCallback(
-    (index) =>
-      setValue((v) => {
+    index =>
+      setValue(v => {
         const copy = v.slice();
         copy.splice(index, 1);
         return copy;
       }),
-    []
+    [],
   );
 
   const modifyById = useCallback(
     (id, newValue) =>
-      setValue((arr) =>
-        arr.map((v: any) => (v.id === id ? { ...v, ...newValue } : v))
+      setValue(arr =>
+        arr.map((v: any) => (v.id === id ? { ...v, ...newValue } : v)),
       ),
-    []
+    [],
   );
 
   const actions = useMemo(
@@ -209,7 +209,7 @@ function useArray<T = any>(initial: T[]): UseArray<T> {
       removeIndex,
       pop,
       shift,
-    ]
+    ],
   );
   return [value, actions];
 }
@@ -224,13 +224,13 @@ type UseBoolean = [boolean, UseBooleanActions];
 function useBoolean(initial: boolean): UseBoolean {
   const [value, setValue] = useState<boolean>(initial);
 
-  const toggle = useCallback(() => setValue((v) => !v), []);
+  const toggle = useCallback(() => setValue(v => !v), []);
   const setTrue = useCallback(() => setValue(true), []);
   const setFalse = useCallback(() => setValue(false), []);
 
   const actions = useMemo(
     () => ({ setValue, toggle, setTrue, setFalse }),
-    [setFalse, setTrue, toggle]
+    [setFalse, setTrue, toggle],
   );
 
   return useMemo(() => [value, actions], [actions, value]);
@@ -254,13 +254,13 @@ function useNumber(
     lowerLimit?: number;
     loop?: boolean;
     step?: number;
-  } = {}
+  } = {},
 ): UseNumber {
   const [value, setValue] = useState<number>(initial);
 
   const decrease = useCallback(
     (d?: number) => {
-      setValue((aValue) => {
+      setValue(aValue => {
         const decreaseBy = d !== undefined ? d : step;
         const nextValue = aValue - decreaseBy;
 
@@ -277,12 +277,12 @@ function useNumber(
         return nextValue;
       });
     },
-    [loop, lowerLimit, step, upperLimit]
+    [loop, lowerLimit, step, upperLimit],
   );
 
   const increase = useCallback(
     (i?: number) => {
-      setValue((aValue) => {
+      setValue(aValue => {
         const increaseBy = i !== undefined ? i : step;
         const nextValue = aValue + increaseBy;
 
@@ -298,7 +298,7 @@ function useNumber(
         return nextValue;
       });
     },
-    [initial, loop, step, upperLimit]
+    [initial, loop, step, upperLimit],
   );
 
   const actions = useMemo(
@@ -307,7 +307,7 @@ function useNumber(
       increase,
       decrease,
     }),
-    [decrease, increase]
+    [decrease, increase],
   );
 
   return [value, actions];
@@ -321,7 +321,7 @@ function useStateFull<T = any>(initial: T): UseStateFull<T> {
       value,
       setValue,
     }),
-    [value]
+    [value],
   );
 }
 
@@ -341,21 +341,21 @@ type UseSetArrayStateAction<T extends object> = React.Dispatch<
 type UseSetStateArray<T extends object> = [
   T,
   UseSetArrayStateAction<T>,
-  () => void
+  () => void,
 ];
 function useSetStateArray<T extends object>(
-  initialValue: T
+  initialValue: T,
 ): UseSetStateArray<T> {
   const [value, setValue] = useState<T>(initialValue);
 
   const setState = useCallback(
     (v: SetStateAction<Partial<T>>) => {
-      return setValue((oldValue) => ({
+      return setValue(oldValue => ({
         ...oldValue,
-        ...(typeof v === "function" ? v(oldValue) : v),
+        ...(typeof v === 'function' ? v(oldValue) : v),
       }));
     },
-    [setValue]
+    [setValue],
   );
 
   const resetState = useCallback(() => setValue(initialValue), [initialValue]);
@@ -380,7 +380,7 @@ function useSetState<T extends object>(initialValue: T): UseSetState<T> {
       resetState,
       state,
     }),
-    [setState, resetState, state]
+    [setState, resetState, state],
   );
 }
 
@@ -390,17 +390,17 @@ function useStyle<T>(style: (theme: AppTheme) => T): T {
 }
 
 function useAsyncState<T>(
-  initialValue: T
+  initialValue: T,
 ): [
   T,
-  (newValue: SetStateAction<T>, callback?: (newState: T) => void) => void
+  (newValue: SetStateAction<T>, callback?: (newState: T) => void) => void,
 ] {
   const [state, setState] = useState(initialValue);
   const _callback = useRef<(newState: T) => void>();
 
   const _setState = (
     newValue: SetStateAction<T>,
-    callback?: (newState: T) => void
+    callback?: (newState: T) => void,
   ) => {
     if (callback) {
       _callback.current = callback;
@@ -409,7 +409,7 @@ function useAsyncState<T>(
   };
 
   useEffect(() => {
-    if (typeof _callback.current === "function") {
+    if (typeof _callback.current === 'function') {
       _callback.current(state);
       _callback.current = undefined;
     }
@@ -448,28 +448,28 @@ function useIsKeyboardShown() {
     let keyboardWillHide: EmitterSubscription;
     let keyboardDidShow: EmitterSubscription;
     let keyboardDidHide: EmitterSubscription;
-    if (Platform.OS === "ios") {
+    if (Platform.OS === 'ios') {
       keyboardWillShow = Keyboard.addListener(
-        "keyboardWillShow",
-        handleKeyboardShow
+        'keyboardWillShow',
+        handleKeyboardShow,
       );
       keyboardWillHide = Keyboard.addListener(
-        "keyboardWillHide",
-        handleKeyboardHide
+        'keyboardWillHide',
+        handleKeyboardHide,
       );
     } else {
       keyboardDidShow = Keyboard.addListener(
-        "keyboardDidShow",
-        handleKeyboardShow
+        'keyboardDidShow',
+        handleKeyboardShow,
       );
       keyboardDidHide = Keyboard.addListener(
-        "keyboardDidHide",
-        handleKeyboardHide
+        'keyboardDidHide',
+        handleKeyboardHide,
       );
     }
 
     return () => {
-      if (Platform.OS === "ios") {
+      if (Platform.OS === 'ios') {
         keyboardWillShow.remove();
         keyboardWillHide.remove();
       } else {
@@ -485,7 +485,7 @@ function useIsKeyboardShown() {
 function useDisableBackHandler(disabled: boolean, callback?: () => void) {
   // function
   const onBackPress = useCallback(() => {
-    if (onCheckType(callback, "function")) {
+    if (onCheckType(callback, 'function')) {
       callback();
     }
     return true;
@@ -493,12 +493,12 @@ function useDisableBackHandler(disabled: boolean, callback?: () => void) {
 
   useEffect(() => {
     if (disabled) {
-      BackHandler.addEventListener("hardwareBackPress", onBackPress);
+      BackHandler.addEventListener('hardwareBackPress', onBackPress);
     } else {
-      BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
     }
     return () =>
-      BackHandler.removeEventListener("hardwareBackPress", onBackPress);
+      BackHandler.removeEventListener('hardwareBackPress', onBackPress);
   }, [disabled, onBackPress]);
 }
 
@@ -540,7 +540,7 @@ function useMessageYupTranslation(msg?: string) {
   }, [msg]);
 
   return useMemo<string | undefined>(() => {
-    if (!parsed && typeof msg === "string") {
+    if (!parsed && typeof msg === 'string') {
       return t(msg);
     }
     if (!parsed) {
@@ -549,9 +549,9 @@ function useMessageYupTranslation(msg?: string) {
 
     const optionsTx: Record<string, string> = {};
     if (parsed.optionsTx) {
-      Object.keys(parsed.optionsTx).forEach((key) => {
+      Object.keys(parsed.optionsTx).forEach(key => {
         optionsTx[key] = t(
-          String((parsed.optionsTx as Record<string, string | number>)[key])
+          String((parsed.optionsTx as Record<string, string | number>)[key]),
         );
       });
     }
@@ -577,7 +577,7 @@ function useMessageYupTranslation(msg?: string) {
  * ```
  */
 const useEventCallback = <Fn extends (...args: any[]) => ReturnType<Fn>>(
-  func: Fn
+  func: Fn,
 ) => {
   const callbackRef = useRef<(...args: Parameters<Fn>) => ReturnType<Fn>>();
 

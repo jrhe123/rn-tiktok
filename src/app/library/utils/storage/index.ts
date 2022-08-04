@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { MMKV } from "react-native-mmkv";
+import { MMKV } from 'react-native-mmkv';
 
-const appName = "APP_Name";
-const AppKey = "7268428d-d814-4eca-8829-3dbe0e2eaa7a";
+const appName = 'APP_Name';
+const AppKey = '7268428d-d814-4eca-8829-3dbe0e2eaa7a';
 
 export const AppStorage = new MMKV({
   id: `user-${appName}-storage`,
@@ -46,7 +46,7 @@ export function saveString(key: string, value: string) {
 export function load(key: string) {
   try {
     const almostThere = AppStorage.getString(key);
-    return typeof almostThere === "string" ? JSON.parse(almostThere) : null;
+    return typeof almostThere === 'string' ? JSON.parse(almostThere) : null;
   } catch {
     return null;
   }
@@ -88,11 +88,11 @@ export const reduxPersistStorage: Storage = {
     AppStorage.set(key, value);
     return Promise.resolve(true);
   },
-  getItem: (key) => {
+  getItem: key => {
     const value = AppStorage.getString(key);
     return Promise.resolve(value);
   },
-  removeItem: (key) => {
+  removeItem: key => {
     AppStorage.delete(key);
     return Promise.resolve();
   },

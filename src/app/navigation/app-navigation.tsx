@@ -1,26 +1,26 @@
-import React, { useEffect } from "react";
-import { StatusBar } from "react-native";
+import React, { useEffect } from 'react';
+import { StatusBar } from 'react-native';
 
-import { dispatch, RXStore } from "@common";
+import { dispatch, RXStore } from '@common';
 import {
   hideLoading,
   PortalHost,
   ProgressDialog,
   showLoading,
   SnackBar,
-} from "@components";
-import { ImageTransition } from "@components/light-box/image-transition";
-import { useSelector } from "@hooks";
-import { AppModule } from "@native-module";
-import { navigationRef } from "@navigation/navigation-service";
-import { RootNavigation } from "@navigation/root-navigator";
-import { NavigationContainer } from "@react-navigation/native";
-import { appActions } from "@redux-slice";
-import { MyAppTheme } from "@theme";
+} from '@components';
+import { ImageTransition } from '@components/light-box/image-transition';
+import { useSelector } from '@hooks';
+import { AppModule } from '@native-module';
+import { navigationRef } from '@navigation/navigation-service';
+import { RootNavigation } from '@navigation/root-navigator';
+import { NavigationContainer } from '@react-navigation/native';
+import { appActions } from '@redux-slice';
+import { MyAppTheme } from '@theme';
 
 export const AppContainer = () => {
   // state
-  const { loadingApp, showDialog, theme } = useSelector((x) => x.app);
+  const { loadingApp, showDialog, theme } = useSelector(x => x.app);
 
   // effect
   useEffect(() => {
@@ -36,13 +36,13 @@ export const AppContainer = () => {
   }, [showDialog]);
 
   useEffect(() => {
-    if (theme === "dark") {
+    if (theme === 'dark') {
       AppModule.setIQKeyboardOption({
-        keyboardAppearance: "dark",
+        keyboardAppearance: 'dark',
       });
     } else {
       AppModule.setIQKeyboardOption({
-        keyboardAppearance: "light",
+        keyboardAppearance: 'light',
       });
     }
   }, [theme]);
@@ -51,10 +51,10 @@ export const AppContainer = () => {
   return (
     <NavigationContainer ref={navigationRef} theme={MyAppTheme[theme]}>
       <>
-        <StatusBar translucent backgroundColor={"transparent"} />
+        <StatusBar translucent backgroundColor={'transparent'} />
         {!loadingApp && (
           <>
-            <PortalHost name={"AppModal"} />
+            <PortalHost name={'AppModal'} />
             <RootNavigation />
             <ProgressDialog />
             <SnackBar />

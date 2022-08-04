@@ -1,7 +1,7 @@
-import { SLICE_NAME } from "@config/type";
-import { AppState } from "@model/app";
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { ThemeType } from "@theme";
+import { SLICE_NAME } from '@config/type';
+import { AppState } from '@model/app';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { ThemeType } from '@theme';
 
 const initialAppState: AppState = {
   internetState: true,
@@ -12,7 +12,7 @@ const initialAppState: AppState = {
    */
   loadingApp: false,
   showDialog: false,
-  theme: "default",
+  theme: 'default',
 };
 
 const appSlice = createSlice({
@@ -31,19 +31,19 @@ const appSlice = createSlice({
     onSetAppTheme: (state, { payload }: PayloadAction<ThemeType>) => {
       state.theme = payload;
     },
-    onLoadApp: (state) => {
+    onLoadApp: state => {
       state.loadingApp = true;
     },
-    onLoadAppEnd: (state) => {
+    onLoadAppEnd: state => {
       state.loadingApp = false;
     },
-    onStartProcess: (state) => {
+    onStartProcess: state => {
       state.showDialog = true;
     },
-    onEndProcess: (state) => {
+    onEndProcess: state => {
       state.showDialog = false;
     },
-    onLogout: (state) => {
+    onLogout: state => {
       state.token = undefined;
       state.profile = {};
     },

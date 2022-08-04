@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { appActions } from "@redux-slice";
-import { createListenerMiddleware } from "@reduxjs/toolkit";
+import { appActions } from '@redux-slice';
+import { createListenerMiddleware } from '@reduxjs/toolkit';
 
 export const listenerMiddleware = createListenerMiddleware();
 const startAppListening = listenerMiddleware.startListening;
