@@ -1,6 +1,7 @@
 import { subscribeActionMiddleware } from '@common';
 import { configureStore } from '@reduxjs/toolkit';
 import { allReducer } from '@store/all-reducers';
+import logger from 'redux-logger';
 
 import { listenerMiddleware } from '../listener';
 
@@ -16,7 +17,9 @@ import { listenerMiddleware } from '../listener';
 
 const devMode = __DEV__;
 const middleware = [subscribeActionMiddleware];
-
+if (devMode) {
+  middleware.push(logger);
+}
 export const store = configureStore({
   reducer: allReducer,
   devTools: devMode,

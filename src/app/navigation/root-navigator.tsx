@@ -4,6 +4,7 @@ import BootSplash from 'react-native-bootsplash';
 
 import { Home } from '@features/authentication/home';
 import { Login } from '@features/un-authentication/login';
+import { Welcome } from '@features/un-authentication/welcome';
 import { useSelector } from '@hooks';
 import { AppModule } from '@native-module';
 import { APP_SCREEN, RootStackParamList } from '@navigation/screen-types';
@@ -19,7 +20,7 @@ export const RootNavigation = () => {
   useEffect(() => {
     const id = setTimeout(() => {
       BootSplash.hide({ fade: true });
-    }, 1000);
+    }, 3000);
     return () => clearTimeout(id);
   }, []);
 
@@ -39,6 +40,7 @@ export const RootNavigation = () => {
             animationTypeForReplace: 'pop',
             gestureEnabled: false,
           }}>
+          <RootStack.Screen name={APP_SCREEN.WELCOME} component={Welcome} />
           <RootStack.Screen name={APP_SCREEN.LOGIN} component={Login} />
         </RootStack.Group>
       ) : (

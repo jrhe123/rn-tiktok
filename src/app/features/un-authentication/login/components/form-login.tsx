@@ -27,7 +27,6 @@ export const FormLogin = ({ onSubmit }: FormLoginProps) => {
     <FormProvider {...formMethod}>
       <Input<FormLoginType> name={'email'} label={'Email'} />
       <Input<FormLoginType> name={'password'} label={'Password'} />
-
       <Button title={'Submit'} onPress={onSubmitKey} />
     </FormProvider>
   );

@@ -19,6 +19,9 @@ const loginSlice = createSlice({
     onStart: () => {
       console.log('onStart');
     },
+    loginSuccess: () => {
+      console.log('loginSuccess hit');
+    },
   },
 });
 
