@@ -136,7 +136,7 @@ const SecondP = ({
                 style={{
                   backgroundColor: op.selected ? OPTION_BTN_COLOR : 'white',
                   paddingHorizontal: 13,
-                  paddingVertical: 15,
+                  paddingVertical: 12,
                   borderRadius: 24,
                   borderWidth: 0.5,
                   borderColor: op.selected ? OPTION_BTN_COLOR : '#ccc',
