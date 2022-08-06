@@ -2,18 +2,22 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import {
   Alert,
   Animated,
+  Dimensions,
   NativeScrollEvent,
   NativeSyntheticEvent,
+  ScrollView,
 } from 'react-native';
 
 import isEqual from 'react-fast-compare';
 import { Extrapolate } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
+import { ImageTypes } from '@assets/image';
 import { Block, Button, LocalImage, Screen, Text } from '@components';
 
 import { Option } from './type';
 
+const { width } = Dimensions.get('window');
 const SCROLL_THROTTLE = 120;
 const ANIMATED_HEADER_HEIGHT = 90;
 const OPTION_BTN_COLOR = '#E8445A';
@@ -42,6 +46,14 @@ const INTEREST_OPTIONS: Option[] = [
   { title: 'Life Hacks', selected: false },
   { title: 'Dance', selected: false },
 ];
+const GIF_IMAGES: ImageTypes[] = [
+  'welcome_dog_tiktok',
+  'welcome_cat_tiktok',
+  'welcome_bird_tiktok',
+  'welcome_seal_tiktok',
+];
+const CAROUSEL_WIDTH = 180;
+const CAROUSEL_HEIGHT = 360;
 
 const FirstP = () => {
   return (
@@ -256,7 +268,28 @@ const SecondP = ({
   );
 };
 
-const ThirdP = () => {
+const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
+  const _refRoot = useRef<ScrollView>(null);
+  const [index, setIndex] = useState<number>(0);
+
+  useEffect(() => {
+    const id = setInterval(() => {
+      setIndex(prevIndex => prevIndex + 1);
+    }, 5000);
+    return () => clearInterval(id);
+  }, []);
+
+  useEffect(() => {
+    const scrollIndex = index % GIF_IMAGES.length;
+    if (_refRoot.current) {
+      _refRoot.current?.scrollTo({
+        x: 0,
+        y: (CAROUSEL_HEIGHT + 20) * scrollIndex,
+        animated: true,
+      });
+    }
+  }, [index]);
+
   return (
     <Block block paddingTop={0} paddingHorizontal={15}>
       <Screen
@@ -275,19 +308,62 @@ const ThirdP = () => {
             share.
           </Text>
         </Block>
-        <Block pointerEvents={'none'} width={140} height={140}>
-          <LocalImage resizeMode={'contain'} source={'welcome_dog_tiktok'} />
-        </Block>
+        {/* carousel */}
         <Block
-          pointerEvents={'none'}
+          marginTop={40}
+          alignItems={'center'}
+          height={CAROUSEL_HEIGHT}
+          position="relative">
+          <Block
+            width={CAROUSEL_WIDTH}
+            height={CAROUSEL_HEIGHT}
+            position="absolute"
+            top={0}
+            left={width / 2 - 35 - CAROUSEL_WIDTH / 2}
+            zIndex={99}>
+            <LocalImage resizeMode={'contain'} source={'welcome_iphone'} />
+          </Block>
+          <ScrollView
+            ref={_refRoot}
+            style={{
+              width: CAROUSEL_WIDTH,
+              height: CAROUSEL_HEIGHT,
+              borderRadius: 18,
+            }}
+            pagingEnabled>
+            {GIF_IMAGES.map((img, index) => (
+              <Block
+                key={index}
+                width={CAROUSEL_WIDTH - 10}
+                height={CAROUSEL_HEIGHT}
+                borderRadius={18}
+                overflow={'hidden'}>
+                <LocalImage resizeMode={'cover'} source={img} />
+              </Block>
+            ))}
+          </ScrollView>
+        </Block>
+        {/* bottom button */}
+        <Block
+          block
           position={'absolute'}
           left={0}
           bottom={30}
           width={'100%'}
-          height={30}>
-          <Text color={'black'} fontSize={15} center>
-            bottom
-          </Text>
+          height={50}>
+          <Button
+            style={{
+              backgroundColor: OPTION_BTN_COLOR,
+              paddingHorizontal: 13,
+              paddingVertical: 15,
+              flex: 1,
+              height: 50,
+            }}
+            onPress={handleConfirm}>
+            <Text color={'white'} fontSize={15} center>
+              Start watching
+            </Text>
+          </Button>
         </Block>
       </Screen>
     </Block>
@@ -318,7 +394,7 @@ const WelcomeComponent = () => {
       />
     );
   } else if (step === 3) {
-    return <ThirdP />;
+    return <ThirdP handleConfirm={() => setStep(4)} />;
   }
   return null;
 };

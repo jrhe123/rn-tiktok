@@ -6,6 +6,7 @@ export const images = {
   welcome_dog_tiktok: require('./source/welcome_dog_tiktok.gif'),
   welcome_bird_tiktok: require('./source/welcome_bird_tiktok.gif'),
   welcome_seal_tiktok: require('./source/welcome_seal_tiktok.gif'),
+  welcome_iphone: require('./source/welcome_iphone.png'),
 };
 
 export type ImageTypes = keyof typeof images;
