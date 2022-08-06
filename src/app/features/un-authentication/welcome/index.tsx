@@ -1,5 +1,6 @@
-import React, { memo, useRef, useState, useCallback, useEffect } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import {
+  Alert,
   Animated,
   NativeScrollEvent,
   NativeSyntheticEvent,
@@ -11,10 +12,7 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Block, Button, LocalImage, Screen, Text } from '@components';
 
-interface Option {
-  title: string;
-  selected: boolean;
-}
+import { Option } from './type';
 
 const SCROLL_THROTTLE = 120;
 const ANIMATED_HEADER_HEIGHT = 90;
@@ -81,9 +79,11 @@ const FirstP = () => {
 const SecondP = ({
   options,
   handleSetOptions,
+  handleConfirm,
 }: {
   options: Option[];
   handleSetOptions: (options: Option[]) => void;
+  handleConfirm: () => void;
 }) => {
   // animated header
   const insets = useSafeAreaInsets();
@@ -94,6 +94,25 @@ const SecondP = ({
     outputRange: [ANIMATED_HEADER_HEIGHT + insets.top, insets.top + 44],
     extrapolate: Extrapolate.CLAMP,
   });
+  //
+  useEffect(() => {
+    const id = setTimeout(() => {
+      Alert.alert(
+        '',
+        'By tapping "Agree and continue", you agree to our Terms of Service and acknowledge that you have read our Privacy Policy to learn how we collect, use, and share your data',
+        [
+          {
+            text: 'Agree and continue',
+            onPress: () => {
+              console.log('agreed');
+            },
+            style: 'default',
+          },
+        ],
+      );
+    }, 3000);
+    return () => clearTimeout(id);
+  }, []);
   //
   const enableInterests = options.some(op => op.selected);
   return (
@@ -213,7 +232,7 @@ const SecondP = ({
             flex: 1,
             height: 50,
           }}
-          onPress={() => {}}>
+          onPress={handleConfirm}>
           <Text color={'black'} fontSize={15} center>
             Skip
           </Text>
@@ -227,12 +246,47 @@ const SecondP = ({
             height: 50,
           }}
           disabled={!enableInterests}
-          onPress={() => {}}>
+          onPress={handleConfirm}>
           <Text color={'white'} fontSize={15} center>
             Next
           </Text>
         </Button>
       </Block>
+    </Block>
+  );
+};
+
+const ThirdP = () => {
+  return (
+    <Block block paddingTop={0} paddingHorizontal={15}>
+      <Screen
+        statusBarStyle="dark-content"
+        bottomInsetColor="transparent"
+        style={{ paddingVertical: 0, paddingHorizontal: 10 }}
+        backgroundColor={'transparent'}>
+        <Block paddingVertical={15} direction={'column'}>
+          <Text fontSize={36} fontWeight="bold">
+            Swipe up
+          </Text>
+        </Block>
+        <Block paddingVertical={6} direction={'column'} paddingRight={30}>
+          <Text fontSize={18} lineHeight={24}>
+            Videos are personalized for you based on what you watch, like, and
+            share.
+          </Text>
+        </Block>
+        <Block
+          pointerEvents={'none'}
+          position={'absolute'}
+          left={0}
+          bottom={30}
+          width={'100%'}
+          height={30}>
+          <Text color={'black'} fontSize={15} center>
+            bottom
+          </Text>
+        </Block>
+      </Screen>
     </Block>
   );
 };
@@ -243,21 +297,25 @@ const WelcomeComponent = () => {
 
   useEffect(() => {
     const id = setTimeout(() => {
-      setStep(2);
+      if (step === 1) {
+        setStep(2);
+      }
     }, 3000);
     return () => clearTimeout(id);
   }, []);
 
   if (step === 1) {
     return <FirstP />;
-  }
-  if (step === 2) {
+  } else if (step === 2) {
     return (
       <SecondP
         options={options}
         handleSetOptions={options => setOptions(options)}
+        handleConfirm={() => setStep(3)}
       />
     );
+  } else if (step === 3) {
+    return <ThirdP />;
   }
   return null;
 };
