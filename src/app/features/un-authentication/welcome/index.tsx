@@ -275,6 +275,9 @@ const ThirdP = () => {
             share.
           </Text>
         </Block>
+        <Block pointerEvents={'none'} width={140} height={140}>
+          <LocalImage resizeMode={'contain'} source={'welcome_dog_tiktok'} />
+        </Block>
         <Block
           pointerEvents={'none'}
           position={'absolute'}
