@@ -1,6 +1,13 @@
 import React, { memo, useRef, useState, useCallback, useEffect } from 'react';
+import {
+  Animated,
+  NativeScrollEvent,
+  NativeSyntheticEvent,
+} from 'react-native';
 
 import isEqual from 'react-fast-compare';
+import { Extrapolate } from 'react-native-reanimated';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { Block, Button, LocalImage, Screen, Text } from '@components';
 
@@ -9,7 +16,8 @@ interface Option {
   selected: boolean;
 }
 
-const SCROLL_THROTTLE = 90;
+const SCROLL_THROTTLE = 120;
+const ANIMATED_HEADER_HEIGHT = 90;
 const OPTION_BTN_COLOR = '#E8445A';
 const INTEREST_OPTIONS: Option[] = [
   { title: 'Comedy', selected: false },
@@ -77,19 +85,34 @@ const SecondP = ({
   options: Option[];
   handleSetOptions: (options: Option[]) => void;
 }) => {
-  const [showHeader, setShowHeader] = useState<boolean>(false);
-  const enable = options.some(op => op.selected);
+  // animated header
+  const insets = useSafeAreaInsets();
+  const offset = useRef(new Animated.Value(0)).current;
+  const [opacity, setOpacity] = useState<number>(0);
+  const headerHeight = offset.interpolate({
+    inputRange: [0, ANIMATED_HEADER_HEIGHT + insets.top],
+    outputRange: [ANIMATED_HEADER_HEIGHT + insets.top, insets.top + 44],
+    extrapolate: Extrapolate.CLAMP,
+  });
+  //
+  const enableInterests = options.some(op => op.selected);
   return (
     <Block block>
+      {/* interests list */}
       <Block block paddingTop={0} paddingBottom={90} paddingHorizontal={15}>
         <Screen
-          onScroll={e => {
-            if (e.nativeEvent.contentOffset.y >= SCROLL_THROTTLE) {
-              setShowHeader(true);
-            } else {
-              setShowHeader(false);
-            }
-          }}
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: offset } } }],
+            {
+              useNativeDriver: false,
+              listener: (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+                const offsetY = e.nativeEvent.contentOffset.y;
+                const offsetYAbs = offsetY > 0 ? offsetY : 0;
+                const minVal = Math.min(offsetYAbs, SCROLL_THROTTLE);
+                setOpacity(minVal / SCROLL_THROTTLE);
+              },
+            },
+          )}
           scroll
           statusBarStyle="dark-content"
           bottomInsetColor="transparent"
@@ -137,30 +160,32 @@ const SecondP = ({
           </Block>
         </Screen>
       </Block>
-      {/* header */}
-      {showHeader && (
+      {/* hidden header */}
+      <Animated.View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          height: headerHeight,
+          backgroundColor: '#F2F2F2',
+          borderBottomColor: '#ccc',
+          borderWidth: 1,
+          borderStyle: 'solid',
+          opacity,
+        }}>
         <Block
           block
-          style={{
-            backgroundColor: '#F2F2F2',
-          }}
-          paddingBottom={15}
-          paddingHorizontal={15}
-          position={'absolute'}
-          left={0}
-          top={0}
-          height={90}
-          width={'100%'}
-          borderColor={'#ccc'}
-          borderBottomWidth={0.5}
-          borderStyle={'solid'}
-          direction="row">
-          <Text color={'black'} fontSize={15} center>
+          paddingTop={42}
+          justifyContent={'center'}
+          alignItems={'center'}>
+          <Text fontSize={18} fontWeight="bold">
             Choose your interests
           </Text>
         </Block>
-      )}
-      {/* footer */}
+      </Animated.View>
+      {/* fixed footer */}
       <Block
         block
         style={{
@@ -195,13 +220,13 @@ const SecondP = ({
         </Button>
         <Button
           style={{
-            backgroundColor: enable ? OPTION_BTN_COLOR : '#ccc',
+            backgroundColor: enableInterests ? OPTION_BTN_COLOR : '#ccc',
             paddingHorizontal: 13,
             paddingVertical: 15,
             flex: 1,
             height: 50,
           }}
-          disabled={!enable}
+          disabled={!enableInterests}
           onPress={() => {}}>
           <Text color={'white'} fontSize={15} center>
             Next
