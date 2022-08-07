@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import BootSplash from 'react-native-bootsplash';
 
 import { Home } from '@features/authentication/home';
+import { Detail } from '@features/un-authentication/detail';
 import { Login } from '@features/un-authentication/login';
 import { Welcome } from '@features/un-authentication/welcome';
 import { useSelector } from '@hooks';
@@ -14,7 +15,7 @@ const RootStack = createStackNavigator<RootStackParamList>();
 
 export const RootNavigation = () => {
   // state
-  const token = useSelector(x => x.app.token);
+  const { token, loadingApp } = useSelector(state => state.app);
 
   // effect
   useEffect(() => {
@@ -42,6 +43,7 @@ export const RootNavigation = () => {
           }}>
           <RootStack.Screen name={APP_SCREEN.WELCOME} component={Welcome} />
           <RootStack.Screen name={APP_SCREEN.LOGIN} component={Login} />
+          <RootStack.Screen name={APP_SCREEN.DETAIL} component={Detail} />
         </RootStack.Group>
       ) : (
         <RootStack.Group

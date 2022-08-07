@@ -15,10 +15,19 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ImageTypes } from '@assets/image';
 import { Block, Button, Icon, LocalImage, Screen, Text } from '@components';
+import {
+  navigate,
+  navigateMerge,
+  goBack,
+} from '@navigation/navigation-service';
+import { APP_SCREEN, RootStackParamList } from '@navigation/screen-types';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { Option } from './type';
 
 const { width } = Dimensions.get('window');
+const LOGO_SIZE = 140;
 const SCROLL_THROTTLE = 120;
 const ANIMATED_HEADER_HEIGHT = 90;
 const OPTION_BTN_COLOR = '#E8445A';
@@ -58,7 +67,26 @@ const CAROUSEL_HEIGHT = 360;
 const CAROUSEL_HAND_SIZE = 72;
 const CAROUSEL_TOUCH_POINT_SIZE = 36;
 
+const aniLogoValue = new Animated.Value(0);
 const FirstP = () => {
+  const translateY = aniLogoValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [0, -10, 0],
+  });
+  const opacity = aniLogoValue.interpolate({
+    inputRange: [0, 0.5, 1],
+    outputRange: [0, 0.5, 1],
+  });
+  useEffect(() => {
+    // animated logo
+    Animated.timing(aniLogoValue, {
+      toValue: 1,
+      delay: 500,
+      duration: 500,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  }, []);
   return (
     <Block block paddingTop={0} paddingHorizontal={15}>
       <Screen
@@ -77,15 +105,20 @@ const FirstP = () => {
             Your Day
           </Text>
         </Block>
-        <Block
-          pointerEvents={'none'}
-          position={'absolute'}
-          left={0}
-          bottom={30}
-          width={140}
-          height={140}>
-          <LocalImage resizeMode={'contain'} source={'welcome_tiktok_logo'} />
-        </Block>
+        <Animated.View
+          style={{
+            transform: [{ translateY }],
+            opacity,
+            width: LOGO_SIZE,
+            height: LOGO_SIZE,
+            position: 'absolute',
+            left: 0,
+            bottom: 30,
+          }}>
+          <Block pointerEvents={'none'} width={140} height={140}>
+            <LocalImage resizeMode={'contain'} source={'welcome_tiktok_logo'} />
+          </Block>
+        </Animated.View>
       </Screen>
     </Block>
   );
@@ -460,7 +493,12 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
   );
 };
 
+type unauthScreenNavigationType = StackNavigationProp<
+  RootStackParamList,
+  APP_SCREEN.DETAIL
+>;
 const WelcomeComponent = () => {
+  const nav = useNavigation<unauthScreenNavigationType>();
   const [step, setStep] = useState<number>(1);
   const [options, setOptions] = useState<Option[]>(INTEREST_OPTIONS);
 
@@ -469,6 +507,12 @@ const WelcomeComponent = () => {
       if (step === 1) {
         setStep(2);
       }
+      // nav.navigate(APP_SCREEN.DETAIL, {
+      //   id: 999,
+      // });
+      // navigate(APP_SCREEN.DETAIL, {
+      //   id: 996,
+      // });
     }, 3000);
     return () => clearTimeout(id);
   }, []);

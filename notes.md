@@ -17,3 +17,8 @@ https://blog.logrocket.com/redux-toolkits-new-listener-middleware-vs-redux-saga/
 
 <!-- animated header -->
 https://blog.jscrambler.com/how-to-animate-a-header-view-on-scroll-with-react-native-animated
+
+<!-- navigation -->
+https://www.youtube.com/watch?v=MVKkMr7FSPA&t=268s
+
+https://reactnavigation.org/docs/use-navigation
