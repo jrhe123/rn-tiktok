@@ -10,6 +10,7 @@ import {
 } from 'react-native';
 
 import isEqual from 'react-fast-compare';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import { Extrapolate } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
@@ -68,7 +69,7 @@ const CAROUSEL_HAND_SIZE = 72;
 const CAROUSEL_TOUCH_POINT_SIZE = 36;
 
 const aniLogoValue = new Animated.Value(0);
-const FirstP = () => {
+const FirstP = ({ handleConfirm }: { handleConfirm: () => void }) => {
   const translateY = aniLogoValue.interpolate({
     inputRange: [0, 0.2, 1],
     outputRange: [0, -10, 0],
@@ -94,31 +95,40 @@ const FirstP = () => {
         bottomInsetColor="transparent"
         style={{ paddingVertical: 0, paddingHorizontal: 10 }}
         backgroundColor={'transparent'}>
-        <Block paddingVertical={15} direction={'column'}>
-          <Text fontSize={36} fontWeight="bold">
-            Videos to
-          </Text>
-          <Text fontSize={36} fontWeight="bold">
-            Make
-          </Text>
-          <Text fontSize={36} fontWeight="bold">
-            Your Day
-          </Text>
-        </Block>
-        <Animated.View
+        <TouchableWithoutFeedback
+          onPress={handleConfirm}
           style={{
-            transform: [{ translateY }],
-            opacity,
-            width: LOGO_SIZE,
-            height: LOGO_SIZE,
-            position: 'absolute',
-            left: 0,
-            bottom: 30,
+            height: '100%',
           }}>
-          <Block pointerEvents={'none'} width={140} height={140}>
-            <LocalImage resizeMode={'contain'} source={'welcome_tiktok_logo'} />
+          <Block paddingVertical={15} direction={'column'}>
+            <Text fontSize={36} fontWeight="bold">
+              Videos to
+            </Text>
+            <Text fontSize={36} fontWeight="bold">
+              Make
+            </Text>
+            <Text fontSize={36} fontWeight="bold">
+              Your Day
+            </Text>
           </Block>
-        </Animated.View>
+          <Animated.View
+            style={{
+              transform: [{ translateY }],
+              opacity,
+              width: LOGO_SIZE,
+              height: LOGO_SIZE,
+              position: 'absolute',
+              left: 0,
+              bottom: 30,
+            }}>
+            <Block pointerEvents={'none'} width={140} height={140}>
+              <LocalImage
+                resizeMode={'contain'}
+                source={'welcome_tiktok_logo'}
+              />
+            </Block>
+          </Animated.View>
+        </TouchableWithoutFeedback>
       </Screen>
     </Block>
   );
@@ -504,9 +514,6 @@ const WelcomeComponent = () => {
 
   useEffect(() => {
     const id = setTimeout(() => {
-      if (step === 1) {
-        setStep(2);
-      }
       // nav.navigate(APP_SCREEN.DETAIL, {
       //   id: 999,
       // });
@@ -518,7 +525,7 @@ const WelcomeComponent = () => {
   }, []);
 
   if (step === 1) {
-    return <FirstP />;
+    return <FirstP handleConfirm={() => setStep(2)} />;
   } else if (step === 2) {
     return (
       <SecondP
