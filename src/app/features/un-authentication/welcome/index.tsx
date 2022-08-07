@@ -3,6 +3,7 @@ import {
   Alert,
   Animated,
   Dimensions,
+  Easing,
   NativeScrollEvent,
   NativeSyntheticEvent,
   ScrollView,
@@ -13,7 +14,7 @@ import { Extrapolate } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ImageTypes } from '@assets/image';
-import { Block, Button, LocalImage, Screen, Text } from '@components';
+import { Block, Button, Icon, LocalImage, Screen, Text } from '@components';
 
 import { Option } from './type';
 
@@ -54,6 +55,8 @@ const GIF_IMAGES: ImageTypes[] = [
 ];
 const CAROUSEL_WIDTH = 180;
 const CAROUSEL_HEIGHT = 360;
+const CAROUSEL_HAND_SIZE = 72;
+const CAROUSEL_TOUCH_POINT_SIZE = 36;
 
 const FirstP = () => {
   return (
@@ -122,7 +125,7 @@ const SecondP = ({
           },
         ],
       );
-    }, 3000);
+    }, 1000);
     return () => clearTimeout(id);
   }, []);
   //
@@ -268,16 +271,59 @@ const SecondP = ({
   );
 };
 
+const aniHandValue = new Animated.Value(0);
 const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
   const _refRoot = useRef<ScrollView>(null);
+  const fadeAnim = useRef(new Animated.Value(0)).current;
   const [index, setIndex] = useState<number>(0);
+  const [enableBtn, setEnableBtn] = useState<boolean>(false);
+
+  const spin = aniHandValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: ['0deg', '60deg', '0deg'],
+  });
+  const translateY = aniHandValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [0, -100, 0],
+  });
+  const opacity = aniHandValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [1, 0, 0],
+  });
 
   useEffect(() => {
+    // animated hand
+    Animated.loop(
+      Animated.timing(aniHandValue, {
+        toValue: 1,
+        duration: 2000,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }),
+    ).start();
+    // carousel auto scroll
     const id = setInterval(() => {
       setIndex(prevIndex => prevIndex + 1);
-    }, 5000);
-    return () => clearInterval(id);
+    }, 2000);
+    // enable btn
+    const tid = setTimeout(() => {
+      setEnableBtn(true);
+    }, 3000);
+    return () => {
+      clearInterval(id);
+      clearTimeout(tid);
+    };
   }, []);
+
+  useEffect(() => {
+    Animated.timing(fadeAnim, {
+      delay: 3000,
+      toValue: 1,
+      duration: 500,
+      easing: Easing.bounce,
+      useNativeDriver: true,
+    }).start();
+  }, [fadeAnim]);
 
   useEffect(() => {
     const scrollIndex = index % GIF_IMAGES.length;
@@ -314,6 +360,7 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
           alignItems={'center'}
           height={CAROUSEL_HEIGHT}
           position="relative">
+          {/* iphone frame */}
           <Block
             width={CAROUSEL_WIDTH}
             height={CAROUSEL_HEIGHT}
@@ -323,6 +370,46 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
             zIndex={99}>
             <LocalImage resizeMode={'contain'} source={'welcome_iphone'} />
           </Block>
+          {/* animated touch point */}
+          <Block
+            width={CAROUSEL_TOUCH_POINT_SIZE}
+            height={CAROUSEL_TOUCH_POINT_SIZE}
+            position="absolute"
+            top={(CAROUSEL_HEIGHT - CAROUSEL_TOUCH_POINT_SIZE) / 2 + 90}
+            right={width / 2 - 35 - CAROUSEL_TOUCH_POINT_SIZE / 2}
+            zIndex={99}>
+            <Animated.View
+              style={{
+                transform: [{ translateY }],
+                opacity,
+                width: CAROUSEL_TOUCH_POINT_SIZE,
+                height: CAROUSEL_TOUCH_POINT_SIZE,
+                backgroundColor: '#ccc',
+                borderRadius: CAROUSEL_TOUCH_POINT_SIZE,
+              }}
+            />
+          </Block>
+          {/* animated hand */}
+          <Block
+            width={CAROUSEL_HAND_SIZE}
+            height={CAROUSEL_HAND_SIZE}
+            style={{
+              transform: [{ rotate: '-90deg' }],
+            }}
+            position="absolute"
+            top={(CAROUSEL_HEIGHT - CAROUSEL_HAND_SIZE) / 2 + 90}
+            right={width / 2 - 35 - CAROUSEL_WIDTH / 2 - 20}
+            zIndex={99}>
+            <Animated.View
+              style={{
+                transform: [{ rotate: spin }],
+                width: 200,
+                height: 200,
+              }}>
+              <Icon icon={'hand'} size={CAROUSEL_HAND_SIZE} />
+            </Animated.View>
+          </Block>
+          {/* actual carousel */}
           <ScrollView
             ref={_refRoot}
             style={{
@@ -344,13 +431,15 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
           </ScrollView>
         </Block>
         {/* bottom button */}
-        <Block
-          block
-          position={'absolute'}
-          left={0}
-          bottom={30}
-          width={'100%'}
-          height={50}>
+        <Animated.View
+          style={{
+            position: 'absolute',
+            left: 0,
+            bottom: 30,
+            width: '100%',
+            height: 50,
+            opacity: fadeAnim,
+          }}>
           <Button
             style={{
               backgroundColor: OPTION_BTN_COLOR,
@@ -359,12 +448,13 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
               flex: 1,
               height: 50,
             }}
+            disabled={!enableBtn}
             onPress={handleConfirm}>
             <Text color={'white'} fontSize={15} center>
               Start watching
             </Text>
           </Button>
-        </Block>
+        </Animated.View>
       </Screen>
     </Block>
   );
