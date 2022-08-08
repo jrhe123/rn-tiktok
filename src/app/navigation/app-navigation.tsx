@@ -12,12 +12,7 @@ import {
 import { ImageTransition } from '@components/light-box/image-transition';
 import { useSelector } from '@hooks';
 import { AppModule } from '@native-module';
-import {
-  navigationRef,
-  navigate,
-  navigateMerge,
-  goBack,
-} from '@navigation/navigation-service';
+import { navigationRef } from '@navigation/navigation-service';
 import { RootNavigation } from '@navigation/root-navigator';
 import { NavigationContainer } from '@react-navigation/native';
 import { appActions } from '@redux-slice';

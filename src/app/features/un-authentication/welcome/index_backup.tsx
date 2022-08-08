@@ -1,7 +1,7 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
 import {
   Alert,
-  Animated as AnimatedRN,
+  Animated,
   Dimensions,
   Easing,
   NativeScrollEvent,
@@ -11,13 +11,19 @@ import {
 
 import isEqual from 'react-fast-compare';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-import Animated, { Extrapolate, SlideOutUp } from 'react-native-reanimated';
+import { Extrapolate } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ImageTypes } from '@assets/image';
 import { Block, Button, Icon, LocalImage, Screen, Text } from '@components';
-import { navigate } from '@navigation/navigation-service';
-import { APP_SCREEN } from '@navigation/screen-types';
+import {
+  navigate,
+  navigateMerge,
+  goBack,
+} from '@navigation/navigation-service';
+import { APP_SCREEN, RootStackParamList } from '@navigation/screen-types';
+import { useNavigation } from '@react-navigation/native';
+import { StackNavigationProp } from '@react-navigation/stack';
 
 import { Option } from './type';
 
@@ -62,7 +68,7 @@ const CAROUSEL_HEIGHT = 360;
 const CAROUSEL_HAND_SIZE = 72;
 const CAROUSEL_TOUCH_POINT_SIZE = 36;
 
-const aniLogoValue = new AnimatedRN.Value(0);
+const aniLogoValue = new Animated.Value(0);
 const FirstP = ({ handleConfirm }: { handleConfirm: () => void }) => {
   const translateY = aniLogoValue.interpolate({
     inputRange: [0, 0.2, 1],
@@ -74,7 +80,7 @@ const FirstP = ({ handleConfirm }: { handleConfirm: () => void }) => {
   });
   useEffect(() => {
     // animated logo
-    AnimatedRN.timing(aniLogoValue, {
+    Animated.timing(aniLogoValue, {
       toValue: 1,
       delay: 500,
       duration: 500,
@@ -94,24 +100,18 @@ const FirstP = ({ handleConfirm }: { handleConfirm: () => void }) => {
           style={{
             height: '100%',
           }}>
-          <AnimatedRN.View
-            style={{
-              transform: [{ translateY }],
-              opacity,
-            }}>
-            <Block paddingVertical={15} direction={'column'}>
-              <Text fontSize={36} fontWeight="bold">
-                Videos to
-              </Text>
-              <Text fontSize={36} fontWeight="bold">
-                Make
-              </Text>
-              <Text fontSize={36} fontWeight="bold">
-                Your Day
-              </Text>
-            </Block>
-          </AnimatedRN.View>
-          <AnimatedRN.View
+          <Block paddingVertical={15} direction={'column'}>
+            <Text fontSize={36} fontWeight="bold">
+              Videos to
+            </Text>
+            <Text fontSize={36} fontWeight="bold">
+              Make
+            </Text>
+            <Text fontSize={36} fontWeight="bold">
+              Your Day
+            </Text>
+          </Block>
+          <Animated.View
             style={{
               transform: [{ translateY }],
               opacity,
@@ -127,7 +127,7 @@ const FirstP = ({ handleConfirm }: { handleConfirm: () => void }) => {
                 source={'welcome_tiktok_logo'}
               />
             </Block>
-          </AnimatedRN.View>
+          </Animated.View>
         </TouchableWithoutFeedback>
       </Screen>
     </Block>
@@ -145,7 +145,7 @@ const SecondP = ({
 }) => {
   // animated header
   const insets = useSafeAreaInsets();
-  const offset = useRef(new AnimatedRN.Value(0)).current;
+  const offset = useRef(new Animated.Value(0)).current;
   const [opacity, setOpacity] = useState<number>(0);
   const headerHeight = offset.interpolate({
     inputRange: [0, ANIMATED_HEADER_HEIGHT + insets.top],
@@ -174,152 +174,150 @@ const SecondP = ({
   //
   const enableInterests = options.some(op => op.selected);
   return (
-    <Animated.View style={{ flex: 1 }} exiting={SlideOutUp}>
-      <Block block>
-        {/* interests list */}
-        <Block block paddingTop={0} paddingBottom={90} paddingHorizontal={15}>
-          <Screen
-            onScroll={AnimatedRN.event(
-              [{ nativeEvent: { contentOffset: { y: offset } } }],
-              {
-                useNativeDriver: false,
-                listener: (e: NativeSyntheticEvent<NativeScrollEvent>) => {
-                  const offsetY = e.nativeEvent.contentOffset.y;
-                  const offsetYAbs = offsetY > 0 ? offsetY : 0;
-                  const minVal = Math.min(offsetYAbs, SCROLL_THROTTLE);
-                  setOpacity(minVal / SCROLL_THROTTLE);
-                },
+    <Block block>
+      {/* interests list */}
+      <Block block paddingTop={0} paddingBottom={90} paddingHorizontal={15}>
+        <Screen
+          onScroll={Animated.event(
+            [{ nativeEvent: { contentOffset: { y: offset } } }],
+            {
+              useNativeDriver: false,
+              listener: (e: NativeSyntheticEvent<NativeScrollEvent>) => {
+                const offsetY = e.nativeEvent.contentOffset.y;
+                const offsetYAbs = offsetY > 0 ? offsetY : 0;
+                const minVal = Math.min(offsetYAbs, SCROLL_THROTTLE);
+                setOpacity(minVal / SCROLL_THROTTLE);
               },
-            )}
-            scroll
-            statusBarStyle="dark-content"
-            bottomInsetColor="transparent"
-            style={{ paddingVertical: 0, paddingHorizontal: 10 }}
-            backgroundColor={'transparent'}>
-            <Block paddingVertical={15} direction={'column'}>
-              <Text fontSize={36} fontWeight="bold">
-                Choose your
-              </Text>
-              <Text fontSize={36} fontWeight="bold">
-                interests
-              </Text>
-            </Block>
-            <Block>
-              <Text fontSize={18}>Get better video recommendations</Text>
-            </Block>
-            <Block paddingTop={40} direction="row" flexWrap={'wrap'}>
-              {options.map((op, index) => (
-                <Button
-                  key={index}
-                  style={{
-                    backgroundColor: op.selected ? OPTION_BTN_COLOR : 'white',
-                    paddingHorizontal: 13,
-                    paddingVertical: 12,
-                    borderRadius: 24,
-                    borderWidth: 0.5,
-                    borderColor: op.selected ? OPTION_BTN_COLOR : '#ccc',
-                    marginRight: 9,
-                    marginBottom: 12,
-                  }}
-                  onPress={() => {
-                    const updated = options.map((item, i) => {
-                      if (i === index) {
-                        item.selected = !item.selected;
-                      }
-                      return item;
-                    });
-                    handleSetOptions(updated);
-                  }}>
-                  <Text color={op.selected ? 'white' : 'black'} fontSize={15}>
-                    {op.title}
-                  </Text>
-                </Button>
-              ))}
-            </Block>
-          </Screen>
-        </Block>
-        {/* hidden header */}
-        <AnimatedRN.View
-          style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
-            right: 0,
-            zIndex: 10,
-            height: headerHeight,
-            backgroundColor: '#F2F2F2',
-            borderBottomColor: '#ccc',
-            borderWidth: 1,
-            borderStyle: 'solid',
-            opacity,
-          }}>
-          <Block
-            block
-            paddingTop={42}
-            justifyContent={'center'}
-            alignItems={'center'}>
-            <Text fontSize={18} fontWeight="bold">
-              Choose your interests
+            },
+          )}
+          scroll
+          statusBarStyle="dark-content"
+          bottomInsetColor="transparent"
+          style={{ paddingVertical: 0, paddingHorizontal: 10 }}
+          backgroundColor={'transparent'}>
+          <Block paddingVertical={15} direction={'column'}>
+            <Text fontSize={36} fontWeight="bold">
+              Choose your
+            </Text>
+            <Text fontSize={36} fontWeight="bold">
+              interests
             </Text>
           </Block>
-        </AnimatedRN.View>
-        {/* fixed footer */}
+          <Block>
+            <Text fontSize={18}>Get better video recommendations</Text>
+          </Block>
+          <Block paddingTop={40} direction="row" flexWrap={'wrap'}>
+            {options.map((op, index) => (
+              <Button
+                key={index}
+                style={{
+                  backgroundColor: op.selected ? OPTION_BTN_COLOR : 'white',
+                  paddingHorizontal: 13,
+                  paddingVertical: 12,
+                  borderRadius: 24,
+                  borderWidth: 0.5,
+                  borderColor: op.selected ? OPTION_BTN_COLOR : '#ccc',
+                  marginRight: 9,
+                  marginBottom: 12,
+                }}
+                onPress={() => {
+                  const updated = options.map((item, i) => {
+                    if (i === index) {
+                      item.selected = !item.selected;
+                    }
+                    return item;
+                  });
+                  handleSetOptions(updated);
+                }}>
+                <Text color={op.selected ? 'white' : 'black'} fontSize={15}>
+                  {op.title}
+                </Text>
+              </Button>
+            ))}
+          </Block>
+        </Screen>
+      </Block>
+      {/* hidden header */}
+      <Animated.View
+        style={{
+          position: 'absolute',
+          top: 0,
+          left: 0,
+          right: 0,
+          zIndex: 10,
+          height: headerHeight,
+          backgroundColor: '#F2F2F2',
+          borderBottomColor: '#ccc',
+          borderWidth: 1,
+          borderStyle: 'solid',
+          opacity,
+        }}>
         <Block
           block
-          style={{
-            backgroundColor: '#F2F2F2',
-          }}
-          paddingTop={15}
-          paddingHorizontal={15}
-          position={'absolute'}
-          left={0}
-          bottom={0}
-          height={120}
-          width={'100%'}
-          borderColor={'#ccc'}
-          borderTopWidth={1}
-          borderStyle={'solid'}
-          direction="row">
-          <Button
-            style={{
-              backgroundColor: 'white',
-              paddingHorizontal: 13,
-              paddingVertical: 15,
-              borderWidth: 0.5,
-              borderColor: '#ccc',
-              marginRight: 9,
-              flex: 1,
-              height: 50,
-            }}
-            onPress={handleConfirm}>
-            <Text color={'black'} fontSize={15} center>
-              Skip
-            </Text>
-          </Button>
-          <Button
-            style={{
-              backgroundColor: enableInterests ? OPTION_BTN_COLOR : '#ccc',
-              paddingHorizontal: 13,
-              paddingVertical: 15,
-              flex: 1,
-              height: 50,
-            }}
-            disabled={!enableInterests}
-            onPress={handleConfirm}>
-            <Text color={'white'} fontSize={15} center>
-              Next
-            </Text>
-          </Button>
+          paddingTop={42}
+          justifyContent={'center'}
+          alignItems={'center'}>
+          <Text fontSize={18} fontWeight="bold">
+            Choose your interests
+          </Text>
         </Block>
+      </Animated.View>
+      {/* fixed footer */}
+      <Block
+        block
+        style={{
+          backgroundColor: '#F2F2F2',
+        }}
+        paddingTop={15}
+        paddingHorizontal={15}
+        position={'absolute'}
+        left={0}
+        bottom={0}
+        height={120}
+        width={'100%'}
+        borderColor={'#ccc'}
+        borderTopWidth={1}
+        borderStyle={'solid'}
+        direction="row">
+        <Button
+          style={{
+            backgroundColor: 'white',
+            paddingHorizontal: 13,
+            paddingVertical: 15,
+            borderWidth: 0.5,
+            borderColor: '#ccc',
+            marginRight: 9,
+            flex: 1,
+            height: 50,
+          }}
+          onPress={handleConfirm}>
+          <Text color={'black'} fontSize={15} center>
+            Skip
+          </Text>
+        </Button>
+        <Button
+          style={{
+            backgroundColor: enableInterests ? OPTION_BTN_COLOR : '#ccc',
+            paddingHorizontal: 13,
+            paddingVertical: 15,
+            flex: 1,
+            height: 50,
+          }}
+          disabled={!enableInterests}
+          onPress={handleConfirm}>
+          <Text color={'white'} fontSize={15} center>
+            Next
+          </Text>
+        </Button>
       </Block>
-    </Animated.View>
+    </Block>
   );
 };
 
-const aniHandValue = new AnimatedRN.Value(0);
+const aniHandValue = new Animated.Value(0);
 const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
   const _refRoot = useRef<ScrollView>(null);
-  const fadeAnim = useRef(new AnimatedRN.Value(0)).current;
+  const fadeAnim = useRef(new Animated.Value(0)).current;
   const [index, setIndex] = useState<number>(0);
   const [enableBtn, setEnableBtn] = useState<boolean>(false);
 
@@ -338,8 +336,8 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
 
   useEffect(() => {
     // animated hand
-    AnimatedRN.loop(
-      AnimatedRN.timing(aniHandValue, {
+    Animated.loop(
+      Animated.timing(aniHandValue, {
         toValue: 1,
         duration: 2000,
         easing: Easing.linear,
@@ -361,7 +359,7 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
   }, []);
 
   useEffect(() => {
-    AnimatedRN.timing(fadeAnim, {
+    Animated.timing(fadeAnim, {
       delay: 3000,
       toValue: 1,
       duration: 500,
@@ -423,7 +421,7 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
             top={(CAROUSEL_HEIGHT - CAROUSEL_TOUCH_POINT_SIZE) / 2 + 90}
             right={width / 2 - 35 - CAROUSEL_TOUCH_POINT_SIZE / 2}
             zIndex={99}>
-            <AnimatedRN.View
+            <Animated.View
               style={{
                 transform: [{ translateY }],
                 opacity,
@@ -445,14 +443,14 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
             top={(CAROUSEL_HEIGHT - CAROUSEL_HAND_SIZE) / 2 + 90}
             right={width / 2 - 35 - CAROUSEL_WIDTH / 2 - 20}
             zIndex={99}>
-            <AnimatedRN.View
+            <Animated.View
               style={{
                 transform: [{ rotate: spin }],
                 width: 200,
                 height: 200,
               }}>
               <Icon icon={'hand'} size={CAROUSEL_HAND_SIZE} />
-            </AnimatedRN.View>
+            </Animated.View>
           </Block>
           {/* actual carousel */}
           <ScrollView
@@ -476,7 +474,7 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
           </ScrollView>
         </Block>
         {/* bottom button */}
-        <AnimatedRN.View
+        <Animated.View
           style={{
             position: 'absolute',
             left: 0,
@@ -499,15 +497,32 @@ const ThirdP = ({ handleConfirm }: { handleConfirm: () => void }) => {
               Start watching
             </Text>
           </Button>
-        </AnimatedRN.View>
+        </Animated.View>
       </Screen>
     </Block>
   );
 };
 
+type unauthScreenNavigationType = StackNavigationProp<
+  RootStackParamList,
+  APP_SCREEN.DETAIL
+>;
 const WelcomeComponent = () => {
+  const nav = useNavigation<unauthScreenNavigationType>();
   const [step, setStep] = useState<number>(1);
   const [options, setOptions] = useState<Option[]>(INTEREST_OPTIONS);
+
+  useEffect(() => {
+    const id = setTimeout(() => {
+      // nav.navigate(APP_SCREEN.DETAIL, {
+      //   id: 999,
+      // });
+      // navigate(APP_SCREEN.DETAIL, {
+      //   id: 996,
+      // });
+    }, 3000);
+    return () => clearTimeout(id);
+  }, []);
 
   if (step === 1) {
     return <FirstP handleConfirm={() => setStep(2)} />;
@@ -520,7 +535,7 @@ const WelcomeComponent = () => {
       />
     );
   } else if (step === 3) {
-    return <ThirdP handleConfirm={() => navigate(APP_SCREEN.HOME)} />;
+    return <ThirdP handleConfirm={() => setStep(4)} />;
   }
   return null;
 };

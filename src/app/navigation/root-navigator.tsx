@@ -15,7 +15,7 @@ const RootStack = createStackNavigator<RootStackParamList>();
 
 export const RootNavigation = () => {
   // state
-  const { token, loadingApp } = useSelector(state => state.app);
+  const { token } = useSelector(state => state.app);
 
   // effect
   useEffect(() => {
@@ -44,6 +44,7 @@ export const RootNavigation = () => {
           <RootStack.Screen name={APP_SCREEN.WELCOME} component={Welcome} />
           <RootStack.Screen name={APP_SCREEN.LOGIN} component={Login} />
           <RootStack.Screen name={APP_SCREEN.DETAIL} component={Detail} />
+          <RootStack.Screen name={APP_SCREEN.HOME} component={Home} />
         </RootStack.Group>
       ) : (
         <RootStack.Group
