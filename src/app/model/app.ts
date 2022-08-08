@@ -7,6 +7,8 @@ export interface AppState {
 
   token: string | undefined;
 
+  welcomeComplete: boolean;
+
   loadingApp: boolean;
 
   showDialog: boolean;

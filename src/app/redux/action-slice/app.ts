@@ -7,6 +7,7 @@ const initialAppState: AppState = {
   internetState: true,
   profile: {},
   token: undefined,
+  welcomeComplete: false,
   /**
    * default true to load app
    */
@@ -24,6 +25,9 @@ const appSlice = createSlice({
     },
     onSetToken: (state, { payload }: PayloadAction<string>) => {
       state.token = payload;
+    },
+    onSetWelcomeComplete: (state, { payload }: PayloadAction<boolean>) => {
+      state.welcomeComplete = payload;
     },
     onSetAppProfile: (state, { payload }: PayloadAction<unknown>) => {
       state.profile = payload;

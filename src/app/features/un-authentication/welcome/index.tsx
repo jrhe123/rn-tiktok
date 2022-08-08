@@ -15,9 +15,11 @@ import Animated, { Extrapolate, SlideOutUp } from 'react-native-reanimated';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 
 import { ImageTypes } from '@assets/image';
+import { STORAGE_WELCOME_COMPLETE } from '@common';
 import { Block, Button, Icon, LocalImage, Screen, Text } from '@components';
 import { navigate } from '@navigation/navigation-service';
 import { APP_SCREEN } from '@navigation/screen-types';
+import { saveString } from '@storage';
 
 import { Option } from './type';
 
@@ -520,7 +522,14 @@ const WelcomeComponent = () => {
       />
     );
   } else if (step === 3) {
-    return <ThirdP handleConfirm={() => navigate(APP_SCREEN.HOME)} />;
+    return (
+      <ThirdP
+        handleConfirm={() => {
+          saveString(STORAGE_WELCOME_COMPLETE, '1');
+          navigate(APP_SCREEN.HOME);
+        }}
+      />
+    );
   }
   return null;
 };
