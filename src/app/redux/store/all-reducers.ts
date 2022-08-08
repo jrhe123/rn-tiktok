@@ -1,8 +1,9 @@
-import { appReducer, loginReducer } from '@redux-slice';
+import { appReducer, loginReducer, welcomeReducer } from '@redux-slice';
 import { combineReducers } from '@reduxjs/toolkit';
 
 export const allReducer = combineReducers({
   app: appReducer,
+  welcome: welcomeReducer,
   login: loginReducer,
 });
 

@@ -3,6 +3,7 @@ const API_VERSION = '/api/v1/';
 const ApiEndPoint = {
   LOGIN: '',
   REFRESH_TOKEN: '',
+  CUSTOMIZE: '',
 } as const;
 
 const configApi = () => {

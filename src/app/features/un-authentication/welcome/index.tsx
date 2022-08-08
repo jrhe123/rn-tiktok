@@ -2,9 +2,11 @@ import React, { memo, useState } from 'react';
 
 import isEqual from 'react-fast-compare';
 
-import { STORAGE_WELCOME_COMPLETE } from '@common';
+import { dispatch, STORAGE_WELCOME_COMPLETE } from '@common';
+import { FormCustomizeType } from '@model/welcome';
 import { navigate } from '@navigation/navigation-service';
 import { APP_SCREEN } from '@navigation/screen-types';
+import { welcomeActions } from '@redux-slice';
 import { saveString } from '@storage';
 
 import { FirstP } from './components/first-page';
@@ -26,7 +28,20 @@ const WelcomeComponent = () => {
         handleSetOptions={(options: Option[]) => setOptions(options)}
         handleConfirm={() => {
           const filtered = options.filter(op => op.selected);
-          console.log('filtered: ', filtered);
+          const data: FormCustomizeType = {
+            options: filtered,
+          };
+          dispatch(
+            welcomeActions.onCustomize(
+              data,
+              () => {
+                console.log('success here');
+              },
+              error => {
+                console.log('error: ', error);
+              },
+            ),
+          );
           setStep(3);
         }}
       />
