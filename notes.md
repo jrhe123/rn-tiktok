@@ -25,3 +25,7 @@ https://reactnavigation.org/docs/use-navigation
 
 <!-- advance feat -->
 remove this line when use
+
+<!-- pod -->
+cd ios
+pod install --repo-update
