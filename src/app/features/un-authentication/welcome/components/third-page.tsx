@@ -10,6 +10,7 @@ import isEqual from 'react-fast-compare';
 
 import { ImageTypes } from '@assets/image';
 import { Block, Button, Icon, LocalImage, Screen, Text } from '@components';
+import { useSwipe } from '@hooks';
 
 const OPTION_BTN_COLOR = '#E8445A';
 const GIF_IMAGES: ImageTypes[] = [
@@ -27,6 +28,11 @@ const { width } = Dimensions.get('window');
 const aniHandValue = new AnimatedRN.Value(0);
 
 const ThirdPComponent = ({ handleConfirm }: { handleConfirm: () => void }) => {
+  //
+  const onSwipeUp = () => {
+    handleConfirm();
+  };
+  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeUp, null, 6);
   const _refRoot = useRef<ScrollView>(null);
   const fadeAnim = useRef(new AnimatedRN.Value(0)).current;
   const [index, setIndex] = useState<number>(0);
@@ -91,7 +97,12 @@ const ThirdPComponent = ({ handleConfirm }: { handleConfirm: () => void }) => {
   }, [index]);
 
   return (
-    <Block block paddingTop={0} paddingHorizontal={15}>
+    <Block
+      block
+      paddingTop={0}
+      paddingHorizontal={15}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}>
       <Screen
         statusBarStyle="dark-content"
         bottomInsetColor="transparent"

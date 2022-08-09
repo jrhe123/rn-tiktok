@@ -5,11 +5,18 @@ import isEqual from 'react-fast-compare';
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { Block, LocalImage, Screen, Text } from '@components';
+import { useSwipe } from '@hooks';
 
 const LOGO_SIZE = 140;
 const aniLogoValue = new AnimatedRN.Value(0);
 
 const FirstPComponent = ({ handleConfirm }: { handleConfirm: () => void }) => {
+  //
+  const onSwipeUp = () => {
+    handleConfirm();
+  };
+  const { onTouchStart, onTouchEnd } = useSwipe(onSwipeUp, null, 6);
+  //
   const translateY = aniLogoValue.interpolate({
     inputRange: [0, 0.2, 1],
     outputRange: [0, -10, 0],
@@ -29,7 +36,12 @@ const FirstPComponent = ({ handleConfirm }: { handleConfirm: () => void }) => {
     }).start();
   }, []);
   return (
-    <Block block paddingTop={0} paddingHorizontal={15}>
+    <Block
+      block
+      paddingTop={0}
+      paddingHorizontal={15}
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}>
       <Screen
         statusBarStyle="dark-content"
         bottomInsetColor="transparent"

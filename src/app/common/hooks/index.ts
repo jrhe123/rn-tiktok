@@ -12,7 +12,9 @@ import React, {
 } from 'react';
 import {
   BackHandler,
+  Dimensions,
   EmitterSubscription,
+  GestureResponderEvent,
   Keyboard,
   LayoutAnimation,
   Platform,
@@ -592,6 +594,33 @@ const useEventCallback = <Fn extends (...args: any[]) => ReturnType<Fn>>(
   return callbackMemoized;
 };
 
+/**
+ * swipe
+ */
+const useSwipe = (onSwipeUp?: any, onSwipeDown?: any, rangeOffset = 4) => {
+  const windowHeight = Dimensions.get('window').height;
+  let firstTouch = 0;
+  // set user touch start position
+  function onTouchStart(e: GestureResponderEvent) {
+    firstTouch = e.nativeEvent.pageY;
+  }
+  // when touch ends check for swipe directions
+  function onTouchEnd(e: GestureResponderEvent) {
+    // get touch position and screen size
+    const positionY = e.nativeEvent.pageY;
+    const range = windowHeight / rangeOffset;
+    // check if position is growing positively and has reached specified range
+    if (positionY - firstTouch > range) {
+      onSwipeDown && onSwipeDown();
+    }
+    // check if position is growing negatively and has reached specified range
+    else if (firstTouch - positionY > range) {
+      onSwipeUp && onSwipeUp();
+    }
+  }
+  return { onTouchStart, onTouchEnd };
+};
+
 export {
   useMessageYupTranslation,
   useDisableBackHandler,
@@ -614,4 +643,5 @@ export {
   useIsKeyboardShown,
   useDidMount,
   useEventCallback,
+  useSwipe,
 };

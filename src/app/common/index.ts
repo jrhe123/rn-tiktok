@@ -14,7 +14,7 @@ export * from './native-module';
 /**
  * Firebase
  */
-// export * from './firebase';
+export * from './firebase';
 
 /**
  * Social login
