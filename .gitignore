@@ -69,3 +69,6 @@ buck-out/
 ios/prebuild.log
 ios/tmp.xcconfig
 *.app.dSYM.zip
+
+# 
+.env
