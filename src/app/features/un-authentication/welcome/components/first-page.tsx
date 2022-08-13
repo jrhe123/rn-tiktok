@@ -48,7 +48,7 @@ const FirstPComponent = ({ handleConfirm }: { handleConfirm: () => void }) => {
         style={{ paddingVertical: 0, paddingHorizontal: 10 }}
         backgroundColor={'transparent'}>
         <TouchableWithoutFeedback
-          onPress={handleConfirm}
+          // onPress={handleConfirm}
           style={{
             height: '100%',
           }}>

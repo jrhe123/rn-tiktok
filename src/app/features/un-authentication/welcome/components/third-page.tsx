@@ -29,14 +29,16 @@ const aniHandValue = new AnimatedRN.Value(0);
 
 const ThirdPComponent = ({ handleConfirm }: { handleConfirm: () => void }) => {
   //
+  const [enableBtn, setEnableBtn] = useState<boolean>(false);
   const onSwipeUp = () => {
-    handleConfirm();
+    if (enableBtn) {
+      handleConfirm();
+    }
   };
   const { onTouchStart, onTouchEnd } = useSwipe(onSwipeUp, null, 6);
   const _refRoot = useRef<ScrollView>(null);
   const fadeAnim = useRef(new AnimatedRN.Value(0)).current;
   const [index, setIndex] = useState<number>(0);
-  const [enableBtn, setEnableBtn] = useState<boolean>(false);
 
   const spin = aniHandValue.interpolate({
     inputRange: [0, 0.2, 1],
