@@ -1,12 +1,14 @@
-import React, { FC, memo } from 'react';
+import React, { memo } from 'react';
 import { Animated as AnimatedRN, Dimensions } from 'react-native';
 
 import isEqual from 'react-fast-compare';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
+import { dispatch } from '@common';
 import { Block } from '@components';
 import { APP_SCREEN, RootStackParamList } from '@navigation/screen-types';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { homeActions } from '@redux-slice';
 
 import { Friend } from './friend';
 import { Inbox } from './inbox';
@@ -20,12 +22,14 @@ const BOTTOM_ICON_HEIGHT = BOTTOM_BAR_HEIGHT - 39;
 
 const HomeTab = createBottomTabNavigator<RootStackParamList>();
 
-const TabNavigator: FC<any> = props => {
-  console.log('props: ', props);
+const TabNavigator = () => {
   return (
     <HomeTab.Navigator
       initialRouteName={APP_SCREEN.VIDEO}
-      screenOptions={_ => {
+      screenOptions={props => {
+        // get last item in history array
+        const { history } = props.navigation.getState();
+        // dispatch(homeActions.updateHistory(history));
         return {
           tabBarActiveTintColor: 'white',
           headerShown: false,
@@ -53,7 +57,7 @@ const TabNavigator: FC<any> = props => {
         component={Video}
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused, color }) => {
+          tabBarIcon: ({ color }) => {
             return (
               <Block
                 style={{
@@ -83,7 +87,7 @@ const TabNavigator: FC<any> = props => {
         component={Friend}
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused, color }) => {
+          tabBarIcon: ({ color }) => {
             return (
               <Block
                 style={{
@@ -113,7 +117,7 @@ const TabNavigator: FC<any> = props => {
         component={Record}
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused, color }) => {
+          tabBarIcon: () => {
             return (
               <Block
                 style={{
@@ -139,7 +143,7 @@ const TabNavigator: FC<any> = props => {
         component={Inbox}
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused, color }) => {
+          tabBarIcon: ({ color }) => {
             return (
               <Block
                 style={{
@@ -170,7 +174,7 @@ const TabNavigator: FC<any> = props => {
         component={Profile}
         options={{
           tabBarShowLabel: false,
-          tabBarIcon: ({ focused, color }) => {
+          tabBarIcon: ({ color }) => {
             return (
               <Block
                 style={{
