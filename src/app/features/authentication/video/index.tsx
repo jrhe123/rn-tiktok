@@ -10,7 +10,6 @@ import {
 
 import isEqual from 'react-fast-compare';
 
-import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { dispatch, STORAGE_NOTIFICATION, STORAGE_TRACKING } from '@common';
 import { Block, Button, Icon } from '@components';
 import { appActions } from '@redux-slice';
@@ -29,7 +28,6 @@ const MAIN_HEADER_HEIGHT = 60;
 const MAIN_HEADER_BAR_WIDTH = 120;
 const MAIN_HEADER_BAR_UNDERNEATH_WIDTH = 30;
 const SEARCH_ICON_SIZE = 27;
-const BOTTOM_BAR_HEIGHT = 90;
 
 enum TAB {
   FOLLOWING = 'FOLLOWING',
@@ -38,7 +36,7 @@ enum TAB {
 
 const distance = MAIN_HEADER_BAR_WIDTH;
 const aniControlValue = new AnimatedRN.Value(1);
-const HomeComponent = () => {
+const VideoComponent = () => {
   const [currentTab, setCurrentTab] = useState<TAB>(TAB.FOR_YOU);
   const [translateX, setTranslateX] = useState<number>(0);
   const _refRoot = useRef<ScrollView>(null);
@@ -273,179 +271,6 @@ const HomeComponent = () => {
           </Block>
         </Block>
       </Block>
-      {/* Bottom control bar */}
-      <Block
-        style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          height: BOTTOM_BAR_HEIGHT,
-          width,
-          flexDirection: 'row',
-          zIndex: 99,
-          borderColor: '#ccc',
-          borderTopWidth: 0.2,
-          borderStyle: 'solid',
-        }}>
-        <Block
-          block
-          style={{
-            position: 'relative',
-            flexDirection: 'row',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          {/* #1 */}
-          <Block
-            style={{
-              height: BOTTOM_BAR_HEIGHT,
-              width: width / 5,
-            }}>
-            <Button
-              onPress={() => {}}
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: BOTTOM_BAR_HEIGHT,
-                paddingBottom: 36,
-              }}>
-              <VectorIcon icon={'home'} color="white" />
-              <AnimatedRN.Text
-                style={{
-                  marginTop: 3,
-                  color: 'white',
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  // opacity: opacityForYou,
-                }}>
-                Home
-              </AnimatedRN.Text>
-            </Button>
-          </Block>
-          {/* #1 */}
-          {/* #2 */}
-          <Block
-            style={{
-              height: BOTTOM_BAR_HEIGHT,
-              width: width / 5,
-            }}>
-            <Button
-              onPress={() => {}}
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: BOTTOM_BAR_HEIGHT,
-                paddingBottom: 36,
-              }}>
-              <VectorIcon icon={'multi_user'} color="white" />
-              <AnimatedRN.Text
-                style={{
-                  marginTop: 3,
-                  color: 'white',
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  // opacity: opacityForYou,
-                }}>
-                Friends
-              </AnimatedRN.Text>
-            </Button>
-          </Block>
-          {/* #2 */}
-          {/* #3 */}
-          <Block
-            style={{
-              height: BOTTOM_BAR_HEIGHT,
-              width: width / 5,
-              display: 'flex',
-              justifyContent: 'flex-start',
-              alignItems: 'center',
-              paddingTop: 6,
-            }}>
-            <Button
-              onPress={() => {}}
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 30,
-                width: 45,
-                backgroundColor: 'white',
-                borderRadius: 9,
-                borderLeftWidth: 4,
-                borderRightWidth: 4,
-                borderLeftColor: '#67D1E8',
-                borderRightColor: '#E7426D',
-              }}>
-              <VectorIcon icon={'bx_plus'} color="black" />
-            </Button>
-          </Block>
-          {/* #3 */}
-          {/* #4 */}
-          <Block
-            style={{
-              height: BOTTOM_BAR_HEIGHT,
-              width: width / 5,
-            }}>
-            <Button
-              onPress={() => {}}
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: BOTTOM_BAR_HEIGHT,
-                paddingBottom: 36,
-              }}>
-              <VectorIcon icon={'bx_message'} color="white" />
-              <AnimatedRN.Text
-                style={{
-                  marginTop: 3,
-                  color: 'white',
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  // opacity: opacityForYou,
-                }}>
-                Inbox
-              </AnimatedRN.Text>
-            </Button>
-          </Block>
-          {/* #4 */}
-          {/* #5 */}
-          <Block
-            style={{
-              height: BOTTOM_BAR_HEIGHT,
-              width: width / 5,
-            }}>
-            <Button
-              onPress={() => {}}
-              style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: BOTTOM_BAR_HEIGHT,
-                paddingBottom: 36,
-              }}>
-              <VectorIcon icon={'bx_user'} color="white" />
-              <AnimatedRN.Text
-                style={{
-                  marginTop: 3,
-                  color: 'white',
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                  textAlign: 'center',
-                  // opacity: opacityForYou,
-                }}>
-                Profile
-              </AnimatedRN.Text>
-            </Button>
-          </Block>
-          {/* #5 */}
-        </Block>
-      </Block>
       {/* Horizontal */}
       <ScrollView
         onScroll={e => {
@@ -491,4 +316,4 @@ const HomeComponent = () => {
   );
 };
 
-export const Home = memo(HomeComponent, isEqual);
+export const Video = memo(VideoComponent, isEqual);

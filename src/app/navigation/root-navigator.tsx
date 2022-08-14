@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 
 import BootSplash from 'react-native-bootsplash';
 
-import { Home } from '@features/authentication/home';
+import { HomeTabNavigator } from '@features/authentication/tab-navigator';
 import { Detail } from '@features/un-authentication/detail';
 import { Login } from '@features/un-authentication/login';
 import { Welcome } from '@features/un-authentication/welcome';
@@ -46,14 +46,20 @@ export const RootNavigation = () => {
           <RootStack.Screen name={APP_SCREEN.WELCOME} component={Welcome} />
           <RootStack.Screen name={APP_SCREEN.LOGIN} component={Login} />
           <RootStack.Screen name={APP_SCREEN.DETAIL} component={Detail} />
-          <RootStack.Screen name={APP_SCREEN.HOME} component={Home} />
+          <RootStack.Screen
+            name={APP_SCREEN.HOME}
+            component={HomeTabNavigator}
+          />
         </RootStack.Group>
       ) : (
         <RootStack.Group
           screenOptions={{
             gestureEnabled: false,
           }}>
-          <RootStack.Screen name={APP_SCREEN.HOME} component={Home} />
+          <RootStack.Screen
+            name={APP_SCREEN.HOME}
+            component={HomeTabNavigator}
+          />
         </RootStack.Group>
       )}
     </RootStack.Navigator>
