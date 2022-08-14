@@ -10,6 +10,7 @@ import {
 
 import isEqual from 'react-fast-compare';
 
+import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { dispatch, STORAGE_NOTIFICATION, STORAGE_TRACKING } from '@common';
 import { Block, Button, Icon } from '@components';
 import { appActions } from '@redux-slice';
@@ -29,7 +30,6 @@ const MAIN_HEADER_BAR_WIDTH = 120;
 const MAIN_HEADER_BAR_UNDERNEATH_WIDTH = 30;
 const SEARCH_ICON_SIZE = 27;
 const BOTTOM_BAR_HEIGHT = 90;
-const BOTTOM_ICON_SIZE = 24;
 
 enum TAB {
   FOLLOWING = 'FOLLOWING',
@@ -310,7 +310,7 @@ const HomeComponent = () => {
                 height: BOTTOM_BAR_HEIGHT,
                 paddingBottom: 36,
               }}>
-              <Icon icon={'home'} size={BOTTOM_ICON_SIZE} color={'white'} />
+              <VectorIcon icon={'home'} color="white" />
               <AnimatedRN.Text
                 style={{
                   marginTop: 3,
@@ -340,7 +340,7 @@ const HomeComponent = () => {
                 height: BOTTOM_BAR_HEIGHT,
                 paddingBottom: 36,
               }}>
-              <Icon icon={'user'} size={BOTTOM_ICON_SIZE} color={'white'} />
+              <VectorIcon icon={'multi_user'} color="white" />
               <AnimatedRN.Text
                 style={{
                   marginTop: 3,
@@ -372,11 +372,15 @@ const HomeComponent = () => {
                 justifyContent: 'center',
                 alignItems: 'center',
                 height: 30,
-                width: 42,
+                width: 45,
                 backgroundColor: 'white',
                 borderRadius: 9,
+                borderLeftWidth: 4,
+                borderRightWidth: 4,
+                borderLeftColor: '#67D1E8',
+                borderRightColor: '#E7426D',
               }}>
-              <Icon icon={'plus'} size={14} color={'black'} />
+              <VectorIcon icon={'bx_plus'} color="black" />
             </Button>
           </Block>
           {/* #3 */}
@@ -395,7 +399,7 @@ const HomeComponent = () => {
                 height: BOTTOM_BAR_HEIGHT,
                 paddingBottom: 36,
               }}>
-              <Icon icon={'send'} size={BOTTOM_ICON_SIZE} color={'white'} />
+              <VectorIcon icon={'bx_message'} color="white" />
               <AnimatedRN.Text
                 style={{
                   marginTop: 3,
@@ -425,7 +429,7 @@ const HomeComponent = () => {
                 height: BOTTOM_BAR_HEIGHT,
                 paddingBottom: 36,
               }}>
-              <Icon icon={'user'} size={BOTTOM_ICON_SIZE} color={'white'} />
+              <VectorIcon icon={'bx_user'} color="white" />
               <AnimatedRN.Text
                 style={{
                   marginTop: 3,
