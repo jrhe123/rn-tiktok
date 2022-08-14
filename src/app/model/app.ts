@@ -1,5 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { StatusBarStyle } from 'react-native';
+
 import { ThemeType } from '@theme';
+
 export interface AppState {
   internetState: boolean;
 
@@ -14,4 +17,6 @@ export interface AppState {
   showDialog: boolean;
 
   theme: ThemeType;
+
+  statusBar: StatusBarStyle;
 }

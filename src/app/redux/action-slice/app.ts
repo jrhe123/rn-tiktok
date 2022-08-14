@@ -1,3 +1,5 @@
+import { StatusBarStyle } from 'react-native';
+
 import { SLICE_NAME } from '@config/type';
 import { AppState } from '@model/app';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
@@ -14,6 +16,7 @@ const initialAppState: AppState = {
   loadingApp: false,
   showDialog: false,
   theme: 'default',
+  statusBar: 'dark-content',
 };
 
 const appSlice = createSlice({
@@ -50,6 +53,9 @@ const appSlice = createSlice({
     onLogout: state => {
       state.token = undefined;
       state.profile = {};
+    },
+    onSetStatusBar: (state, { payload }: PayloadAction<StatusBarStyle>) => {
+      state.statusBar = payload;
     },
   },
 });

@@ -20,7 +20,9 @@ import { MyAppTheme } from '@theme';
 
 export const AppContainer = () => {
   // state
-  const { loadingApp, showDialog, theme } = useSelector(state => state.app);
+  const { loadingApp, showDialog, theme, statusBar } = useSelector(
+    state => state.app,
+  );
 
   // effect
   useEffect(() => {
@@ -51,7 +53,11 @@ export const AppContainer = () => {
   return (
     <NavigationContainer ref={navigationRef} theme={MyAppTheme[theme]}>
       <>
-        <StatusBar translucent backgroundColor={'transparent'} />
+        <StatusBar
+          translucent
+          backgroundColor={'transparent'}
+          barStyle={statusBar}
+        />
         {!loadingApp && (
           <>
             <PortalHost name={'AppModal'} />
