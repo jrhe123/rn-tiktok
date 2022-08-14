@@ -5,15 +5,13 @@ import {
   Dimensions,
   Easing,
   NativeModules,
-  NativeScrollEvent,
-  NativeSyntheticEvent,
   ScrollView,
 } from 'react-native';
 
 import isEqual from 'react-fast-compare';
 
 import { dispatch, STORAGE_NOTIFICATION, STORAGE_TRACKING } from '@common';
-import { Block, Button, Text } from '@components';
+import { Block, Button } from '@components';
 import { appActions } from '@redux-slice';
 import { loadString, saveString } from '@storage';
 
@@ -25,7 +23,7 @@ let statusBarHeight = 0;
 StatusBarManager.getHeight(({ height }: { height: number }) => {
   statusBarHeight = height;
 });
-const statusBarOffset = 6;
+const statusBarOffset = 0;
 const MAIN_HEADER_HEIGHT = 60;
 const MAIN_HEADER_BAR_WIDTH = 120;
 const MAIN_HEADER_BAR_UNDERNEATH_WIDTH = 30;
@@ -35,12 +33,49 @@ enum TAB {
   FOR_YOU = 'FOR_YOU',
 }
 
+const distance = MAIN_HEADER_BAR_WIDTH;
+const aniControlValue = new AnimatedRN.Value(1);
 const HomeComponent = () => {
-  // const [currentTab, setCurrentTab] = useState<TAB>(TAB.FOR_YOU);
+  const [currentTab, setCurrentTab] = useState<TAB>(TAB.FOR_YOU);
   const [translateX, setTranslateX] = useState<number>(0);
   const _refRoot = useRef<ScrollView>(null);
   const _refForYouRoot = useRef<ScrollView>(null);
   const _refFollowingRoot = useRef<ScrollView>(null);
+
+  console.log('currentTab: ', currentTab);
+
+  useEffect(() => {
+    AnimatedRN.timing(aniControlValue, {
+      toValue: translateX / distance,
+      duration: 200,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+
+    switch (translateX / distance) {
+      case 0:
+        setCurrentTab(TAB.FOLLOWING);
+        break;
+      case 1:
+        setCurrentTab(TAB.FOR_YOU);
+        break;
+      default:
+        break;
+    }
+  }, [translateX]);
+
+  const translateDistance = aniControlValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, distance],
+  });
+  const opacityFollow = aniControlValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0.5],
+  });
+  const opacityForYou = aniControlValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.5, 1],
+  });
 
   useEffect(() => {
     /**
@@ -135,8 +170,7 @@ const HomeComponent = () => {
           height: MAIN_HEADER_HEIGHT,
           width,
           flexDirection: 'row',
-          borderColor: 'red',
-          borderWidth: 1,
+          zIndex: 99,
         }}>
         <Block
           block
@@ -149,34 +183,64 @@ const HomeComponent = () => {
           <Block
             style={{
               paddingHorizontal: 6,
-              borderWidth: 1,
-              borderColor: 'red',
               width: MAIN_HEADER_BAR_WIDTH,
             }}>
-            <Button>
-              <Text color={'white'} fontSize={18} center fontWeight={'bold'}>
+            <Button
+              style={{ paddingVertical: 18 }}
+              onPress={() => {
+                if (_refRoot.current) {
+                  _refRoot.current?.scrollTo({
+                    x: 0,
+                    y: 0,
+                    animated: true,
+                  });
+                }
+              }}>
+              <AnimatedRN.Text
+                style={{
+                  color: 'white',
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  opacity: opacityFollow,
+                }}>
                 Following
-              </Text>
+              </AnimatedRN.Text>
             </Button>
           </Block>
           <Block
             style={{
               paddingHorizontal: 6,
-              borderWidth: 1,
-              borderColor: 'green',
               width: MAIN_HEADER_BAR_WIDTH,
             }}>
-            <Button>
-              <Text color={'white'} fontSize={18} center fontWeight={'bold'}>
+            <Button
+              style={{ paddingVertical: 18 }}
+              onPress={() => {
+                if (_refRoot.current) {
+                  _refRoot.current?.scrollTo({
+                    x: width,
+                    y: 0,
+                    animated: true,
+                  });
+                }
+              }}>
+              <AnimatedRN.Text
+                style={{
+                  color: 'white',
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  opacity: opacityForYou,
+                }}>
                 For You
-              </Text>
+              </AnimatedRN.Text>
             </Button>
           </Block>
           {/* Underneath bar */}
           <AnimatedRN.View
             style={{
               position: 'absolute',
-              transform: [{ translateX }],
+              transform: [{ translateX: translateDistance }],
               bottom: 9,
               left:
                 width / 2 -
@@ -185,7 +249,7 @@ const HomeComponent = () => {
               height: 4,
               width: MAIN_HEADER_BAR_UNDERNEATH_WIDTH,
               backgroundColor: 'white',
-              borderRadius: 3,
+              borderRadius: 2,
             }}
           />
         </Block>
@@ -193,9 +257,6 @@ const HomeComponent = () => {
       {/* Horizontal */}
       <ScrollView
         onScroll={e => {
-          const distance = MAIN_HEADER_BAR_WIDTH;
-          console.log('width: ', width);
-          console.log('e: ', e.nativeEvent.contentOffset.x);
           setTranslateX((e.nativeEvent.contentOffset.x / width) * distance);
         }}
         ref={_refRoot}
