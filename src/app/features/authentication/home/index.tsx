@@ -28,6 +28,8 @@ const MAIN_HEADER_HEIGHT = 60;
 const MAIN_HEADER_BAR_WIDTH = 120;
 const MAIN_HEADER_BAR_UNDERNEATH_WIDTH = 30;
 const SEARCH_ICON_SIZE = 27;
+const BOTTOM_BAR_HEIGHT = 90;
+const BOTTOM_ICON_SIZE = 24;
 
 enum TAB {
   FOLLOWING = 'FOLLOWING',
@@ -269,6 +271,175 @@ const HomeComponent = () => {
               <Icon icon={'search'} color={'white'} size={SEARCH_ICON_SIZE} />
             </Button>
           </Block>
+        </Block>
+      </Block>
+      {/* Bottom control bar */}
+      <Block
+        style={{
+          position: 'absolute',
+          bottom: 0,
+          left: 0,
+          height: BOTTOM_BAR_HEIGHT,
+          width,
+          flexDirection: 'row',
+          zIndex: 99,
+          borderColor: '#ccc',
+          borderTopWidth: 0.2,
+          borderStyle: 'solid',
+        }}>
+        <Block
+          block
+          style={{
+            position: 'relative',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {/* #1 */}
+          <Block
+            style={{
+              height: BOTTOM_BAR_HEIGHT,
+              width: width / 5,
+            }}>
+            <Button
+              onPress={() => {}}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: BOTTOM_BAR_HEIGHT,
+                paddingBottom: 36,
+              }}>
+              <Icon icon={'home'} size={BOTTOM_ICON_SIZE} color={'white'} />
+              <AnimatedRN.Text
+                style={{
+                  marginTop: 3,
+                  color: 'white',
+                  fontSize: 12,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  // opacity: opacityForYou,
+                }}>
+                Home
+              </AnimatedRN.Text>
+            </Button>
+          </Block>
+          {/* #1 */}
+          {/* #2 */}
+          <Block
+            style={{
+              height: BOTTOM_BAR_HEIGHT,
+              width: width / 5,
+            }}>
+            <Button
+              onPress={() => {}}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: BOTTOM_BAR_HEIGHT,
+                paddingBottom: 36,
+              }}>
+              <Icon icon={'user'} size={BOTTOM_ICON_SIZE} color={'white'} />
+              <AnimatedRN.Text
+                style={{
+                  marginTop: 3,
+                  color: 'white',
+                  fontSize: 12,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  // opacity: opacityForYou,
+                }}>
+                Friends
+              </AnimatedRN.Text>
+            </Button>
+          </Block>
+          {/* #2 */}
+          {/* #3 */}
+          <Block
+            style={{
+              height: BOTTOM_BAR_HEIGHT,
+              width: width / 5,
+              display: 'flex',
+              justifyContent: 'flex-start',
+              alignItems: 'center',
+              paddingTop: 6,
+            }}>
+            <Button
+              onPress={() => {}}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: 30,
+                width: 42,
+                backgroundColor: 'white',
+                borderRadius: 9,
+              }}>
+              <Icon icon={'plus'} size={14} color={'black'} />
+            </Button>
+          </Block>
+          {/* #3 */}
+          {/* #4 */}
+          <Block
+            style={{
+              height: BOTTOM_BAR_HEIGHT,
+              width: width / 5,
+            }}>
+            <Button
+              onPress={() => {}}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: BOTTOM_BAR_HEIGHT,
+                paddingBottom: 36,
+              }}>
+              <Icon icon={'send'} size={BOTTOM_ICON_SIZE} color={'white'} />
+              <AnimatedRN.Text
+                style={{
+                  marginTop: 3,
+                  color: 'white',
+                  fontSize: 12,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  // opacity: opacityForYou,
+                }}>
+                Inbox
+              </AnimatedRN.Text>
+            </Button>
+          </Block>
+          {/* #4 */}
+          {/* #5 */}
+          <Block
+            style={{
+              height: BOTTOM_BAR_HEIGHT,
+              width: width / 5,
+            }}>
+            <Button
+              onPress={() => {}}
+              style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                height: BOTTOM_BAR_HEIGHT,
+                paddingBottom: 36,
+              }}>
+              <Icon icon={'user'} size={BOTTOM_ICON_SIZE} color={'white'} />
+              <AnimatedRN.Text
+                style={{
+                  marginTop: 3,
+                  color: 'white',
+                  fontSize: 12,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  // opacity: opacityForYou,
+                }}>
+                Profile
+              </AnimatedRN.Text>
+            </Button>
+          </Block>
+          {/* #5 */}
         </Block>
       </Block>
       {/* Horizontal */}

@@ -9,9 +9,7 @@ const { height, width } = Dimensions.get('window');
 const SlideComponent = () => {
   return (
     <Block style={{ width, height }}>
-      <Text fontSize={36} fontWeight="bold" color={'white'}>
-        123
-      </Text>
+      <Text fontSize={36} fontWeight="bold" color={'white'}></Text>
     </Block>
   );
 };
