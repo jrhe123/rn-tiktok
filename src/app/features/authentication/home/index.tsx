@@ -11,7 +11,7 @@ import {
 import isEqual from 'react-fast-compare';
 
 import { dispatch, STORAGE_NOTIFICATION, STORAGE_TRACKING } from '@common';
-import { Block, Button } from '@components';
+import { Block, Button, Icon } from '@components';
 import { appActions } from '@redux-slice';
 import { loadString, saveString } from '@storage';
 
@@ -27,6 +27,7 @@ const statusBarOffset = 0;
 const MAIN_HEADER_HEIGHT = 60;
 const MAIN_HEADER_BAR_WIDTH = 120;
 const MAIN_HEADER_BAR_UNDERNEATH_WIDTH = 30;
+const SEARCH_ICON_SIZE = 27;
 
 enum TAB {
   FOLLOWING = 'FOLLOWING',
@@ -252,6 +253,22 @@ const HomeComponent = () => {
               borderRadius: 2,
             }}
           />
+          {/* Search icon */}
+          <Block
+            style={{
+              position: 'absolute',
+              right: 6,
+              top: 0,
+              height: MAIN_HEADER_HEIGHT,
+              width: MAIN_HEADER_HEIGHT,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <Button onPress={() => {}}>
+              <Icon icon={'search'} color={'white'} size={SEARCH_ICON_SIZE} />
+            </Button>
+          </Block>
         </Block>
       </Block>
       {/* Horizontal */}
