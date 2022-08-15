@@ -27,7 +27,6 @@ declare module 'react' {
 
 LogBox.ignoreLogs([
   "[react-native-gesture-handler] Seems like you're using an old API with gesture components, check out new Gestures system!",
-  // 'Warning: Cannot update a component (`ForwardRef`) while rendering a different component (`BottomTabNavigator`). To locate the bad setState() call inside `BottomTabNavigator`, follow the stack trace as described in https://reactjs.org/link/setstate-in-render',
 ]);
 
 if (!isIos) {

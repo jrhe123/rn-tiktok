@@ -29,3 +29,13 @@ remove this line when use
 <!-- pod -->
 cd ios
 pod install --repo-update
+
+<!-- live stream -->
+https://docs.agora.io/en/Video/API%20Reference/react_native/index.html
+
+<!-- live stream rtmp -->
+https://github.com/sieuhuflit/react-native-live-stream-rtmp-example
+https://github.com/sieuhuflit/live-tream-rtmp-server
+
+<!-- spring rtmp -->
+http://www.selokljuc.com/16201229.html

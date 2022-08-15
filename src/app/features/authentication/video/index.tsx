@@ -43,8 +43,6 @@ const VideoComponent = () => {
   const _refForYouRoot = useRef<ScrollView>(null);
   const _refFollowingRoot = useRef<ScrollView>(null);
 
-  console.log('currentTab: ', currentTab);
-
   useEffect(() => {
     AnimatedRN.timing(aniControlValue, {
       toValue: translateX / distance,
