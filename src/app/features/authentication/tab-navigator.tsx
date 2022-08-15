@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect } from 'react';
 import {
   Animated as AnimatedRN,
   Dimensions,
+  Easing,
   TouchableOpacity,
 } from 'react-native';
 
@@ -35,8 +36,120 @@ type LabelProps =
       color: string;
       position: LabelPosition;
     }) => React.ReactNode);
+
+const aniVideoValue = new AnimatedRN.Value(1);
+const aniFriendValue = new AnimatedRN.Value(1);
+const aniInboxValue = new AnimatedRN.Value(1);
+const aniProfileValue = new AnimatedRN.Value(1);
 const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
-  console.log('state: ', state);
+  const scaleVideo = aniVideoValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [0.7, 1, 1],
+  });
+  const opacityVideo = aniVideoValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [0.7, 1, 1],
+  });
+  const scaleFriend = aniFriendValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [0.7, 1, 1],
+  });
+  const opacityFriend = aniVideoValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [0.7, 1, 1],
+  });
+  const scaleInbox = aniInboxValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [0.7, 1, 1],
+  });
+  const opacityInbox = aniVideoValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [0.7, 1, 1],
+  });
+  const scaleProfile = aniProfileValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [0.7, 1, 1],
+  });
+  const opacityProfile = aniVideoValue.interpolate({
+    inputRange: [0, 0.2, 1],
+    outputRange: [0.7, 1, 1],
+  });
+
+  useEffect(() => {
+    switch (state.index) {
+      case 0:
+        AnimatedRN.timing(aniVideoValue, {
+          toValue: 0,
+          duration: 100,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }).start(({ finished }) => {
+          if (finished) {
+            AnimatedRN.timing(aniVideoValue, {
+              toValue: 1,
+              duration: 500,
+              easing: Easing.linear,
+              useNativeDriver: true,
+            }).start();
+          }
+        });
+        break;
+      case 1:
+        AnimatedRN.timing(aniFriendValue, {
+          toValue: 0,
+          duration: 100,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }).start(({ finished }) => {
+          if (finished) {
+            AnimatedRN.timing(aniFriendValue, {
+              toValue: 1,
+              duration: 500,
+              easing: Easing.linear,
+              useNativeDriver: true,
+            }).start();
+          }
+        });
+        break;
+      case 3:
+        AnimatedRN.timing(aniInboxValue, {
+          toValue: 0,
+          duration: 100,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }).start(({ finished }) => {
+          if (finished) {
+            AnimatedRN.timing(aniInboxValue, {
+              toValue: 1,
+              duration: 500,
+              easing: Easing.linear,
+              useNativeDriver: true,
+            }).start();
+          }
+        });
+        break;
+      case 4:
+        AnimatedRN.timing(aniProfileValue, {
+          toValue: 0,
+          duration: 100,
+          easing: Easing.linear,
+          useNativeDriver: true,
+        }).start(({ finished }) => {
+          if (finished) {
+            AnimatedRN.timing(aniProfileValue, {
+              toValue: 1,
+              duration: 500,
+              easing: Easing.linear,
+              useNativeDriver: true,
+            }).start();
+          }
+        });
+        break;
+      default:
+        break;
+    }
+  }, [state.index]);
+
   return (
     <Block
       style={{
@@ -84,18 +197,33 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
           const color = isFocused ? 'white' : '#ccc';
           const opacity = isFocused ? 1 : 0.5;
           let icon: VectorIconIcon = 'home';
+          let reverseIcon: VectorIconIcon = 'home';
+          let scaleAni = scaleVideo;
+          let opacityAni = opacityVideo;
           switch (route.name) {
-            case 'HOME':
-              icon = 'home';
+            case 'VIDEO':
+              icon = 'bx_home1';
+              reverseIcon = 'home';
+              scaleAni = scaleVideo;
+              opacityAni = opacityVideo;
               break;
             case 'FRIEND':
-              icon = 'multi_user';
+              icon = 'bx_book';
+              reverseIcon = 'multi_user';
+              scaleAni = scaleFriend;
+              opacityAni = opacityFriend;
               break;
             case 'INBOX':
-              icon = 'bx_message';
+              icon = 'bx_message_alt_check';
+              reverseIcon = 'bx_message';
+              scaleAni = scaleInbox;
+              opacityAni = opacityInbox;
               break;
             case 'PROFILE':
-              icon = 'bx_user';
+              icon = 'bx_user_pin';
+              reverseIcon = 'bx_user';
+              scaleAni = scaleProfile;
+              opacityAni = opacityProfile;
               break;
             default:
               break;
@@ -142,18 +270,36 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
                     alignItems: 'center',
                     paddingTop: 6,
                   }}>
-                  <VectorIcon icon={icon} color={color} />
-                  <AnimatedRN.Text
+                  <AnimatedRN.View
                     style={{
-                      marginTop: 3,
-                      color,
-                      fontSize: 12,
-                      fontWeight: 'bold',
-                      textAlign: 'center',
-                      opacity,
+                      opacity: opacityAni,
+                      alignItems: 'center',
+                      transform: [
+                        {
+                          scaleX: scaleAni,
+                        },
+                        {
+                          scaleY: scaleAni,
+                        },
+                      ],
                     }}>
-                    {label}
-                  </AnimatedRN.Text>
+                    {isFocused ? (
+                      <VectorIcon icon={icon} color={color} />
+                    ) : (
+                      <VectorIcon icon={reverseIcon} color={color} />
+                    )}
+                    <AnimatedRN.Text
+                      style={{
+                        marginTop: 3,
+                        color,
+                        fontSize: 12,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        opacity,
+                      }}>
+                      {label}
+                    </AnimatedRN.Text>
+                  </AnimatedRN.View>
                 </Block>
               )}
             </TouchableOpacity>
