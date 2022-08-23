@@ -11,6 +11,7 @@ export const icons = {
   hand: require('./source/ic_hand.png'),
   arrow_down: require('./source/arrow_down.png'),
   check: require('./source/check.png'),
+  phone: require('./source/ic_phone.png'),
 };
 
 export type IconTypes = keyof typeof icons;

@@ -18,6 +18,18 @@ const GIF_IMAGES: ImageTypes[] = [
   'welcome_cat_tiktok',
   'welcome_bird_tiktok',
   'welcome_seal_tiktok',
+  'welcome_dog_tiktok',
+  'welcome_cat_tiktok',
+  'welcome_bird_tiktok',
+  'welcome_seal_tiktok',
+  'welcome_dog_tiktok',
+  'welcome_cat_tiktok',
+  'welcome_bird_tiktok',
+  'welcome_seal_tiktok',
+  'welcome_dog_tiktok',
+  'welcome_cat_tiktok',
+  'welcome_bird_tiktok',
+  'welcome_seal_tiktok',
 ];
 const CAROUSEL_WIDTH = 180;
 const CAROUSEL_HEIGHT = 360;

@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { StatusBarStyle } from 'react-native';
-
 import { ThemeType } from '@theme';
 
 export interface AppState {
@@ -12,11 +10,21 @@ export interface AppState {
 
   welcomeComplete: boolean;
 
+  askRegister: boolean;
+
   loadingApp: boolean;
 
   showDialog: boolean;
 
   theme: ThemeType;
 
-  statusBar: StatusBarStyle;
+  modalOpen: boolean;
+
+  modalType: ModalType | undefined;
 }
+
+export type ModalType =
+  | 'REGISTER'
+  | 'REGISTER_POPUP'
+  | 'SWIPE_UP_ANI_POPUP'
+  | 'OTHER';

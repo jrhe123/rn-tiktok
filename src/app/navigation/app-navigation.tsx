@@ -1,9 +1,11 @@
 import React, { useEffect } from 'react';
-import { StatusBar } from 'react-native';
+import { ColorValue, Dimensions, NativeModules } from 'react-native';
 
 import { dispatch, RXStore } from '@common';
 import {
+  Block,
   hideLoading,
+  Modal,
   PortalHost,
   ProgressDialog,
   showLoading,
@@ -18,9 +20,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import { appActions } from '@redux-slice';
 import { MyAppTheme } from '@theme';
 
+import { Register } from './modals/register';
+import { RegisterPopup } from './modals/register-pop';
+import { SwipeUpAni } from './modals/swipe-up-ani';
+
+const { width, height } = Dimensions.get('window');
+const { StatusBarManager } = NativeModules;
+let statusBarHeight = 0;
+StatusBarManager.getHeight(({ height }: { height: number }) => {
+  statusBarHeight = height;
+});
+
 export const AppContainer = () => {
   // state
-  const { loadingApp, showDialog, theme, statusBar } = useSelector(
+  const { loadingApp, showDialog, theme, modalOpen, modalType } = useSelector(
     state => state.app,
   );
 
@@ -49,15 +62,64 @@ export const AppContainer = () => {
     }
   }, [theme]);
 
+  const hideDrop = () => {
+    dispatch(appActions.onModalClose());
+  };
+
+  // render modal content
+  const renderModalContent = () => {
+    let children: React.ReactNode;
+    let type = 'MODAL';
+    let backgroundColor: ColorValue | undefined;
+    switch (modalType) {
+      case 'REGISTER':
+        children = <Register />;
+        backgroundColor = '#FFFFFF';
+        type = 'MODAL';
+        break;
+      case 'REGISTER_POPUP':
+        children = <RegisterPopup handleClose={hideDrop} />;
+        backgroundColor = '#FFFFFF';
+        type = 'POP_UP';
+        break;
+      case 'SWIPE_UP_ANI_POPUP':
+        children = <SwipeUpAni handleConfirm={hideDrop} />;
+        backgroundColor = 'transparent';
+        type = 'POP_UP';
+        break;
+      default:
+        break;
+    }
+    return (
+      <Block
+        style={[
+          type === 'POP_UP'
+            ? {
+                height: (1 / 3) * height,
+                borderBottomLeftRadius: 15,
+                borderBottomRightRadius: 15,
+                width: width - 48,
+              }
+            : {
+                height: height - statusBarHeight,
+                width,
+              },
+          {
+            backgroundColor,
+            overflow: 'hidden',
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+          },
+        ]}>
+        {children}
+      </Block>
+    );
+  };
+
   // render
   return (
     <NavigationContainer ref={navigationRef} theme={MyAppTheme[theme]}>
       <>
-        <StatusBar
-          translucent
-          backgroundColor={'transparent'}
-          barStyle={statusBar}
-        />
         {!loadingApp && (
           <>
             <PortalHost name={'AppModal'} />
@@ -65,6 +127,30 @@ export const AppContainer = () => {
             <ProgressDialog />
             <SnackBar />
             <ImageTransition />
+            {/* global */}
+            <Modal
+              onBackdropPress={hideDrop}
+              onBackButtonPress={hideDrop}
+              animatedIn={'slideInUp'}
+              hasGesture={false}
+              animatedOut={
+                modalType?.includes('POPUP') ? 'slideOutUp' : 'slideOutDown'
+              }
+              style={[
+                {
+                  display: 'flex',
+                  justifyContent: modalType?.includes('POPUP')
+                    ? 'center'
+                    : 'flex-end',
+                  alignItems: 'center',
+                  marginHorizontal: 0,
+                  marginVertical: 0,
+                },
+              ]}
+              backdropOpacity={0.3}
+              isVisible={modalOpen}>
+              {renderModalContent()}
+            </Modal>
           </>
         )}
         <RXStore />
