@@ -15,6 +15,9 @@ commitlint: [build, chore, ci, docs, feat, fix, perf, refactor, revert, style, t
 <!-- redux listenerr vs redux saga -->
 https://blog.logrocket.com/redux-toolkits-new-listener-middleware-vs-redux-saga/
 
+<!-- listener api -->
+https://redux-toolkit.js.org/api/createListenerMiddleware
+
 <!-- animated header -->
 https://blog.jscrambler.com/how-to-animate-a-header-view-on-scroll-with-react-native-animated
 

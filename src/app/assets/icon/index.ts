@@ -12,6 +12,10 @@ export const icons = {
   arrow_down: require('./source/arrow_down.png'),
   check: require('./source/check.png'),
   phone: require('./source/ic_phone.png'),
+  google_logo: require('./source/ic_google.png'),
+  facebook_logo: require('./source/ic_facebook.png'),
+  twitter_logo: require('./source/ic_twitter.png'),
+  apple_logo: require('./source/ic_apple.png'),
 };
 
 export type IconTypes = keyof typeof icons;

@@ -9,8 +9,10 @@ const LOGO_SIZE = 30;
 const BTN_COLOR = '#E8445A';
 const aniLogoValue = new AnimatedRN.Value(0);
 const RegisterPopupComponent = ({
+  handleConfirm,
   handleClose,
 }: {
+  handleConfirm: () => void;
   handleClose: () => void;
 }) => {
   const translateY = aniLogoValue.interpolate({
@@ -26,16 +28,12 @@ const RegisterPopupComponent = ({
     // animated logo
     AnimatedRN.timing(aniLogoValue, {
       toValue: 1,
-      delay: 500,
+      delay: 200,
       duration: 500,
       easing: Easing.linear,
       useNativeDriver: true,
     }).start();
   }, []);
-
-  const handleConfirm = () => {
-    console.log('hit here');
-  };
 
   return (
     <Block

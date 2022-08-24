@@ -53,3 +53,12 @@ takeLatestListeners()({
     listenerApi.dispatch(appActions.onModalOpen('REGISTER_POPUP'));
   },
 });
+
+takeLatestListeners()({
+  actionCreator: appActions.onPopupRegisterConfirm,
+  effect: async (_, listenerApi) => {
+    listenerApi.dispatch(appActions.onModalClose());
+    await listenerApi.delay(300);
+    listenerApi.dispatch(appActions.onModalOpen('REGISTER'));
+  },
+});

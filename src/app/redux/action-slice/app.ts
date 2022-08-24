@@ -84,6 +84,9 @@ export const appActions = {
   onModalClose: appSlice.actions.onModalClose,
   //
   onPopupRegister: createAction(`${appSlice.name}/onPopupRegister`),
+  onPopupRegisterConfirm: createAction(
+    `${appSlice.name}/onPopupRegisterConfirm`,
+  ),
 };
 
 export const { reducer } = appSlice;

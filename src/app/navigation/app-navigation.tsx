@@ -78,7 +78,14 @@ export const AppContainer = () => {
         type = 'MODAL';
         break;
       case 'REGISTER_POPUP':
-        children = <RegisterPopup handleClose={hideDrop} />;
+        children = (
+          <RegisterPopup
+            handleConfirm={() => {
+              dispatch(appActions.onPopupRegisterConfirm());
+            }}
+            handleClose={hideDrop}
+          />
+        );
         backgroundColor = '#FFFFFF';
         type = 'POP_UP';
         break;
