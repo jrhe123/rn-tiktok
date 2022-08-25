@@ -13,6 +13,8 @@ import isEqual from 'react-fast-compare';
 import { dispatch, STORAGE_NOTIFICATION, STORAGE_TRACKING } from '@common';
 import { Block, Button, Icon, Screen } from '@components';
 import { useSelector } from '@hooks';
+import { navigate } from '@navigation/navigation-service';
+import { APP_SCREEN } from '@navigation/screen-types';
 import { appActions } from '@redux-slice';
 import { loadString, saveString } from '@storage';
 
@@ -239,6 +241,118 @@ const VideoComponent = () => {
     { viewabilityConfig, onViewableItemsChanged: onFOViewableItemsChanged },
   ]);
 
+  const renderTopBar = () => (
+    <Block
+      style={{
+        position: 'absolute',
+        top: statusBarHeight + statusBarOffset,
+        left: 0,
+        height: MAIN_HEADER_HEIGHT,
+        width,
+        flexDirection: 'row',
+        zIndex: 99,
+      }}>
+      <Block
+        block
+        style={{
+          position: 'relative',
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}>
+        <Block
+          style={{
+            paddingHorizontal: 6,
+            width: MAIN_HEADER_BAR_WIDTH,
+          }}>
+          <Button
+            style={{ paddingVertical: 18 }}
+            onPress={() => {
+              if (_refRoot.current) {
+                _refRoot.current?.scrollToIndex({
+                  animated: true,
+                  index: 0,
+                });
+              }
+            }}>
+            <AnimatedRN.Text
+              style={{
+                color: 'white',
+                fontSize: 18,
+                fontWeight: 'bold',
+                textAlign: 'center',
+                opacity: opacityFollow,
+              }}>
+              Following
+            </AnimatedRN.Text>
+          </Button>
+        </Block>
+        <Block
+          style={{
+            paddingHorizontal: 6,
+            width: MAIN_HEADER_BAR_WIDTH,
+          }}>
+          <Button
+            style={{ paddingVertical: 18 }}
+            onPress={() => {
+              if (_refRoot.current) {
+                _refRoot.current?.scrollToIndex({
+                  animated: true,
+                  index: 1,
+                });
+              }
+            }}>
+            <AnimatedRN.Text
+              style={{
+                color: 'white',
+                fontSize: 18,
+                fontWeight: 'bold',
+                textAlign: 'center',
+                opacity: opacityForYou,
+              }}>
+              For You
+            </AnimatedRN.Text>
+          </Button>
+        </Block>
+        {/* Underneath bar */}
+        <AnimatedRN.View
+          style={{
+            position: 'absolute',
+            transform: [{ translateX: translateDistance }],
+            bottom: 9,
+            left:
+              width / 2 -
+              MAIN_HEADER_BAR_WIDTH +
+              (MAIN_HEADER_BAR_WIDTH - MAIN_HEADER_BAR_UNDERNEATH_WIDTH) / 2,
+            height: 4,
+            width: MAIN_HEADER_BAR_UNDERNEATH_WIDTH,
+            backgroundColor: 'white',
+            borderRadius: 2,
+          }}
+        />
+        {/* Search icon */}
+        <Block
+          style={{
+            position: 'absolute',
+            right: 6,
+            top: 0,
+            height: MAIN_HEADER_HEIGHT,
+            width: MAIN_HEADER_HEIGHT,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          <Button
+            onPress={() => {
+              navigate(APP_SCREEN.SEARCH);
+            }}>
+            <Icon icon={'search'} color={'white'} size={SEARCH_ICON_SIZE} />
+          </Button>
+        </Block>
+      </Block>
+    </Block>
+  );
+
   const renderVItem = () => <Slide />;
 
   const renderItem = ({ item }: { item: View }) => {
@@ -301,118 +415,7 @@ const VideoComponent = () => {
         {!isShown ? null : (
           <>
             {/* Main control bar */}
-            <Block
-              style={{
-                position: 'absolute',
-                top: statusBarHeight + statusBarOffset,
-                left: 0,
-                height: MAIN_HEADER_HEIGHT,
-                width,
-                flexDirection: 'row',
-                zIndex: 99,
-              }}>
-              <Block
-                block
-                style={{
-                  position: 'relative',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                }}>
-                <Block
-                  style={{
-                    paddingHorizontal: 6,
-                    width: MAIN_HEADER_BAR_WIDTH,
-                  }}>
-                  <Button
-                    style={{ paddingVertical: 18 }}
-                    onPress={() => {
-                      if (_refRoot.current) {
-                        _refRoot.current?.scrollToIndex({
-                          animated: true,
-                          index: 0,
-                        });
-                      }
-                    }}>
-                    <AnimatedRN.Text
-                      style={{
-                        color: 'white',
-                        fontSize: 18,
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        opacity: opacityFollow,
-                      }}>
-                      Following
-                    </AnimatedRN.Text>
-                  </Button>
-                </Block>
-                <Block
-                  style={{
-                    paddingHorizontal: 6,
-                    width: MAIN_HEADER_BAR_WIDTH,
-                  }}>
-                  <Button
-                    style={{ paddingVertical: 18 }}
-                    onPress={() => {
-                      if (_refRoot.current) {
-                        _refRoot.current?.scrollToIndex({
-                          animated: true,
-                          index: 1,
-                        });
-                      }
-                    }}>
-                    <AnimatedRN.Text
-                      style={{
-                        color: 'white',
-                        fontSize: 18,
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        opacity: opacityForYou,
-                      }}>
-                      For You
-                    </AnimatedRN.Text>
-                  </Button>
-                </Block>
-                {/* Underneath bar */}
-                <AnimatedRN.View
-                  style={{
-                    position: 'absolute',
-                    transform: [{ translateX: translateDistance }],
-                    bottom: 9,
-                    left:
-                      width / 2 -
-                      MAIN_HEADER_BAR_WIDTH +
-                      (MAIN_HEADER_BAR_WIDTH -
-                        MAIN_HEADER_BAR_UNDERNEATH_WIDTH) /
-                        2,
-                    height: 4,
-                    width: MAIN_HEADER_BAR_UNDERNEATH_WIDTH,
-                    backgroundColor: 'white',
-                    borderRadius: 2,
-                  }}
-                />
-                {/* Search icon */}
-                <Block
-                  style={{
-                    position: 'absolute',
-                    right: 6,
-                    top: 0,
-                    height: MAIN_HEADER_HEIGHT,
-                    width: MAIN_HEADER_HEIGHT,
-                    display: 'flex',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                  }}>
-                  <Button onPress={() => {}}>
-                    <Icon
-                      icon={'search'}
-                      color={'white'}
-                      size={SEARCH_ICON_SIZE}
-                    />
-                  </Button>
-                </Block>
-              </Block>
-            </Block>
+            {renderTopBar()}
             {/* Horizontal */}
             <FlatList
               onScroll={e => {

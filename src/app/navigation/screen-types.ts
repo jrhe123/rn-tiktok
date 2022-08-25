@@ -8,6 +8,7 @@ export enum APP_SCREEN {
   //
   WELCOME = 'WELCOME',
   HOME = 'HOME',
+  SEARCH = 'SEARCH',
   //
   INFO = 'INFO',
   TERMS_OF_SERVICE = 'TERMS_OF_SERVICE',
@@ -29,6 +30,7 @@ export type UnAuthorizeParamsList = {
   };
   //
   [APP_SCREEN.WELCOME]: undefined;
+  [APP_SCREEN.SEARCH]: undefined;
   //
   [APP_SCREEN.INFO]: undefined;
   [APP_SCREEN.TERMS_OF_SERVICE]: undefined;
