@@ -16,6 +16,7 @@ export const icons = {
   facebook_logo: require('./source/ic_facebook.png'),
   twitter_logo: require('./source/ic_twitter.png'),
   apple_logo: require('./source/ic_apple.png'),
+  instagram_logo: require('./source/ic_instagram.png'),
 };
 
 export type IconTypes = keyof typeof icons;

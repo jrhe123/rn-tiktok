@@ -1,5 +1,10 @@
-import React, { memo } from 'react';
-import { TouchableOpacity } from 'react-native';
+import React, { memo, useRef } from 'react';
+import {
+  Dimensions,
+  FlatList,
+  NativeModules,
+  TouchableOpacity,
+} from 'react-native';
 
 import isEqual from 'react-fast-compare';
 
@@ -7,40 +12,29 @@ import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { Block, Button, Icon, Text } from '@components';
 
 const BTN_COLOR = '#E8445A';
-const RegisterComponent = () => {
+const { height, width } = Dimensions.get('window');
+type Page = {
+  id: string;
+  type: string;
+};
+const pages: Page[] = [
+  {
+    id: '0',
+    type: 'SIGN_UP',
+  },
+  {
+    id: '1',
+    type: 'SIGN_IN',
+  },
+];
+
+const SignUpPage = ({
+  handleNavigateToLogin,
+}: {
+  handleNavigateToLogin: () => void;
+}) => {
   return (
-    <Block
-      block
-      style={{
-        alignItems: 'center',
-        position: 'relative',
-      }}>
-      {/* top left btn */}
-      <Block
-        style={{
-          position: 'absolute',
-          top: 24,
-          left: 24,
-          width: 30,
-          height: 30,
-        }}>
-        <Button>
-          <Icon icon={'close'} size={30} />
-        </Button>
-      </Block>
-      {/* top right btn */}
-      <Block
-        style={{
-          position: 'absolute',
-          top: 24,
-          right: 24,
-          width: 30,
-          height: 30,
-        }}>
-        <Button>
-          <VectorIcon icon={'bx_info_circle1'} size={30} />
-        </Button>
-      </Block>
+    <Block style={{ width, flex: 1 }}>
       {/* top section */}
       <Block
         style={{
@@ -56,7 +50,7 @@ const RegisterComponent = () => {
         </Block>
         {/* desc */}
         <Block style={{ marginTop: 18 }}>
-          <Text color={'#504F54'} fontSize={18} fontWeight={'200'} center>
+          <Text color={'#504F54'} fontSize={15} fontWeight={'200'} center>
             Create a profile, follow other accounts, make your own videos, and
             more.
           </Text>
@@ -214,6 +208,7 @@ const RegisterComponent = () => {
             <Text fontSize={15} center>
               Already have an account?{' '}
               <TouchableOpacity
+                onPress={handleNavigateToLogin}
                 style={{
                   padding: 0,
                 }}>
@@ -225,6 +220,311 @@ const RegisterComponent = () => {
           </Block>
         </Block>
       </Block>
+    </Block>
+  );
+};
+
+const SignInPage = ({
+  handleNavigateToSignup,
+}: {
+  handleNavigateToSignup: () => void;
+}) => {
+  return (
+    <Block style={{ width, flex: 1 }}>
+      {/* top section */}
+      <Block
+        style={{
+          padding: 24,
+          width: '100%',
+          flex: 1,
+        }}>
+        {/* title */}
+        <Block style={{ marginTop: 84 }}>
+          <Text color={'black'} fontSize={24} fontWeight={'bold'} center>
+            Log in to TikTok
+          </Text>
+        </Block>
+        {/* desc */}
+        <Block style={{ marginTop: 18 }}>
+          <Text color={'#504F54'} fontSize={15} fontWeight={'200'} center>
+            Manage your account, check notifications, comment on videos, and
+            more.
+          </Text>
+        </Block>
+        {/* button */}
+        <Block
+          style={{
+            marginTop: 42,
+            width: '100%',
+          }}>
+          <Button
+            style={{
+              height: 45,
+              paddingHorizontal: 12,
+              borderWidth: 1,
+              borderColor: '#E5E5E5',
+            }}>
+            <Block style={{ flexDirection: 'row', flex: 1 }}>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                }}>
+                <VectorIcon icon={'bx_user'} size={24} />
+              </Block>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1,
+                }}>
+                <Text>Use phone / email / username</Text>
+              </Block>
+            </Block>
+          </Button>
+          <Button
+            style={{
+              marginTop: 12,
+              height: 45,
+              paddingHorizontal: 12,
+              borderWidth: 1,
+              borderColor: '#E5E5E5',
+            }}>
+            <Block style={{ flexDirection: 'row', flex: 1 }}>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                }}>
+                <Icon icon={'facebook_logo'} size={24} />
+              </Block>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1,
+                }}>
+                <Text>Continue with Facebook</Text>
+              </Block>
+            </Block>
+          </Button>
+          <Button
+            style={{
+              marginTop: 12,
+              height: 45,
+              paddingHorizontal: 12,
+              borderWidth: 1,
+              borderColor: '#E5E5E5',
+            }}>
+            <Block style={{ flexDirection: 'row', flex: 1 }}>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                }}>
+                <Icon icon={'apple_logo'} size={22} />
+              </Block>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1,
+                }}>
+                <Text>Continue with Apple</Text>
+              </Block>
+            </Block>
+          </Button>
+          <Button
+            style={{
+              marginTop: 12,
+              height: 45,
+              paddingHorizontal: 12,
+              borderWidth: 1,
+              borderColor: '#E5E5E5',
+            }}>
+            <Block style={{ flexDirection: 'row', flex: 1 }}>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                }}>
+                <Icon icon={'google_logo'} size={20} />
+              </Block>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1,
+                }}>
+                <Text>Continue with Google</Text>
+              </Block>
+            </Block>
+          </Button>
+          <Button
+            style={{
+              marginTop: 12,
+              height: 45,
+              paddingHorizontal: 12,
+              borderWidth: 1,
+              borderColor: '#E5E5E5',
+            }}>
+            <Block style={{ flexDirection: 'row', flex: 1 }}>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                }}>
+                <Icon icon={'twitter_logo'} size={22} />
+              </Block>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1,
+                }}>
+                <Text>Continue with Twitter</Text>
+              </Block>
+            </Block>
+          </Button>
+          <Button
+            style={{
+              marginTop: 12,
+              height: 45,
+              paddingHorizontal: 12,
+              borderWidth: 1,
+              borderColor: '#E5E5E5',
+            }}>
+            <Block style={{ flexDirection: 'row', flex: 1 }}>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                }}>
+                <Icon icon={'instagram_logo'} size={21} />
+              </Block>
+              <Block
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1,
+                }}>
+                <Text>Continue with Instagram</Text>
+              </Block>
+            </Block>
+          </Button>
+        </Block>
+      </Block>
+      {/* bottom section */}
+      <Block
+        style={{
+          width: '100%',
+          height: 240,
+          justifyContent: 'flex-end',
+        }}>
+        <Block style={{ height: 120, backgroundColor: '#F8F8F8', padding: 24 }}>
+          <Block style={{ marginTop: 6 }}>
+            <Text fontSize={15} center>
+              Don't have an account?{' '}
+              <TouchableOpacity
+                onPress={handleNavigateToSignup}
+                style={{
+                  padding: 0,
+                }}>
+                <Text fontWeight={'bold'} color={BTN_COLOR}>
+                  Sign up
+                </Text>
+              </TouchableOpacity>
+            </Text>
+          </Block>
+        </Block>
+      </Block>
+    </Block>
+  );
+};
+
+const { StatusBarManager } = NativeModules;
+let statusBarHeight = 0;
+StatusBarManager.getHeight(({ height }: { height: number }) => {
+  statusBarHeight = height;
+});
+const RegisterComponent = () => {
+  const _refRoot = useRef<FlatList>(null);
+
+  const renderItem = ({ item }: { item: Page }) => {
+    if (item.type === 'SIGN_UP') {
+      return (
+        <SignUpPage
+          handleNavigateToLogin={() => {
+            if (_refRoot.current) {
+              _refRoot.current?.scrollToIndex({
+                animated: true,
+                index: 1,
+              });
+            }
+          }}
+        />
+      );
+    } else if (item.type === 'SIGN_IN') {
+      return (
+        <SignInPage
+          handleNavigateToSignup={() => {
+            if (_refRoot.current) {
+              _refRoot.current?.scrollToIndex({
+                animated: true,
+                index: 0,
+              });
+            }
+          }}
+        />
+      );
+    }
+    return null;
+  };
+
+  return (
+    <Block
+      block
+      style={{
+        alignItems: 'center',
+        position: 'relative',
+      }}>
+      {/* top left btn */}
+      <Block
+        style={{
+          position: 'absolute',
+          top: 24,
+          left: 24,
+          width: 30,
+          height: 30,
+          zIndex: 1,
+        }}>
+        <Button>
+          <Icon icon={'close'} size={30} />
+        </Button>
+      </Block>
+      {/* top right btn */}
+      <Block
+        style={{
+          position: 'absolute',
+          top: 24,
+          right: 24,
+          width: 30,
+          height: 30,
+          zIndex: 1,
+        }}>
+        <Button>
+          <VectorIcon icon={'bx_info_circle1'} size={30} />
+        </Button>
+      </Block>
+      <FlatList
+        ref={_refRoot}
+        data={pages}
+        renderItem={renderItem}
+        keyExtractor={item => item.id}
+        horizontal
+        scrollEnabled={false}
+        style={{
+          width,
+          height: height - statusBarHeight,
+        }}
+        scrollEventThrottle={width}
+        pagingEnabled
+        showsHorizontalScrollIndicator={false}
+      />
     </Block>
   );
 };
