@@ -341,6 +341,7 @@ const VideoComponent = () => {
             display: 'flex',
             justifyContent: 'center',
             alignItems: 'center',
+            zIndex: 1,
           }}>
           <Button
             onPress={() => {

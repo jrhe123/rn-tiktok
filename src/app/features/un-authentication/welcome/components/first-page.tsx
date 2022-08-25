@@ -2,7 +2,6 @@ import React, { memo, useEffect } from 'react';
 import { Animated as AnimatedRN, Easing } from 'react-native';
 
 import isEqual from 'react-fast-compare';
-import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 import { Block, LocalImage, Screen, Text } from '@components';
 import { useSwipe } from '@hooks';
@@ -47,46 +46,37 @@ const FirstPComponent = ({ handleConfirm }: { handleConfirm: () => void }) => {
         bottomInsetColor="transparent"
         style={{ paddingVertical: 0, paddingHorizontal: 10 }}
         backgroundColor={'transparent'}>
-        <TouchableWithoutFeedback
-          // onPress={handleConfirm}
+        <AnimatedRN.View
           style={{
-            height: '100%',
+            transform: [{ translateY }],
+            opacity,
           }}>
-          <AnimatedRN.View
-            style={{
-              transform: [{ translateY }],
-              opacity,
-            }}>
-            <Block paddingVertical={15} direction={'column'}>
-              <Text fontSize={36} fontWeight="bold">
-                Videos to
-              </Text>
-              <Text fontSize={36} fontWeight="bold">
-                Make
-              </Text>
-              <Text fontSize={36} fontWeight="bold">
-                Your Day
-              </Text>
-            </Block>
-          </AnimatedRN.View>
-          <AnimatedRN.View
-            style={{
-              transform: [{ translateY }],
-              opacity,
-              width: LOGO_SIZE,
-              height: LOGO_SIZE,
-              position: 'absolute',
-              left: 0,
-              bottom: 30,
-            }}>
-            <Block pointerEvents={'none'} width={140} height={140}>
-              <LocalImage
-                resizeMode={'contain'}
-                source={'welcome_tiktok_logo'}
-              />
-            </Block>
-          </AnimatedRN.View>
-        </TouchableWithoutFeedback>
+          <Block paddingVertical={15} direction={'column'}>
+            <Text fontSize={36} fontWeight="bold">
+              Videos to
+            </Text>
+            <Text fontSize={36} fontWeight="bold">
+              Make
+            </Text>
+            <Text fontSize={36} fontWeight="bold">
+              Your Day
+            </Text>
+          </Block>
+        </AnimatedRN.View>
+        <AnimatedRN.View
+          style={{
+            transform: [{ translateY }],
+            opacity,
+            width: LOGO_SIZE,
+            height: LOGO_SIZE,
+            position: 'absolute',
+            left: 0,
+            bottom: 30,
+          }}>
+          <Block pointerEvents={'none'} width={140} height={140}>
+            <LocalImage resizeMode={'contain'} source={'welcome_tiktok_logo'} />
+          </Block>
+        </AnimatedRN.View>
       </Screen>
     </Block>
   );
