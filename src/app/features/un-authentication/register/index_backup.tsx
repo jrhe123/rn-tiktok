@@ -9,6 +9,7 @@ import { useRegisterStyle } from './style';
 
 const RegisterComponent = () => {
   const style = useRegisterStyle();
+  console.log('style: ', style.text.color);
 
   // render
   return (
@@ -28,3 +29,15 @@ const RegisterComponent = () => {
   );
 };
 export const Register = memo(RegisterComponent, isEqual);
+
+// const theme = useTheme();
+// const drawerSx = {
+//     '& .MuiDrawer-paper': {
+//         background: `linear-gradient(to bottom right, ${theme.palette.primary.main}, ${theme.palette.primary.dark})`,
+//     },
+// };
+// return (
+//     <Drawer sx={drawerSx} variant="permanent">
+//       ...
+//     </Drawer>
+// );

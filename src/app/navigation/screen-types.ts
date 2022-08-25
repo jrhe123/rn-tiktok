@@ -3,10 +3,10 @@ export enum APP_SCREEN {
   UN_AUTHORIZE = 'UN_AUTHORIZE',
   SPLASH = 'SPLASH',
   DETAIL = 'DETAIL',
-  REGISTER = 'REGISTER',
-  LOGIN = 'LOGIN',
   //
   WELCOME = 'WELCOME',
+  LOGIN = 'LOGIN',
+  REGISTER = 'REGISTER',
   HOME = 'HOME',
   SEARCH = 'SEARCH',
   //
@@ -22,13 +22,13 @@ export enum APP_SCREEN {
 }
 
 export type UnAuthorizeParamsList = {
-  [APP_SCREEN.LOGIN]: undefined;
-  [APP_SCREEN.REGISTER]: undefined;
   [APP_SCREEN.SPLASH]: undefined;
   [APP_SCREEN.DETAIL]: {
     id?: number;
   };
   //
+  [APP_SCREEN.LOGIN]: undefined;
+  [APP_SCREEN.REGISTER]: undefined;
   [APP_SCREEN.WELCOME]: undefined;
   [APP_SCREEN.SEARCH]: undefined;
   //
