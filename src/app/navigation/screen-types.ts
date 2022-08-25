@@ -1,12 +1,17 @@
 export enum APP_SCREEN {
+  AUTHORIZE = 'AUTHORIZE',
   UN_AUTHORIZE = 'UN_AUTHORIZE',
   SPLASH = 'SPLASH',
-  LOGIN = 'LOGIN',
-  WELCOME = 'WELCOME',
   DETAIL = 'DETAIL',
   REGISTER = 'REGISTER',
-  AUTHORIZE = 'AUTHORIZE',
+  LOGIN = 'LOGIN',
+  //
+  WELCOME = 'WELCOME',
   HOME = 'HOME',
+  //
+  INFO = 'INFO',
+  TERMS_OF_SERVICE = 'TERMS_OF_SERVICE',
+  PRIVACY_POLICY = 'PRIVACY_POLICY',
   // tab
   VIDEO = 'VIDEO',
   FRIEND = 'FRIEND',
@@ -17,12 +22,17 @@ export enum APP_SCREEN {
 
 export type UnAuthorizeParamsList = {
   [APP_SCREEN.LOGIN]: undefined;
-  [APP_SCREEN.WELCOME]: undefined;
+  [APP_SCREEN.REGISTER]: undefined;
+  [APP_SCREEN.SPLASH]: undefined;
   [APP_SCREEN.DETAIL]: {
     id?: number;
   };
-  [APP_SCREEN.REGISTER]: undefined;
-  [APP_SCREEN.SPLASH]: undefined;
+  //
+  [APP_SCREEN.WELCOME]: undefined;
+  //
+  [APP_SCREEN.INFO]: undefined;
+  [APP_SCREEN.TERMS_OF_SERVICE]: undefined;
+  [APP_SCREEN.PRIVACY_POLICY]: undefined;
 };
 export type AuthorizeParamsList = {
   [APP_SCREEN.HOME]: undefined;

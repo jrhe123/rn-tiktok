@@ -9,7 +9,11 @@ import {
 import isEqual from 'react-fast-compare';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
+import { dispatch } from '@common';
 import { Block, Button, Icon, Text } from '@components';
+import { navigate } from '@navigation/navigation-service';
+import { APP_SCREEN } from '@navigation/screen-types';
+import { appActions } from '@redux-slice';
 
 const BTN_COLOR = '#E8445A';
 const { height, width } = Dimensions.get('window');
@@ -182,6 +186,10 @@ const SignUpPage = ({
             lineHeight={18}>
             By continuing, you agree to our{' '}
             <TouchableOpacity
+              onPress={() => {
+                dispatch(appActions.onModalClose());
+                navigate(APP_SCREEN.TERMS_OF_SERVICE);
+              }}
               style={{
                 padding: 0,
                 marginTop: -1,
@@ -192,6 +200,10 @@ const SignUpPage = ({
             </TouchableOpacity>
             and acknowledge that you have read our{' '}
             <TouchableOpacity
+              onPress={() => {
+                dispatch(appActions.onModalClose());
+                navigate(APP_SCREEN.PRIVACY_POLICY);
+              }}
               style={{
                 padding: 0,
                 marginTop: -1,
@@ -506,7 +518,11 @@ const RegisterComponent = () => {
           height: 30,
           zIndex: 1,
         }}>
-        <Button>
+        <Button
+          onPress={() => {
+            dispatch(appActions.onModalClose());
+            navigate(APP_SCREEN.INFO);
+          }}>
           <VectorIcon icon={'bx_info_circle1'} size={30} />
         </Button>
       </Block>

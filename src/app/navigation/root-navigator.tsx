@@ -3,8 +3,9 @@ import React, { useEffect } from 'react';
 import BootSplash from 'react-native-bootsplash';
 
 import { HomeTabNavigator } from '@features/authentication/tab-navigator';
-import { Detail } from '@features/un-authentication/detail';
-import { Login } from '@features/un-authentication/login';
+import { Info } from '@features/un-authentication/info';
+import { Policy } from '@features/un-authentication/policy';
+import { Terms } from '@features/un-authentication/terms';
 import { Welcome } from '@features/un-authentication/welcome';
 import { useSelector } from '@hooks';
 import { AppModule } from '@native-module';
@@ -44,8 +45,15 @@ export const RootNavigation = () => {
             gestureEnabled: false,
           }}>
           <RootStack.Screen name={APP_SCREEN.WELCOME} component={Welcome} />
-          <RootStack.Screen name={APP_SCREEN.LOGIN} component={Login} />
-          <RootStack.Screen name={APP_SCREEN.DETAIL} component={Detail} />
+          <RootStack.Screen name={APP_SCREEN.INFO} component={Info} />
+          <RootStack.Screen
+            name={APP_SCREEN.TERMS_OF_SERVICE}
+            component={Terms}
+          />
+          <RootStack.Screen
+            name={APP_SCREEN.PRIVACY_POLICY}
+            component={Policy}
+          />
           <RootStack.Screen
             name={APP_SCREEN.HOME}
             component={HomeTabNavigator}
