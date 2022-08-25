@@ -42,6 +42,10 @@ const SignUpPageComponent = ({
         {/* button */}
         <Block style={{ marginTop: 60, width: '100%' }}>
           <Button
+            onPress={() => {
+              dispatch(appActions.onModalClose());
+              navigate(APP_SCREEN.REGISTER);
+            }}
             style={{
               backgroundColor: BTN_COLOR,
               paddingVertical: 15,
