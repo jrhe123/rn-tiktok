@@ -1,7 +1,8 @@
-import React, { memo } from 'react';
+import React, { memo, useState } from 'react';
 import { Dimensions, NativeModules } from 'react-native';
 
 import isEqual from 'react-fast-compare';
+import DatePicker from 'react-native-date-picker';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { Block, Button, Icon, Screen, Text, TextField } from '@components';
@@ -18,6 +19,8 @@ const statusBarOffset = 0;
 const MAIN_HEADER_HEIGHT = 48;
 
 const RegisterComponent = () => {
+  const [date, setDate] = useState(new Date());
+
   const renderTopBar = () => (
     <Block
       style={{
@@ -129,12 +132,10 @@ const RegisterComponent = () => {
           <Block
             block
             style={{
-              borderWidth: 1,
-              borderColor: 'red',
               flex: 1,
               justifyContent: 'flex-end',
             }}>
-            <Text>123</Text>
+            <DatePicker date={date} onDateChange={setDate} />
           </Block>
         </Block>
       </Screen>
