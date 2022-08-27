@@ -20,6 +20,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { appActions } from '@redux-slice';
 import { MyAppTheme } from '@theme';
 
+import { CountryList } from './modals/country-list';
 import { Register } from './modals/register';
 import { RegisterPopup } from './modals/register-pop';
 import { SwipeUpAni } from './modals/swipe-up-ani';
@@ -93,6 +94,11 @@ export const AppContainer = () => {
         children = <SwipeUpAni handleConfirm={hideDrop} />;
         backgroundColor = 'transparent';
         type = 'POP_UP';
+        break;
+      case 'COUNTRY_LIST':
+        children = <CountryList handleConfirm={hideDrop} />;
+        backgroundColor = '#FFFFFF';
+        type = 'MODAL';
         break;
       default:
         break;

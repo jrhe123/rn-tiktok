@@ -7421,6 +7421,13 @@ react-native-fast-image@^8.5.11:
   resolved "https://registry.yarnpkg.com/react-native-fast-image/-/react-native-fast-image-8.5.11.tgz#e3dc969d0e4e8df026646bf18194465aa55cbc2b"
   integrity sha512-cNW4bIJg3nvKaheG8vGMfqCt5LMWX9MS5+wMudgKIHbGO51spRr4sgnlhVgwHLcZ5aeNOVJ8CPRxDIWKRq/0QA==
 
+react-native-flatlist-alphabet@^1.1.2:
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/react-native-flatlist-alphabet/-/react-native-flatlist-alphabet-1.1.2.tgz#b7ed48a2d830738d769f042b4b1d829c840ab85b"
+  integrity sha512-zrW9ZSoHYMy2PSnPdG+q/32PoCVi1cosS2LuxcvGguILPMXI3yQ/DipIM/JAiYaJRqJKWQ0beJfi9cYdidGXoA==
+  dependencies:
+    react-native-section-list-get-item-layout "^2.2.3"
+
 react-native-gesture-handler@^2.4.2:
   version "2.5.0"
   resolved "https://registry.yarnpkg.com/react-native-gesture-handler/-/react-native-gesture-handler-2.5.0.tgz#61385583570ed0a45a9ed142425e35f8fe8274fb"
@@ -7473,13 +7480,6 @@ react-native-screens@^3.13.1:
   dependencies:
     react-freeze "^1.0.0"
     warn-once "^0.1.0"
-
-react-native-section-alphabet-list@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/react-native-section-alphabet-list/-/react-native-section-alphabet-list-2.1.0.tgz#d511be2ce16c7fe4d0f2b4420a86dd15f4b002b3"
-  integrity sha512-nn1nM7UAg/FYUZ5N3GlxaBg+fZF52bBMySWdrVCLXcPLef6w78cRgm+TtNXDeswoQc3iU46FOS18cVl/pq33Gg==
-  dependencies:
-    react-native-section-list-get-item-layout "^2.2.3"
 
 react-native-section-list-get-item-layout@^2.2.3:
   version "2.2.3"

@@ -14,12 +14,13 @@ import {
 
 import isEqual from 'react-fast-compare';
 
-import { country } from '@assets/country';
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
+import { dispatch } from '@common';
 import { Block, Button, Screen, Text } from '@components';
 import { rxEmail, rxMobile } from '@config/regex';
 import { goBack, navigate } from '@navigation/navigation-service';
 import { APP_SCREEN } from '@navigation/screen-types';
+import { appActions } from '@redux-slice';
 
 const BTN_COLOR = '#E8445A';
 const BTN_TEXT_COLOR = 'white';
@@ -28,13 +29,6 @@ const DIS_BTN_TEXT_COLOR = '#A9A9A9';
 const { height, width } = Dimensions.get('window');
 const MAIN_HEADER_HEIGHT = 48;
 const MAIN_TOP_BAR_HEIGHT = 60;
-
-type Code = {
-  id: number;
-  country: string;
-  number: number;
-  short: string;
-};
 
 type View = {
   id: string;
@@ -64,7 +58,6 @@ const MAIN_TAB_BAR_WIDTH = (width - 24) / 2;
 const MAIN_TAB_BAR_UNDERNEATH_WIDTH = MAIN_TAB_BAR_WIDTH;
 const distance = MAIN_TAB_BAR_WIDTH;
 
-const { countries }: { countries: Code } = country;
 const PhoneEmailComponent = () => {
   const _refRoot = useRef<FlatList>(null);
   const [currentTab, setCurrentTab] = useState<TAB>(TAB.PHONE);
@@ -126,7 +119,10 @@ const PhoneEmailComponent = () => {
                   borderColor: '#B4B4B4',
                   paddingBottom: 12,
                 }}>
-                <Button>
+                <Button
+                  onPress={() => {
+                    dispatch(appActions.onModalOpen('COUNTRY_LIST'));
+                  }}>
                   <Block
                     style={{
                       width: 72,
