@@ -4,8 +4,12 @@ import {
   Dimensions,
   Easing,
   FlatList,
+  Keyboard,
+  KeyboardAvoidingView,
+  ScrollView,
   TextInput,
   TouchableOpacity,
+  TouchableWithoutFeedback,
 } from 'react-native';
 
 import isEqual from 'react-fast-compare';
@@ -61,7 +65,6 @@ const MAIN_TAB_BAR_UNDERNEATH_WIDTH = MAIN_TAB_BAR_WIDTH;
 const distance = MAIN_TAB_BAR_WIDTH;
 
 const { countries }: { countries: Code } = country;
-
 const PhoneEmailComponent = () => {
   const _refRoot = useRef<FlatList>(null);
   const [currentTab, setCurrentTab] = useState<TAB>(TAB.PHONE);
@@ -107,143 +110,214 @@ const PhoneEmailComponent = () => {
   const renderItem = ({ item }: { item: View }) => {
     if (item.type === 'PHONE') {
       return (
-        <Block
-          block
-          style={{
-            width,
-            padding: 24,
-          }}>
-          <Block
-            style={{
-              marginTop: 18,
-              flexDirection: 'row',
-              borderBottomWidth: 1,
-              borderColor: '#B4B4B4',
-              paddingBottom: 12,
-            }}>
-            <Button>
+        <KeyboardAvoidingView behavior="padding">
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <Block
+              block
+              style={{
+                width,
+                padding: 24,
+              }}>
               <Block
                 style={{
-                  width: 72,
-                  borderRightWidth: 1,
-                  borderColor: '#B4B4B4',
+                  marginTop: 18,
                   flexDirection: 'row',
-                  alignItems: 'center',
+                  borderBottomWidth: 1,
+                  borderColor: '#B4B4B4',
+                  paddingBottom: 12,
                 }}>
-                <Text style={{ marginRight: 6 }}>CA +1</Text>
-                <VectorIcon icon={'bx_chevron_down'} size={18} />
+                <Button>
+                  <Block
+                    style={{
+                      width: 72,
+                      borderRightWidth: 1,
+                      borderColor: '#B4B4B4',
+                      flexDirection: 'row',
+                      alignItems: 'center',
+                    }}>
+                    <Text style={{ marginRight: 6 }}>CA +1</Text>
+                    <VectorIcon icon={'bx_chevron_down'} size={18} />
+                  </Block>
+                </Button>
+                <Block style={{ flex: 1, paddingLeft: 12 }}>
+                  <TextInput
+                    placeholder={'Phone number'}
+                    value={phoneNumber}
+                    keyboardType={'numeric'}
+                    onChangeText={setPhoneNumber}
+                    autoFocus
+                  />
+                </Block>
               </Block>
-            </Button>
-            <Block style={{ flex: 1, paddingLeft: 12 }}>
-              <TextInput
-                placeholder={'Phone number'}
-                value={phoneNumber}
-                onChangeText={setPhoneNumber}
-              />
+              <Block style={{ marginTop: 12 }}>
+                <Text
+                  style={{ fontSize: 15, lineHeight: 21, color: '#A1A1A1' }}>
+                  Your phone number will be used to improve your TikTok
+                  experience, including connecting you with people you may know,
+                  personalizing your ads experience, and more. If you sign up
+                  with SMS, SMS fees may apply.{' '}
+                  <TouchableOpacity
+                    onPress={() => {
+                      // dispatch(appActions.onModalClose());
+                      // navigate(APP_SCREEN.TERMS_OF_SERVICE);
+                    }}
+                    style={{
+                      marginTop: -2,
+                    }}>
+                    <Text fontSize={15}>Learn more</Text>
+                  </TouchableOpacity>
+                </Text>
+              </Block>
+              <Block style={{ marginTop: 36 }}>
+                <Button
+                  onPress={() => {}}
+                  disabled={disabledP}
+                  style={{
+                    backgroundColor: disabledP ? DIS_BTN_COLOR : BTN_COLOR,
+                    paddingVertical: 15,
+                    width: '100%',
+                  }}>
+                  <Text
+                    color={disabledP ? DIS_BTN_TEXT_COLOR : BTN_TEXT_COLOR}
+                    fontSize={15}
+                    center>
+                    Send code
+                  </Text>
+                </Button>
+              </Block>
             </Block>
-          </Block>
-          <Block style={{ marginTop: 12 }}>
-            <Text style={{ fontSize: 15, lineHeight: 21, color: '#A1A1A1' }}>
-              Your phone number will be used to improve your TikTok experience,
-              including connecting you with people you may know, personalizing
-              your ads experience, and more. If you sign up with SMS, SMS fees
-              may apply.{' '}
-              <TouchableOpacity
-                onPress={() => {
-                  // dispatch(appActions.onModalClose());
-                  // navigate(APP_SCREEN.TERMS_OF_SERVICE);
-                }}
-                style={{
-                  marginTop: -2,
-                }}>
-                <Text fontSize={15}>Learn more</Text>
-              </TouchableOpacity>
-            </Text>
-          </Block>
-          <Block style={{ marginTop: 36 }}>
-            <Button
-              onPress={() => {}}
-              disabled={disabledP}
-              style={{
-                backgroundColor: disabledP ? DIS_BTN_COLOR : BTN_COLOR,
-                paddingVertical: 15,
-                width: '100%',
-              }}>
-              <Text
-                color={disabledP ? DIS_BTN_TEXT_COLOR : BTN_TEXT_COLOR}
-                fontSize={15}
-                center>
-                Send code
-              </Text>
-            </Button>
-          </Block>
-        </Block>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       );
     } else if (item.type === 'EMAIL') {
       return (
-        <Block
-          block
-          style={{
-            width,
-            padding: 24,
-          }}>
-          <Block
-            style={{
-              marginTop: 18,
-              paddingBottom: 12,
-              borderBottomWidth: 1,
-              borderColor: '#B4B4B4',
-            }}>
-            <TextInput
-              placeholder={'Email address'}
-              value={email}
-              onChangeText={setEmail}
-            />
-          </Block>
-          <Block style={{ marginTop: 18 }}>
-            <Text style={{ fontSize: 13, lineHeight: 21, color: '#A1A1A1' }}>
-              By continuing, you agree to TikTok's
-              <TouchableOpacity
-                onPress={() => {
-                  // dispatch(appActions.onModalClose());
-                  // navigate(APP_SCREEN.TERMS_OF_SERVICE);
-                }}
-                style={{
-                  marginTop: -1,
-                }}>
-                <Text fontSize={13}>Terms of Service</Text>
-              </TouchableOpacity>{' '}
-              and confirm that you have read TikTok's{' '}
-              <TouchableOpacity
-                onPress={() => {
-                  // dispatch(appActions.onModalClose());
-                  // navigate(APP_SCREEN.TERMS_OF_SERVICE);
-                }}
-                style={{
-                  marginTop: -2,
-                }}>
-                <Text fontSize={13}>Privacy Policy</Text>
-              </TouchableOpacity>
-            </Text>
-          </Block>
-          <Block style={{ marginTop: 36 }}>
-            <Button
-              onPress={() => {}}
-              disabled={disabledE}
+        <KeyboardAvoidingView behavior="padding">
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <Block
               style={{
-                backgroundColor: disabledE ? DIS_BTN_COLOR : BTN_COLOR,
-                paddingVertical: 15,
-                width: '100%',
+                width,
+                padding: 24,
               }}>
-              <Text
-                color={disabledE ? DIS_BTN_TEXT_COLOR : BTN_TEXT_COLOR}
-                fontSize={15}
-                center>
-                Next
-              </Text>
-            </Button>
-          </Block>
-        </Block>
+              {/* main form */}
+              <Block>
+                <Block
+                  style={{
+                    marginTop: 18,
+                    paddingBottom: 12,
+                    borderBottomWidth: 1,
+                    borderColor: '#B4B4B4',
+                  }}>
+                  <TextInput
+                    placeholder={'Email address'}
+                    autoFocus
+                    value={email}
+                    onChangeText={setEmail}
+                  />
+                </Block>
+                <Block style={{ marginTop: 18 }}>
+                  <Text
+                    style={{ fontSize: 13, lineHeight: 21, color: '#A1A1A1' }}>
+                    By continuing, you agree to TikTok's
+                    <TouchableOpacity
+                      onPress={() => {
+                        // dispatch(appActions.onModalClose());
+                        // navigate(APP_SCREEN.TERMS_OF_SERVICE);
+                      }}
+                      style={{
+                        marginTop: -1,
+                      }}>
+                      <Text fontSize={13}>Terms of Service</Text>
+                    </TouchableOpacity>{' '}
+                    and confirm that you have read TikTok's{' '}
+                    <TouchableOpacity
+                      onPress={() => {
+                        // dispatch(appActions.onModalClose());
+                        // navigate(APP_SCREEN.TERMS_OF_SERVICE);
+                      }}
+                      style={{
+                        marginTop: -2,
+                      }}>
+                      <Text fontSize={13}>Privacy Policy</Text>
+                    </TouchableOpacity>
+                  </Text>
+                </Block>
+                <Block style={{ marginTop: 36 }}>
+                  <Button
+                    onPress={() => {}}
+                    disabled={disabledE}
+                    style={{
+                      backgroundColor: disabledE ? DIS_BTN_COLOR : BTN_COLOR,
+                      paddingVertical: 15,
+                      width: '100%',
+                    }}>
+                    <Text
+                      color={disabledE ? DIS_BTN_TEXT_COLOR : BTN_TEXT_COLOR}
+                      fontSize={15}
+                      center>
+                      Next
+                    </Text>
+                  </Button>
+                </Block>
+              </Block>
+              {/* email suffix options */}
+              <Block style={{ marginTop: 90 }}>
+                <Block>
+                  <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+                    <Button
+                      style={{
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        paddingVertical: 6,
+                        paddingHorizontal: 12,
+                        marginRight: 12,
+                      }}>
+                      <Text>@gmail.com</Text>
+                    </Button>
+                    <Button
+                      style={{
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        paddingVertical: 6,
+                        paddingHorizontal: 12,
+                        marginRight: 12,
+                      }}>
+                      <Text>@yahoo.com</Text>
+                    </Button>
+                    <Button
+                      style={{
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        paddingVertical: 6,
+                        paddingHorizontal: 12,
+                        marginRight: 12,
+                      }}>
+                      <Text>@outlook.com</Text>
+                    </Button>
+                    <Button
+                      style={{
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        paddingVertical: 6,
+                        paddingHorizontal: 12,
+                        marginRight: 12,
+                      }}>
+                      <Text>@hotmail.com</Text>
+                    </Button>
+                    <Button
+                      style={{
+                        borderWidth: 1,
+                        borderColor: '#ccc',
+                        paddingVertical: 6,
+                        paddingHorizontal: 12,
+                      }}>
+                      <Text>@icloud.com</Text>
+                    </Button>
+                  </ScrollView>
+                </Block>
+              </Block>
+            </Block>
+          </TouchableWithoutFeedback>
+        </KeyboardAvoidingView>
       );
     }
     return null;
@@ -436,6 +510,8 @@ const PhoneEmailComponent = () => {
           renderItem={renderItem}
           keyExtractor={item => item.id}
           horizontal
+          scrollEnabled={false}
+          nestedScrollEnabled={true}
           style={{
             width,
             height,
