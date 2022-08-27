@@ -1,14 +1,24 @@
-import React, { memo, useState } from 'react';
-import { Dimensions, NativeModules } from 'react-native';
+import React, { memo, useEffect, useState } from 'react';
+import {
+  Alert,
+  Animated as AnimatedRN,
+  Dimensions,
+  NativeModules,
+  TextInput,
+} from 'react-native';
 
 import isEqual from 'react-fast-compare';
 import DatePicker from 'react-native-date-picker';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
-import { Block, Button, Icon, Screen, Text, TextField } from '@components';
+import { Block, Button, Icon, Screen, Text } from '@components';
 import { goBack } from '@navigation/navigation-service';
+import dayjs from 'dayjs';
 
 const BTN_COLOR = '#E8445A';
+const BTN_TEXT_COLOR = 'white';
+const DIS_BTN_COLOR = '#E8E8E8';
+const DIS_BTN_TEXT_COLOR = '#A9A9A9';
 const { width } = Dimensions.get('window');
 const { StatusBarManager } = NativeModules;
 let statusBarHeight = 0;
@@ -16,10 +26,73 @@ StatusBarManager.getHeight(({ height }: { height: number }) => {
   statusBarHeight = height;
 });
 const statusBarOffset = 0;
+const validDate = new Date();
 const MAIN_HEADER_HEIGHT = 48;
+const aniValue = new AnimatedRN.Value(0);
 
 const RegisterComponent = () => {
-  const [date, setDate] = useState(new Date());
+  const [dirty, setDirty] = useState<boolean>(false);
+  const [error, setError] = useState<string>('');
+  const [date, setDate] = useState<Date>(new Date());
+  const disabled = !dirty || date > validDate;
+
+  const startShake = () => {
+    AnimatedRN.sequence([
+      AnimatedRN.timing(aniValue, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      AnimatedRN.timing(aniValue, {
+        toValue: -10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      AnimatedRN.timing(aniValue, {
+        toValue: 10,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+      AnimatedRN.timing(aniValue, {
+        toValue: 0,
+        duration: 100,
+        useNativeDriver: true,
+      }),
+    ]).start();
+  };
+
+  useEffect(() => {
+    if (error) {
+      startShake();
+    }
+  }, [error]);
+
+  const confirmDate = () => {
+    const date1 = dayjs(date.toDateString());
+    const date2 = dayjs(validDate.toDateString());
+    const years = date2.diff(date1, 'year');
+    if (years < 18) {
+      setDirty(false);
+      setError(
+        `You entered an age of ${years} years old. Enter your real date of birth.`,
+      );
+      return;
+    }
+    setError('');
+    Alert.alert(
+      'Review your date of birth',
+      `You entered: ${date.toDateString()}`,
+      [
+        {
+          text: 'OK',
+          onPress: () => {
+            console.log('continue !!!');
+          },
+          style: 'default',
+        },
+      ],
+    );
+  };
 
   const renderTopBar = () => (
     <Block
@@ -110,32 +183,76 @@ const RegisterComponent = () => {
               </Block>
             </Block>
             {/* input */}
-            <Block block style={{ marginTop: 48 }}>
-              <TextField label={'Birthday'} typeInput={'flat'} />
-            </Block>
-            {/* button */}
-            <Block style={{ marginTop: 48, width: '100%' }}>
-              <Button
-                onPress={() => {}}
+            <Block
+              style={{
+                marginTop: 24,
+                marginBottom: 12,
+              }}>
+              <TextInput
+                editable={false}
                 style={{
-                  backgroundColor: BTN_COLOR,
+                  height: 40,
+                  borderBottomWidth: 1,
+                  borderColor: '#A9A9A9',
+                }}
+                placeholder={'Birthday'}
+                value={dirty ? date.toDateString() : ''}
+              />
+            </Block>
+            {/* error msg */}
+            {!!error && (
+              <AnimatedRN.View
+                style={{
+                  marginBottom: 12,
+                  transform: [{ translateX: aniValue }],
+                }}>
+                <Text fontSize={12} color={'#DF5D55'}>
+                  <VectorIcon icon={'bx_warning'} size={13} />
+                  {error}
+                </Text>
+              </AnimatedRN.View>
+            )}
+            {/* button */}
+            <Block style={{ marginTop: 24, width: '100%' }}>
+              <Button
+                onPress={confirmDate}
+                disabled={disabled}
+                style={{
+                  backgroundColor: disabled ? DIS_BTN_COLOR : BTN_COLOR,
                   paddingVertical: 15,
                   width: '100%',
                 }}>
-                <Text color={'white'} fontSize={15} center>
+                <Text
+                  color={disabled ? DIS_BTN_TEXT_COLOR : BTN_TEXT_COLOR}
+                  fontSize={15}
+                  center>
                   Next
                 </Text>
               </Button>
             </Block>
+            {!!error && (
+              <Block style={{ marginTop: 9 }}>
+                <Text fontSize={12} color={'#A9A9A9'}>
+                  If this date is correct, tap "Next". If needed, you can edit
+                  the date before continuing.
+                </Text>
+              </Block>
+            )}
           </Block>
           {/* bottom section */}
           <Block
-            block
             style={{
               flex: 1,
               justifyContent: 'flex-end',
             }}>
-            <DatePicker date={date} onDateChange={setDate} />
+            <DatePicker
+              date={date}
+              mode="date"
+              onDateChange={d => {
+                setDirty(true);
+                setDate(d);
+              }}
+            />
           </Block>
         </Block>
       </Screen>

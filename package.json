@@ -33,6 +33,7 @@
     "@react-navigation/stack": "^6.2.1",
     "@reduxjs/toolkit": "^1.8.2",
     "axios": "^0.27.2",
+    "dayjs": "^1.11.5",
     "i18next": "^20.4.0",
     "moment": "^2.29.1",
     "react": "17.0.2",
