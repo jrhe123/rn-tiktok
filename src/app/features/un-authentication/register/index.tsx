@@ -12,7 +12,8 @@ import DatePicker from 'react-native-date-picker';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { Block, Button, Icon, Screen, Text } from '@components';
-import { goBack } from '@navigation/navigation-service';
+import { goBack, navigate } from '@navigation/navigation-service';
+import { APP_SCREEN } from '@navigation/screen-types';
 import dayjs from 'dayjs';
 
 const BTN_COLOR = '#E8445A';
@@ -86,7 +87,7 @@ const RegisterComponent = () => {
         {
           text: 'OK',
           onPress: () => {
-            console.log('continue !!!');
+            navigate(APP_SCREEN.PHONE_EMAIL);
           },
           style: 'default',
         },

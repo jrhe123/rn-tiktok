@@ -5,4 +5,4 @@ export const rxEmail = new RegExp(
 export const rxPassword =
   /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[\W])(?!.*['"]).{8,}$/;
 
-export const rxMobile = /^([0|\+[0-9]{1,5})?([7-9][0-9]{9})$/;
+export const rxMobile = /^\(?([0-9]{3})\)?[-. ]?([0-9]{3})[-. ]?([0-9]{4})$/;

@@ -5,15 +5,17 @@ export enum APP_SCREEN {
   DETAIL = 'DETAIL',
   //
   WELCOME = 'WELCOME',
+  PHONE_EMAIL = 'PHONE_EMAIL',
   LOGIN = 'LOGIN',
   REGISTER = 'REGISTER',
-  HOME = 'HOME',
   SEARCH = 'SEARCH',
   //
+  HELP = 'HELP',
   INFO = 'INFO',
   TERMS_OF_SERVICE = 'TERMS_OF_SERVICE',
   PRIVACY_POLICY = 'PRIVACY_POLICY',
   // tab
+  HOME = 'HOME',
   VIDEO = 'VIDEO',
   FRIEND = 'FRIEND',
   RECORD = 'RECORD',
@@ -27,18 +29,19 @@ export type UnAuthorizeParamsList = {
     id?: number;
   };
   //
+  [APP_SCREEN.WELCOME]: undefined;
+  [APP_SCREEN.PHONE_EMAIL]: undefined;
   [APP_SCREEN.LOGIN]: undefined;
   [APP_SCREEN.REGISTER]: undefined;
-  [APP_SCREEN.WELCOME]: undefined;
   [APP_SCREEN.SEARCH]: undefined;
   //
+  [APP_SCREEN.HELP]: undefined;
   [APP_SCREEN.INFO]: undefined;
   [APP_SCREEN.TERMS_OF_SERVICE]: undefined;
   [APP_SCREEN.PRIVACY_POLICY]: undefined;
 };
 export type AuthorizeParamsList = {
   [APP_SCREEN.HOME]: undefined;
-  //
   [APP_SCREEN.VIDEO]: undefined;
   [APP_SCREEN.FRIEND]: undefined;
   [APP_SCREEN.RECORD]: undefined;

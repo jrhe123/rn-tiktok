@@ -27,4 +27,5 @@ export type ModalType =
   | 'REGISTER'
   | 'REGISTER_POPUP'
   | 'SWIPE_UP_ANI_POPUP'
+  | 'COUNTRY_LIST'
   | 'OTHER';
