@@ -63,18 +63,22 @@ const CountryListComponent = ({
   const renderItem = (item: IData) => {
     const itemF = item as FormattedCode;
     return (
-      <Block
-        direction={'row'}
-        style={{
-          justifyContent: 'space-between',
-          paddingRight: 24,
-          paddingVertical: 12,
-          borderBottomColor: '#ccc',
-          borderBottomWidth: 0.5,
-        }}>
-        <Text style={{ fontSize: 18 }}>{itemF.value}</Text>
-        <Text style={{ fontSize: 18, color: '#9F9F9F' }}>+{itemF.number}</Text>
-      </Block>
+      <Button>
+        <Block
+          direction={'row'}
+          style={{
+            justifyContent: 'space-between',
+            paddingRight: 24,
+            paddingVertical: 12,
+            borderBottomColor: '#ccc',
+            borderBottomWidth: 0.5,
+          }}>
+          <Text style={{ fontSize: 18 }}>{itemF.value}</Text>
+          <Text style={{ fontSize: 18, color: '#9F9F9F' }}>
+            +{itemF.number}
+          </Text>
+        </Block>
+      </Button>
     );
   };
 
