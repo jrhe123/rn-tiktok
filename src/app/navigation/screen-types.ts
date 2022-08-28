@@ -14,6 +14,7 @@ export enum APP_SCREEN {
   INFO = 'INFO',
   TERMS_OF_SERVICE = 'TERMS_OF_SERVICE',
   PRIVACY_POLICY = 'PRIVACY_POLICY',
+  SETTINGS = 'SETTINGS',
   // tab
   HOME = 'HOME',
   VIDEO = 'VIDEO',
@@ -39,6 +40,7 @@ export type UnAuthorizeParamsList = {
   [APP_SCREEN.INFO]: undefined;
   [APP_SCREEN.TERMS_OF_SERVICE]: undefined;
   [APP_SCREEN.PRIVACY_POLICY]: undefined;
+  [APP_SCREEN.SETTINGS]: undefined;
 };
 export type AuthorizeParamsList = {
   [APP_SCREEN.HOME]: undefined;

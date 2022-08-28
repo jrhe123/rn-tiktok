@@ -10,6 +10,7 @@ import { PhoneEmail } from '@features/un-authentication/phone-email';
 import { Policy } from '@features/un-authentication/policy';
 import { Register } from '@features/un-authentication/register';
 import { Search } from '@features/un-authentication/search';
+import { Settings } from '@features/un-authentication/settings';
 import { Terms } from '@features/un-authentication/terms';
 import { Welcome } from '@features/un-authentication/welcome';
 import { useSelector } from '@hooks';
@@ -67,6 +68,7 @@ export const RootNavigation = () => {
             name={APP_SCREEN.PRIVACY_POLICY}
             component={Policy}
           />
+          <RootStack.Screen name={APP_SCREEN.SETTINGS} component={Settings} />
           <RootStack.Screen
             name={APP_SCREEN.HOME}
             component={HomeTabNavigator}

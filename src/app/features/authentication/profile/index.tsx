@@ -10,6 +10,9 @@ import isEqual from 'react-fast-compare';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { Block } from '@components';
+import { navigate } from '@navigation/navigation-service';
+import { APP_SCREEN } from '@navigation/screen-types';
+import { appActions } from '@redux-slice';
 
 const { width } = Dimensions.get('window');
 const { StatusBarManager } = NativeModules;
@@ -52,7 +55,10 @@ const ProfileComponent = () => {
             justifyContent: 'center',
             alignItems: 'center',
           }}>
-          <TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              navigate(APP_SCREEN.SETTINGS);
+            }}>
             <VectorIcon icon={'bx_menu'} color="white" size={30} />
           </TouchableOpacity>
         </Block>
