@@ -7,6 +7,8 @@
 <!-- aws setup -->
 https://instamobile.io/react-native-tutorials/react-native-aws-s3/
 
+https://docs.amplify.aws/lib/storage/upload/q/platform/js/
+
 # Setup
 
 - Setup development environment [React Native CLI](https://reactnative.dev/docs/environment-setup)

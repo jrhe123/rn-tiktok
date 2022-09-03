@@ -1,3 +1,6 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
+const exclusionList = require('metro-config/src/defaults/exclusionList');
+
 module.exports = {
   transformer: {
     getTransformOptions: async () => ({
@@ -6,5 +9,8 @@ module.exports = {
         inlineRequires: true,
       },
     }),
+  },
+  resolver: {
+    blacklistRE: exclusionList([/#current-cloud-backend\/.*/]),
   },
 };
