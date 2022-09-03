@@ -20,6 +20,8 @@
 	<string>${VERSION_NAME}</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like access to your photo gallery.</string>
 	<key>CFBundleVersion</key>
 	<string>${VERSION_CODE}</string>
 	<key>LSRequiresIPhoneOS</key>
