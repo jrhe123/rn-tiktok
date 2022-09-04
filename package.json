@@ -27,6 +27,7 @@
   "dependencies": {
     "@hookform/resolvers": "^2.9.0",
     "@react-native-async-storage/async-storage": "^1.17.10",
+    "@react-native-community/cameraroll": "^4.1.2",
     "@react-native-community/masked-view": "^0.1.11",
     "@react-native-community/netinfo": "^9.0.0",
     "@react-navigation/bottom-tabs": "^6.3.2",
@@ -36,6 +37,7 @@
     "aws-amplify": "^4.3.34",
     "axios": "^0.27.2",
     "dayjs": "^1.11.5",
+    "fbjs": "^3.0.4",
     "i18next": "^20.4.0",
     "metro-config": "^0.72.1",
     "moment": "^2.29.1",
@@ -64,6 +66,7 @@
     "react-native-video": "^5.2.0",
     "react-redux": "^8.0.2",
     "redux-logger": "^3.0.6",
+    "rn-fetch-blob": "^0.12.0",
     "yup": "^0.32.11"
   },
   "devDependencies": {
