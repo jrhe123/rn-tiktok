@@ -57,7 +57,7 @@ const RecordComponent = () => {
     await launchImageLibrary(
       { mediaType: 'mixed' },
       (result: ImagePickerResponse) => {
-        console.log('result: ', result);
+        // console.log('result: ', result);
         if (!result.assets) {
           Alert.alert(result.errorMessage || '');
           return;
@@ -117,8 +117,13 @@ const RecordComponent = () => {
         setProgressText('Upload Done: 100%');
         setAsset(null);
         setisLoading(false);
+        console.log('!!!!!!!!!!!');
+        console.log('res: ', res);
         Storage.get(res.key)
-          .then(result => console.log(result))
+          .then(result => {
+            console.log('!!!!!!!!!!!');
+            console.log('result: ', result);
+          })
           .catch(err => {
             setProgressText('Upload Error');
             console.log(err);
