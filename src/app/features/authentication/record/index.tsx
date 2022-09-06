@@ -18,6 +18,7 @@ import Amplify, { Storage } from 'aws-amplify';
 import RNFetchBlob from 'rn-fetch-blob';
 
 import awsconfig from './aws-exports';
+import { S3_BASE_URL } from '@env';
 
 type configType = {
   fileCache: boolean;
@@ -31,8 +32,7 @@ type configType = {
 
 Amplify.configure(awsconfig);
 
-const videoLink =
-  'https://rnmobilefe7d9e3bc8d54535927316a80820c8f1212814-test.s3.us-east-1.amazonaws.com/public/e953eea1-ab65-49eb-8b3d-d76dccaa63ee.mp4?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=ASIAQKYX2CQYCLFBBPNJ%2F20220904%2Fus-east-1%2Fs3%2Faws4_request&X-Amz-Date=20220904T172531Z&X-Amz-Expires=900&X-Amz-Security-Token=IQoJb3JpZ2luX2VjEDoaCXVzLWVhc3QtMSJGMEQCICW%2BBxdx%2Fv%2FjRIwYnX25YnT1L3jFMzimg%2FK2jdyjo5%2FoAiA7IU26GuhivIdcLGTNoh0K8DWwIxd4fGsFBLeCHEaeDCqbBgjD%2F%2F%2F%2F%2F%2F%2F%2F%2F%2F8BEAMaDDAyMzEzNTM5MjgxNiIMGddYKnKI0dCHQAWBKu8Fta9l2n%2BzSQMrLPAg83yoNrS6e4%2BoK99V%2BNeixUcsRtgXRKCENiECSl%2FZ36tD8XZfX%2F7hPeaoxht4LxkA%2BlhuFBkXvwjjcpsXwDm2skbBKdqK%2BmtZdWsEb3UYl9u6v9OAow6Fi5Dss5gACa%2FA9t9vt%2FN8jrL%2FToJx0Zu3M2ZSVpc836LLu9b%2FeJI%2BCFm8CW2eNkR7yGOPCEdBeo1ZHpXKAHdbYGPmqOAgT%2FQ%2Bv1Iob2KIcE9%2FuI5AAvQzpUXG6XrXt%2BLNKYZ9bogOjR2HA8e6iNNNghl%2BvG94o9hjSkeX%2BfgUpL3ZngaILK9fU4W2MwB13zlQotUVEfysTpBmL2xg0g5bfhMfFiP%2Fj17H7dFt1EDHkoZNCsSjgt1UbeaDmwSaAPKc3b9daCywyN8CoogkRVLY29LpE2v1S338UuUjLeJ8r9BFx17ApYIChy%2BChcwQfrNIKEALLh4dnuHjc0ycgeYRNT5OKXcYQzExLJaDm6aqxMHfARNYgeSJVpzO02WtTu3NpGfbP%2B8d20ft1uU9RH6YlDlUfPuEepoRjGHoVGJayJ2mhm%2Bj%2BwCPxOgMTC%2Fe8lkCYE3qpOoiRK6o5BXJLJuo2KxstqjwMPFkUyulpJyzv4Bm3uwceJKAc4zowJXqdosOC62iKAIzZo41YeMnwbsaxK3zafc7ae4tj8r%2BgkBNTJE1VKvm%2BhkBbL%2FU4SFJjCtBdQU67aa6NakL6dRQBW%2BvMWBkyMI5CbDYiHJ3sljszOtVCC3SF%2B6f0IbQRAB7qHeJZ1iaLHWMep%2FUX3iSBaWibP6dUpzrFotqgl%2FOMOFjGp94or1jEgxJz%2FRXhd%2FrZZLfCZ7UJ%2B68b2MGiEl16M3t8Fm69tTYXcJRiKuuiblmzuKPQ9K2LD%2BtIDk3fcizV3nqyFXhFjvlQNbuljnnTMNVc5E%2BIZmo4%2BlEK8Hy7R3ZJHizIsxTGUndjfetq0sO%2BkRkcaaPAuK9dn8HpA4%2BwfxEpOrynHM%2BEqsqMKFybjCGv9OYBjqIAkDWo%2FgVpCJ0bDFIozc2EWtPaiRQDBMjj88jURXCMpNhFp8OBvd0stqOeuDWUcgFBO7Zy6shAEg1KE6jSYZM%2F1OWrY%2Fzb0DwzXxMjm95bO7t1ZTX87F7yb5uuusuZJSornncOj1ZDHxq8Q%2BpIdvu14NILWQNVkacj%2BdkaT3V7mZNcMUCp37RfgPZuWjWq69GlC2fKQLpXLbm6HXnJTpR%2FOW6GRHe0YDS5OJFWHw%2BUZaS1QU7%2FlxH465Shrl18qiEN6BxINI5BfAB7AZld5wFoPpIlbCPQ%2FqZ%2B3fHW%2BVnHMSojhKfdsiinXYOdn4FA0z%2BXfkEo4CWGuwDNDHk%2BEQUzyU8wNaF4v4u1w%3D%3D&X-Amz-Signature=ed167fa897a39546d19ab8a9ad6ed585f2a683b2a0e4e15e8939f032aa6fe856&X-Amz-SignedHeaders=host&x-amz-user-agent=aws-sdk-js%2F3.6.1%20os%2Fother%20lang%2Fjs%20md%2Fbrowser%2Funknown_unknown%20api%2Fs3%2F3.6.1%20aws-amplify%2F4.7.2_react-native&x-id=GetObject';
+const videoLink = S3_BASE_URL + '/03615426-ed78-42d1-9bab-2a22f7c16feb.mp4';
 
 const RecordComponent = () => {
   const [asset, setAsset] = useState<Asset | null>(null);
