@@ -25,6 +25,7 @@
     ]
   },
   "dependencies": {
+    "@babel/plugin-transform-named-capturing-groups-regex": "^7.19.0",
     "@hookform/resolvers": "^2.9.0",
     "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-community/cameraroll": "^4.1.2",

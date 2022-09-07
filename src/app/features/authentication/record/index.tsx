@@ -13,12 +13,12 @@ import uuid from 'react-native-uuid';
 import Video from 'react-native-video';
 
 import { Block, Button, Image, Text } from '@components';
+import { S3_BASE_URL } from '@env';
 import CameraRoll from '@react-native-community/cameraroll';
 import Amplify, { Storage } from 'aws-amplify';
 import RNFetchBlob from 'rn-fetch-blob';
 
 import awsconfig from './aws-exports';
-import { S3_BASE_URL } from '@env';
 
 type configType = {
   fileCache: boolean;

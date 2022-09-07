@@ -6,6 +6,7 @@ module.exports = {
     },
   },
   plugins: [
+    '@babel/plugin-transform-named-capturing-groups-regex',
     'react-native-reanimated/plugin',
     [
       'module:react-native-dotenv',
