@@ -1,4 +1,4 @@
-import React, { memo, useEffect } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import {
   Animated as AnimatedRN,
   Dimensions,
@@ -37,6 +37,7 @@ type LabelProps =
       position: LabelPosition;
     }) => React.ReactNode);
 
+const aniBgValue = new AnimatedRN.Value(1);
 const aniVideoValue = new AnimatedRN.Value(1);
 const aniFriendValue = new AnimatedRN.Value(1);
 const aniInboxValue = new AnimatedRN.Value(1);
@@ -74,8 +75,36 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
     inputRange: [0, 0.2, 1],
     outputRange: [0.7, 1, 1],
   });
+  const color = aniBgValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: ['rgb(242, 242, 242)', 'rgb(1, 1, 1)'],
+  });
+  const [isDark, setIsDark] = useState<boolean>(true);
 
   useEffect(() => {
+    if (!isDark) {
+      AnimatedRN.timing(aniBgValue, {
+        toValue: 0,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start();
+    } else {
+      AnimatedRN.timing(aniBgValue, {
+        toValue: 1,
+        duration: 300,
+        easing: Easing.linear,
+        useNativeDriver: false,
+      }).start();
+    }
+  }, [isDark]);
+
+  useEffect(() => {
+    if (state.index === 0) {
+      setIsDark(true);
+    } else {
+      setIsDark(false);
+    }
     switch (state.index) {
       case 0:
         AnimatedRN.timing(aniVideoValue, {
@@ -151,14 +180,14 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   }, [state.index]);
 
   return (
-    <Block
+    <AnimatedRN.View
       style={{
         height: BOTTOM_BAR_HEIGHT,
         width,
         flexDirection: 'row',
         zIndex: 99,
-        backgroundColor: '#010101',
-        borderTopColor: '#6F7681',
+        backgroundColor: color,
+        borderTopColor: isDark ? '#6F7681' : '#D0D0D0',
         borderTopWidth: 0.5,
       }}>
       <Block block style={{ flexDirection: 'row' }}>
@@ -194,7 +223,10 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
             });
           };
 
-          const color = isFocused ? 'white' : '#ccc';
+          let color = isFocused ? 'white' : '#ccc';
+          if (!isDark) {
+            color = isFocused ? 'black' : '#8A8A8A';
+          }
           const opacity = isFocused ? 1 : 0.5;
           let icon: VectorIconIcon = 'home';
           let reverseIcon: VectorIconIcon = 'home';
@@ -251,14 +283,17 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
                       alignItems: 'center',
                       height: 30,
                       width: 45,
-                      backgroundColor: 'white',
+                      backgroundColor: isDark ? 'white' : '#010101',
                       borderRadius: 9,
                       borderLeftWidth: 4,
                       borderRightWidth: 4,
                       borderLeftColor: '#67D1E8',
                       borderRightColor: '#E7426D',
                     }}>
-                    <VectorIcon icon={'bx_plus'} color="black" />
+                    <VectorIcon
+                      icon={'bx_plus'}
+                      color={isDark ? 'black' : 'white'}
+                    />
                   </Block>
                 </Block>
               ) : (
@@ -306,7 +341,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
           );
         })}
       </Block>
-    </Block>
+    </AnimatedRN.View>
   );
 };
 

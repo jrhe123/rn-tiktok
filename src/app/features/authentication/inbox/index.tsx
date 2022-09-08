@@ -1,20 +1,58 @@
 import React, { memo } from 'react';
+import {
+  Animated as AnimatedRN,
+  Dimensions,
+  NativeModules,
+} from 'react-native';
 
 import isEqual from 'react-fast-compare';
 
-import { Block, Text } from '@components';
+import { Block, Screen } from '@components';
 
+const { width } = Dimensions.get('window');
+const { StatusBarManager } = NativeModules;
+let statusBarHeight = 0;
+StatusBarManager.getHeight(({ height }: { height: number }) => {
+  statusBarHeight = height;
+});
+const statusBarOffset = 0;
+const MAIN_HEADER_HEIGHT = 60;
 const InboxComponent = () => {
-  console.log('hit Inbox component');
+  const renderTopBar = () => (
+    <Block
+      style={{
+        marginTop: statusBarHeight + statusBarOffset,
+        width,
+        flexDirection: 'row',
+        justifyContent: 'center',
+        alignItems: 'center',
+        height: MAIN_HEADER_HEIGHT,
+        position: 'relative',
+      }}>
+      <AnimatedRN.Text
+        style={{
+          fontSize: 18,
+          fontWeight: 'bold',
+          textAlign: 'center',
+        }}>
+        Inbox
+      </AnimatedRN.Text>
+    </Block>
+  );
   // render
   return (
     <Block
       block
       style={{
-        backgroundColor: '#010101',
         position: 'relative',
       }}>
-      <Text>this is Inbox page</Text>
+      <Screen
+        unsafe
+        statusBarStyle="dark-content"
+        bottomInsetColor="transparent"
+        backgroundColor={'transparent'}>
+        {renderTopBar()}
+      </Screen>
     </Block>
   );
 };
