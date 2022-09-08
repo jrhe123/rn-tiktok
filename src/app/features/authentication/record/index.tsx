@@ -1,12 +1,12 @@
-import React, { memo, useEffect, useState } from 'react';
-import { Alert, Platform, TouchableOpacity } from 'react-native';
+import React, { memo, useEffect, useRef, useState } from 'react';
+import { Alert, Platform, TouchableOpacity, View } from 'react-native';
 
 import isEqual from 'react-fast-compare';
+import { RNCamera } from 'react-native-camera';
 import { createThumbnail } from 'react-native-create-thumbnail';
 import {
   Asset,
   ImagePickerResponse,
-  launchCamera,
   launchImageLibrary,
 } from 'react-native-image-picker';
 import uuid from 'react-native-uuid';
@@ -34,8 +34,22 @@ Amplify.configure(awsconfig);
 
 const videoLink = S3_BASE_URL + '/03615426-ed78-42d1-9bab-2a22f7c16feb.mp4';
 
+const PendingView = () => (
+  <View
+    style={{
+      flex: 1,
+      backgroundColor: 'lightgreen',
+      justifyContent: 'center',
+      alignItems: 'center',
+    }}>
+    <Text>Waiting</Text>
+  </View>
+);
+
 const RecordComponent = () => {
+  const camera = useRef<RNCamera | null>(null);
   const [asset, setAsset] = useState<Asset | null>(null);
+  const [cameraType, setCameraType] = useState(RNCamera.Constants.Type.back);
   const [progressText, setProgressText] = useState('');
   const [isLoading, setisLoading] = useState(false);
 
@@ -63,26 +77,6 @@ const RecordComponent = () => {
           return;
         }
         setAsset(result.assets[0]);
-      },
-    );
-  };
-
-  const openCamera = async () => {
-    launchCamera(
-      {
-        mediaType: 'mixed',
-      },
-      response => {
-        console.log('Response = ', response);
-        if (response.didCancel) {
-          console.log('User cancelled image picker');
-        } else if (response.errorCode) {
-          console.log('ImagePicker Error: ', response.errorCode);
-        } else if (response.errorMessage) {
-          console.log('User tapped custom button: ', response.errorMessage);
-        } else {
-          console.log('response.assets', response.assets);
-        }
       },
     );
   };
@@ -177,6 +171,129 @@ const RecordComponent = () => {
     }
   };
 
+  const submit = async () => {
+    if (camera.current) {
+      const { uri, codec = 'mp4' } = await camera.current.recordAsync();
+      console.info(uri);
+    }
+  };
+  const stop = () => {
+    if (camera.current) {
+      camera.current.stopRecording();
+    }
+  };
+
+  const takePicture = async () => {
+    if (camera.current) {
+      const options = { quality: 0.5, base64: true, skipProcessing: true };
+      const data = await camera.current.takePictureAsync(options);
+      const source = data.uri;
+      if (source) {
+        await camera.current.pausePreview();
+        console.log('picture source', source);
+      }
+    }
+  };
+
+  const recordVideo = async () => {
+    if (camera.current) {
+      try {
+        const videoRecordPromise = camera.current.recordAsync();
+        if (videoRecordPromise) {
+          const data = await videoRecordPromise;
+          const source = data.uri;
+          if (source) {
+            console.log('video source', source);
+          }
+        }
+      } catch (error) {
+        console.warn(error);
+      }
+    }
+  };
+  const stopVideoRecording = () => {
+    if (camera.current) {
+      camera.current.stopRecording();
+    }
+  };
+
+  const switchCamera = () => {
+    if (isPreview) {
+      return;
+    }
+    setCameraType(prevCameraType =>
+      prevCameraType === Camera.Constants.Type.back
+        ? Camera.Constants.Type.front
+        : Camera.Constants.Type.back,
+    );
+  };
+
+  const renderCam = () => {
+    return (
+      <RNCamera
+        ref={camera}
+        style={{
+          width: '100%',
+          height: 300,
+        }}
+        defaultVideoQuality={RNCamera.Constants.VideoQuality['480p']}
+        type={cameraType}
+        flashMode={RNCamera.Constants.FlashMode.on}
+        androidCameraPermissionOptions={{
+          title: 'Permission to use camera',
+          message: 'We need your permission to use your camera',
+          buttonPositive: 'Ok',
+          buttonNegative: 'Cancel',
+        }}
+        androidRecordAudioPermissionOptions={{
+          title: 'Permission to use audio recording',
+          message: 'We need your permission to use your audio',
+          buttonPositive: 'Ok',
+          buttonNegative: 'Cancel',
+        }}>
+        {({ status }) => {
+          if (status !== 'READY') return <PendingView />;
+          return (
+            <View
+              style={{
+                flex: 0,
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}>
+              <TouchableOpacity
+                onPress={() => takePicture()}
+                style={{
+                  flex: 0,
+                  backgroundColor: '#fff',
+                  borderRadius: 5,
+                  padding: 15,
+                  paddingHorizontal: 20,
+                  alignSelf: 'center',
+                  margin: 20,
+                }}>
+                <Text style={{ fontSize: 14 }}> SNAP </Text>
+              </TouchableOpacity>
+              <TouchableOpacity
+                onLongPress={recordVideo}
+                onPressOut={stopVideoRecording}
+                style={{
+                  flex: 0,
+                  backgroundColor: '#fff',
+                  borderRadius: 5,
+                  padding: 15,
+                  paddingHorizontal: 20,
+                  alignSelf: 'center',
+                  margin: 20,
+                }}>
+                <Text style={{ fontSize: 14 }}> record </Text>
+              </TouchableOpacity>
+            </View>
+          );
+        }}
+      </RNCamera>
+    );
+  };
+
   const renderAsset = () => {
     if (!asset) {
       return null;
@@ -195,7 +312,7 @@ const RecordComponent = () => {
         backgroundColor: 'red',
         position: 'relative',
       }}>
-      <Block style={{ marginTop: 60 }}>
+      {/* <Block style={{ marginTop: 60 }}>
         <Button onPress={selectFile}>
           <Text>SELECT {asset ? 'ANOTHER' : ''} FILE</Text>
         </Button>
@@ -209,23 +326,23 @@ const RecordComponent = () => {
         <Button onPress={downloadResource}>
           <Text>DOWNLOAD</Text>
         </Button>
+      </Block> */}
+      <Block style={{ borderWidth: 3, borderColor: 'green' }}>
+        {renderCam()}
       </Block>
-      <Block style={{ marginTop: 60 }}>
-        <Button onPress={openCamera}>
-          <Text>OPEN CAMERA</Text>
-        </Button>
-      </Block>
-      {renderAsset()}
+      {/* {renderAsset()}
       {asset && (
         <>
           <TouchableOpacity onPress={() => setAsset(null)}>
             <Text>Remove Selected Image</Text>
           </TouchableOpacity>
         </>
-      )}
-      <Image source={{ uri: testUrl }} />
+      )} */}
+      {/* <Image source={{ uri: testUrl }} /> */}
     </Block>
   );
 };
 
 export const Record = memo(RecordComponent, isEqual);
+
+// https://instamobile.io/react-native-tutorials/capturing-photos-and-videos-with-the-camera-in-react-native/
