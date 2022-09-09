@@ -27,7 +27,6 @@ const MAIN_HEADER_HEIGHT = 60;
 const MENU_ICON_SIZE = 30;
 const CAMERA_BUTTON_SIZE = 96;
 const CAMERA_ICON_SIZE = 42;
-const CAROUSEL_WIDTH = width;
 const CAROUSEL_HEIGHT = 72;
 const OPTION_BTN_COLOR = '#E8445A';
 
@@ -75,7 +74,6 @@ const ProfileComponent = () => {
     <Block
       style={{
         marginTop: statusBarHeight + statusBarOffset,
-        width,
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
@@ -125,11 +123,10 @@ const ProfileComponent = () => {
         backgroundColor={'transparent'}>
         {renderTopBar()}
         {/* main content */}
-        <Block>
+        <Block paddingHorizontal={25}>
           {/* camera icon */}
           <Block
             style={{
-              width,
               marginTop: 36,
               alignItems: 'center',
             }}>
@@ -214,20 +211,21 @@ const ProfileComponent = () => {
             <ScrollView
               ref={_refRoot}
               pagingEnabled={false}
+              scrollEnabled={false}
               style={{
-                width: CAROUSEL_WIDTH,
                 height: CAROUSEL_HEIGHT,
               }}>
               {BANNER_TEXT.map((banner, i) => {
                 return (
                   <Block
+                    block
                     key={i}
                     alignItems={'center'}
-                    width={CAROUSEL_WIDTH}
+                    justifyContent={'center'}
+                    width={'100%'}
                     height={CAROUSEL_HEIGHT / 2}
                     overflow={'hidden'}>
                     <Text
-                      center
                       fontSize={21}
                       fontWeight={'bold'}
                       style={{
@@ -242,7 +240,7 @@ const ProfileComponent = () => {
             </ScrollView>
           </Block>
           {/* button */}
-          <Block style={{ marginTop: 24 }} paddingHorizontal={25}>
+          <Block style={{ marginTop: 24 }}>
             <Button
               style={{
                 backgroundColor: OPTION_BTN_COLOR,
