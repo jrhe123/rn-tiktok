@@ -85,14 +85,14 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
     if (!isDark) {
       AnimatedRN.timing(aniBgValue, {
         toValue: 0,
-        duration: 300,
+        duration: 150,
         easing: Easing.linear,
         useNativeDriver: false,
       }).start();
     } else {
       AnimatedRN.timing(aniBgValue, {
         toValue: 1,
-        duration: 300,
+        duration: 150,
         easing: Easing.linear,
         useNativeDriver: false,
       }).start();
