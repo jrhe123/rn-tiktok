@@ -56,6 +56,7 @@ const ProfileComponent = () => {
     }, 4000);
     return () => {
       clearInterval(id);
+      console.log('unmount profile');
     };
   }, []);
 

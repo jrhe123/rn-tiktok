@@ -220,6 +220,9 @@ const VideoComponent = () => {
         ],
       );
     }
+    return () => {
+      console.log('unmount video');
+    };
   }, []);
 
   // FY

@@ -352,6 +352,7 @@ const TabNavigator = () => {
       tabBar={(props: BottomTabBarProps) => <TabBar {...props} />}
       screenOptions={() => ({
         headerShown: false,
+        unmountOnBlur: true, // unmount tab page if inactive
       })}>
       <HomeTab.Screen
         name={APP_SCREEN.VIDEO}
