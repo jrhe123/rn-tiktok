@@ -11,6 +11,17 @@ git commit -m "test(mobile): change ruby version"
 
 commitlint: [build, chore, ci, docs, feat, fix, perf, refactor, revert, style, test]
 
+<!-- fix rn-fetch-blob: Require cycle issue -->
+
+Modify these files can avoid require cycle:
+IN DIR rn-fetch-blob/polyfill
+all thease 4 files: Blob.js, Fetch.js, XMLHttpRequest.js
+
+// import RNFetchBlob from '../index.js'
+import {NativeModules} from 'react-native';
+const RNFetchBlob = NativeModules.RNFetchBlob
+
+https://github.com/joltup/rn-fetch-blob/issues/183
 
 <!-- redux listenerr vs redux saga -->
 https://blog.logrocket.com/redux-toolkits-new-listener-middleware-vs-redux-saga/
