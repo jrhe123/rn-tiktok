@@ -1,4 +1,4 @@
-import React, { memo } from 'react';
+import React, { memo, useEffect, useState } from 'react';
 import {
   Animated as AnimatedRN,
   Dimensions,
@@ -7,7 +7,9 @@ import {
 
 import isEqual from 'react-fast-compare';
 
+import { dispatch } from '@common';
 import { Block, Screen } from '@components';
+import { appActions } from '@redux-slice';
 
 const { width } = Dimensions.get('window');
 const { StatusBarManager } = NativeModules;
@@ -17,7 +19,16 @@ StatusBarManager.getHeight(({ height }: { height: number }) => {
 });
 const statusBarOffset = 0;
 const MAIN_HEADER_HEIGHT = 60;
+
 const FriendComponent = () => {
+  const [isAuth, setIsAuth] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (!isAuth) {
+      dispatch(appActions.onModalOpen('REGISTER'));
+    }
+  }, [isAuth]);
+
   const renderTopBar = () => (
     <Block
       style={{
@@ -32,6 +43,7 @@ const FriendComponent = () => {
       <AnimatedRN.Text
         style={{
           fontSize: 18,
+          color: 'white',
           fontWeight: 'bold',
           textAlign: 'center',
         }}>
@@ -44,11 +56,12 @@ const FriendComponent = () => {
     <Block
       block
       style={{
+        backgroundColor: '#010101',
         position: 'relative',
       }}>
       <Screen
         unsafe
-        statusBarStyle="dark-content"
+        statusBarStyle="light-content"
         bottomInsetColor="transparent"
         backgroundColor={'transparent'}>
         {renderTopBar()}

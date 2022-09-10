@@ -100,7 +100,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
   }, [isDark]);
 
   useEffect(() => {
-    if (state.index === 0) {
+    if (state.index === 0 || state.index === 1) {
       setIsDark(true);
     } else {
       setIsDark(false);
@@ -116,7 +116,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
           if (finished) {
             AnimatedRN.timing(aniVideoValue, {
               toValue: 1,
-              duration: 500,
+              duration: 300,
               easing: Easing.linear,
               useNativeDriver: true,
             }).start();
@@ -133,7 +133,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
           if (finished) {
             AnimatedRN.timing(aniFriendValue, {
               toValue: 1,
-              duration: 500,
+              duration: 300,
               easing: Easing.linear,
               useNativeDriver: true,
             }).start();
@@ -150,7 +150,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
           if (finished) {
             AnimatedRN.timing(aniInboxValue, {
               toValue: 1,
-              duration: 500,
+              duration: 300,
               easing: Easing.linear,
               useNativeDriver: true,
             }).start();
@@ -167,7 +167,7 @@ const TabBar = ({ state, descriptors, navigation }: BottomTabBarProps) => {
           if (finished) {
             AnimatedRN.timing(aniProfileValue, {
               toValue: 1,
-              duration: 500,
+              duration: 300,
               easing: Easing.linear,
               useNativeDriver: true,
             }).start();
