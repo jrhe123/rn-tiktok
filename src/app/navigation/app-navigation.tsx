@@ -75,7 +75,7 @@ export const AppContainer = () => {
     switch (modalType) {
       case 'REGISTER':
         children = <Register />;
-        backgroundColor = '#FFFFFF';
+        backgroundColor = 'transparent';
         type = 'MODAL';
         break;
       case 'REGISTER_POPUP':

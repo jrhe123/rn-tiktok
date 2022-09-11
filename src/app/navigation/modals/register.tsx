@@ -1,11 +1,12 @@
-import React, { memo, useRef } from 'react';
+import React, { memo, useCallback, useEffect, useRef } from 'react';
 import { Dimensions, FlatList, NativeModules } from 'react-native';
 
 import isEqual from 'react-fast-compare';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { dispatch } from '@common';
-import { Block, Button, Icon } from '@components';
+import { Block, BottomSheet, BottomSheetRef, Button, Icon } from '@components';
 import { navigate } from '@navigation/navigation-service';
 import { APP_SCREEN } from '@navigation/screen-types';
 import { appActions } from '@redux-slice';
@@ -36,6 +37,20 @@ StatusBarManager.getHeight(({ height }: { height: number }) => {
 });
 const RegisterComponent = () => {
   const _refRoot = useRef<FlatList>(null);
+  const _refBS = useRef<BottomSheetRef>(null);
+
+  const onPress = useCallback(() => {
+    const isActive = _refBS?.current?.isActive();
+    if (isActive) {
+      _refBS?.current?.scrollTo(0);
+    } else {
+      _refBS?.current?.scrollTo(-(height - statusBarHeight));
+    }
+  }, []);
+
+  useEffect(() => {
+    onPress();
+  }, [onPress]);
 
   const renderTopBar = () => (
     <>
@@ -49,7 +64,10 @@ const RegisterComponent = () => {
           height: 30,
           zIndex: 1,
         }}>
-        <Button>
+        <Button
+          onPress={() => {
+            dispatch(appActions.onModalClose());
+          }}>
           <Icon icon={'close'} size={30} />
         </Button>
       </Block>
@@ -106,29 +124,46 @@ const RegisterComponent = () => {
   };
 
   return (
-    <Block
-      block
-      style={{
-        alignItems: 'center',
-        position: 'relative',
-      }}>
-      {renderTopBar()}
-      <FlatList
-        ref={_refRoot}
-        data={pages}
-        renderItem={renderItem}
-        keyExtractor={item => item.id}
-        horizontal
-        scrollEnabled={false}
-        style={{
-          width,
-          height: height - statusBarHeight,
-        }}
-        scrollEventThrottle={width}
-        pagingEnabled
-        showsHorizontalScrollIndicator={false}
-      />
-    </Block>
+    <GestureHandlerRootView>
+      <BottomSheet
+        ref={_refBS}
+        height={height - statusBarHeight}
+        throttle={100}
+        toggleModal={toggle => {
+          if (!toggle) {
+            dispatch(appActions.onModalClose());
+          }
+        }}>
+        {/* real content */}
+        <Block
+          block
+          style={{
+            alignItems: 'center',
+            position: 'relative',
+            backgroundColor: 'white',
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+          }}>
+          {renderTopBar()}
+          <FlatList
+            ref={_refRoot}
+            data={pages}
+            renderItem={renderItem}
+            keyExtractor={item => item.id}
+            horizontal
+            scrollEnabled={false}
+            style={{
+              width,
+              height: height - statusBarHeight,
+            }}
+            scrollEventThrottle={width}
+            pagingEnabled
+            showsHorizontalScrollIndicator={false}
+          />
+        </Block>
+        {/* end of real content */}
+      </BottomSheet>
+    </GestureHandlerRootView>
   );
 };
 

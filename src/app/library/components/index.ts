@@ -1,5 +1,6 @@
 export * from './progress-dialog';
 export * from './progress';
+export * from './bottom-sheet';
 export * from './button';
 export * from './radio-button';
 export * from './divider';
