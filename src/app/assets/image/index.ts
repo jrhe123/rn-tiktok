@@ -1,5 +1,6 @@
 export const images = {
   bg_wallpaper: require('./source/bg.png'),
+  tk_bg_wallpaper: require('./source/tk_bg.jpeg'),
   default: require('./source/default.png'),
   welcome_tiktok_logo: require('./source/welcome_tiktok_logo.png'),
   welcome_cat_tiktok: require('./source/welcome_cat_tiktok.gif'),
