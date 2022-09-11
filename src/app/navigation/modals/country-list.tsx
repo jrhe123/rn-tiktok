@@ -1,14 +1,24 @@
-import React, { memo } from 'react';
-import { Dimensions } from 'react-native';
+import React, { memo, useCallback, useEffect, useRef } from 'react';
+import { Dimensions, NativeModules } from 'react-native';
 
 import isEqual from 'react-fast-compare';
 import AlphabetList from 'react-native-flatlist-alphabet';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import { country } from '@assets/country';
-import { Block, Button, Icon, Text } from '@components';
+import { dispatch } from '@common';
+import {
+  Block,
+  BottomSheet,
+  BottomSheetRef,
+  Button,
+  Icon,
+  Text,
+} from '@components';
+import { appActions } from '@redux-slice';
 import IData from 'react-native-flatlist-alphabet/dist/interfaces/IData';
 
-const { width } = Dimensions.get('window');
+const { width, height } = Dimensions.get('window');
 type Code = {
   id: number;
   country: string;
@@ -31,11 +41,31 @@ const formattedCountries: FormattedCode[] = countries.map(country => {
   };
 });
 
+const { StatusBarManager } = NativeModules;
+let statusBarHeight = 0;
+StatusBarManager.getHeight(({ height }: { height: number }) => {
+  statusBarHeight = height;
+});
 const CountryListComponent = ({
   handleConfirm,
 }: {
   handleConfirm: () => void;
 }) => {
+  const _refBS = useRef<BottomSheetRef>(null);
+
+  const onPress = useCallback(() => {
+    const isActive = _refBS?.current?.isActive();
+    if (isActive) {
+      _refBS?.current?.scrollTo(0);
+    } else {
+      _refBS?.current?.scrollTo(-(height - statusBarHeight));
+    }
+  }, []);
+
+  useEffect(() => {
+    onPress();
+  }, [onPress]);
+
   const renderTopBar = () => (
     <>
       {/* top left btn */}
@@ -97,25 +127,41 @@ const CountryListComponent = ({
   };
 
   return (
-    <Block
-      block
-      style={{
-        alignItems: 'center',
-        position: 'relative',
-      }}>
-      {renderTopBar()}
-      <Block style={{ width: width - 36, marginTop: 36, paddingBottom: 120 }}>
-        <AlphabetList
-          data={formattedCountries}
-          renderItem={renderItem}
-          renderSectionHeader={renderSectionHeader}
-          indexLetterColor={'#9F9F9F'}
-          containerStyle={{
-            right: -18,
-          }}
-        />
-      </Block>
-    </Block>
+    <GestureHandlerRootView>
+      <BottomSheet
+        ref={_refBS}
+        height={height - statusBarHeight}
+        throttle={100}
+        toggleModal={toggle => {
+          if (!toggle) {
+            dispatch(appActions.onModalClose());
+          }
+        }}>
+        <Block
+          block
+          style={{
+            alignItems: 'center',
+            position: 'relative',
+            backgroundColor: 'white',
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+          }}>
+          {renderTopBar()}
+          <Block
+            style={{ width: width - 36, marginTop: 36, paddingBottom: 120 }}>
+            <AlphabetList
+              data={formattedCountries}
+              renderItem={renderItem}
+              renderSectionHeader={renderSectionHeader}
+              indexLetterColor={'#9F9F9F'}
+              containerStyle={{
+                right: -18,
+              }}
+            />
+          </Block>
+        </Block>
+      </BottomSheet>
+    </GestureHandlerRootView>
   );
 };
 

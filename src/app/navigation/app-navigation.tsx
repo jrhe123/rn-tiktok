@@ -97,7 +97,7 @@ export const AppContainer = () => {
         break;
       case 'COUNTRY_LIST':
         children = <CountryList handleConfirm={hideDrop} />;
-        backgroundColor = '#FFFFFF';
+        backgroundColor = 'transparent';
         type = 'MODAL';
         break;
       default:
