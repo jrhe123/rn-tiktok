@@ -4,6 +4,7 @@ import { TouchableOpacity, View } from 'react-native';
 import Animated, { useAnimatedStyle } from 'react-native-reanimated';
 
 import { useMix, useSharedTransition } from '@animated';
+import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { execFunc } from '@common';
 
 import { styles } from './styles';
@@ -21,6 +22,7 @@ export const CheckBox = ({
   onToggle,
   disable = false,
   initialValue = false,
+  size = 15,
 }: CheckboxProps) => {
   // state
   const [localValue, setLocalValue] = useState<boolean>(initialValue);
@@ -53,7 +55,9 @@ export const CheckBox = ({
       style={[styles.root, style]}>
       <>
         <View style={[styles.outline, outlineStyleOverwrite]}>
-          <Animated.View style={[styles.fill, fillStyle, styleAnimated]} />
+          <Animated.View style={[styles.fill, fillStyle, styleAnimated]}>
+            <VectorIcon color={'white'} icon={'bx_check'} size={size} />
+          </Animated.View>
         </View>
         <Text text={text} t18n={t18n} style={styles.label} />
       </>

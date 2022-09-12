@@ -52,6 +52,11 @@ export interface CheckboxProps {
   t18n?: I18nKeys;
 
   /**
+   * icon size
+   */
+  size?: number;
+
+  /**
    * On change function
    * @default undefined
    */

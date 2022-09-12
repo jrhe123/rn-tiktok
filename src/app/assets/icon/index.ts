@@ -18,6 +18,7 @@ export const icons = {
   apple_logo: require('./source/ic_apple.png'),
   instagram_logo: require('./source/ic_instagram.png'),
   cake: require('./source/ic_cake.png'),
+  translate: require('./source/translate.png'),
 };
 
 export type IconTypes = keyof typeof icons;

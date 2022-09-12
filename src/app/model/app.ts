@@ -12,6 +12,8 @@ export interface AppState {
 
   askRegister: boolean;
 
+  askLanguage: boolean;
+
   loadingApp: boolean;
 
   showDialog: boolean;
@@ -28,4 +30,5 @@ export type ModalType =
   | 'REGISTER_POPUP'
   | 'SWIPE_UP_ANI_POPUP'
   | 'COUNTRY_LIST'
+  | 'LANGUAGE_LIST'
   | 'OTHER';

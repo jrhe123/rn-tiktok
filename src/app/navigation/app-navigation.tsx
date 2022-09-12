@@ -21,6 +21,7 @@ import { appActions } from '@redux-slice';
 import { MyAppTheme } from '@theme';
 
 import { CountryList } from './modals/country-list';
+import { LanguageList } from './modals/language-list';
 import { Register } from './modals/register';
 import { RegisterPopup } from './modals/register-pop';
 import { SwipeUpAni } from './modals/swipe-up-ani';
@@ -97,6 +98,11 @@ export const AppContainer = () => {
         break;
       case 'COUNTRY_LIST':
         children = <CountryList handleConfirm={hideDrop} />;
+        backgroundColor = 'transparent';
+        type = 'MODAL';
+        break;
+      case 'LANGUAGE_LIST':
+        children = <LanguageList handleConfirm={hideDrop} />;
         backgroundColor = 'transparent';
         type = 'MODAL';
         break;

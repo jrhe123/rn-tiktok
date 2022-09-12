@@ -1,6 +1,7 @@
 import {
   checkKeyInObject,
   STORAGE_ASK_REGISTER,
+  STORAGE_ASK_LANGUAGE,
   STORAGE_KEY_APP_THEME,
   STORAGE_KEY_TOKEN,
   STORAGE_NOTIFICATION,
@@ -25,12 +26,17 @@ takeLatestListeners()({
     const token = loadString(STORAGE_KEY_TOKEN);
     const welcomeComplete = loadString(STORAGE_WELCOME_COMPLETE);
     const askRegister = loadString(STORAGE_ASK_REGISTER);
+    const askLanguage = loadString(STORAGE_ASK_LANGUAGE);
     if (typeof token === 'string') {
       listenerApi.dispatch(appActions.onSetToken(token));
     } else {
       // no token & haven't ask yet
       if (askRegister === undefined) {
         listenerApi.dispatch(appActions.onSetAskRegisterAttempt(true));
+      }
+      // no token & haven't ask yet
+      if (askLanguage === undefined) {
+        listenerApi.dispatch(appActions.onSetAskLanguageAttempt(true));
       }
     }
     if (typeof welcomeComplete === 'string') {

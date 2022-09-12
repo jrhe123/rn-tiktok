@@ -17,7 +17,7 @@ export type BottomSheetRef = BottomSheetRefProps;
 export const BottomSheet = React.forwardRef<
   BottomSheetRefProps,
   BottomSheetProps
->(({ children, height, throttle, toggleModal }, ref) => {
+>(({ children, height, secondHeight, throttle, toggleModal }, ref) => {
   const MAX_TRANSLATE_Y = -height;
   const translateY = useSharedValue(0);
   const active = useSharedValue(false);
@@ -47,12 +47,26 @@ export const BottomSheet = React.forwardRef<
       translateY.value = Math.max(translateY.value, MAX_TRANSLATE_Y);
     })
     .onEnd(() => {
-      if (translateY.value > -height + throttle) {
-        scrollTo(0);
-        runOnJS(toggleModal)(false);
+      if (typeof secondHeight !== 'undefined') {
+        const MAX_HALF_TRANSLATE_Y = -secondHeight;
+        if (translateY.value > -secondHeight + throttle) {
+          scrollTo(0);
+          runOnJS(toggleModal)(false);
+        } else if (translateY.value > -height + throttle) {
+          scrollTo(MAX_HALF_TRANSLATE_Y);
+          runOnJS(toggleModal)(true);
+        } else {
+          scrollTo(MAX_TRANSLATE_Y);
+          runOnJS(toggleModal)(true);
+        }
       } else {
-        scrollTo(MAX_TRANSLATE_Y);
-        runOnJS(toggleModal)(true);
+        if (translateY.value > -height + throttle) {
+          scrollTo(0);
+          runOnJS(toggleModal)(false);
+        } else {
+          scrollTo(MAX_TRANSLATE_Y);
+          runOnJS(toggleModal)(true);
+        }
       }
     });
 

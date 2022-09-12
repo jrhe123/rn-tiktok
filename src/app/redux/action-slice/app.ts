@@ -9,6 +9,7 @@ const initialAppState: AppState = {
   token: undefined,
   welcomeComplete: false,
   askRegister: false,
+  askLanguage: false,
   /**
    * default true to load app
    */
@@ -34,6 +35,9 @@ const appSlice = createSlice({
     },
     onSetAskRegisterAttempt: (state, { payload }: PayloadAction<boolean>) => {
       state.askRegister = payload;
+    },
+    onSetAskLanguageAttempt: (state, { payload }: PayloadAction<boolean>) => {
+      state.askLanguage = payload;
     },
     onSetAppProfile: (state, { payload }: PayloadAction<unknown>) => {
       state.profile = payload;
@@ -73,6 +77,7 @@ export const appActions = {
   onSetToken: appSlice.actions.onSetToken,
   onSetWelcomeComplete: appSlice.actions.onSetWelcomeComplete,
   onSetAskRegisterAttempt: appSlice.actions.onSetAskRegisterAttempt,
+  onSetAskLanguageAttempt: appSlice.actions.onSetAskLanguageAttempt,
   onSetAppProfile: appSlice.actions.onSetAppProfile,
   onSetAppTheme: appSlice.actions.onSetAppTheme,
   onLoadApp: appSlice.actions.onLoadApp,

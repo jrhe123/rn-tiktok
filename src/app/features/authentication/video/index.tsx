@@ -74,6 +74,15 @@ const videos_1: Video[] = [
   {
     id: 'ee7acbea-c1b1-46c2-aed5-3ad53abb28ba',
   },
+  {
+    id: 'ff7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  },
+  {
+    id: 'gg7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  },
+  {
+    id: 'hh7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  },
 ];
 const videos_2: Video[] = [
   {
@@ -95,7 +104,7 @@ const distance = MAIN_HEADER_BAR_WIDTH;
 const aniControlValue = new AnimatedRN.Value(1);
 const VideoComponent = () => {
   // state
-  const { askRegister } = useSelector(state => state.app);
+  const { askRegister, askLanguage } = useSelector(state => state.app);
   //
   const [isShown, setIsShown] = useState<boolean>(false);
   const [allowNoti, setAllowNoti] = useState<boolean>(false);
@@ -121,6 +130,14 @@ const VideoComponent = () => {
       dispatch(appActions.onSetAskRegisterAttempt(false));
     }
   }, [askRegister, FYVisibleItemIndex, FOVisibleItemIndex]);
+
+  useEffect(() => {
+    if (askLanguage && FYVisibleItemIndex + FOVisibleItemIndex === 1) {
+      // pop up language alert, if haven't asked yet - once
+      dispatch(appActions.onModalOpen('LANGUAGE_LIST'));
+      dispatch(appActions.onSetAskLanguageAttempt(false));
+    }
+  }, [askLanguage, FYVisibleItemIndex, FOVisibleItemIndex]);
 
   useEffect(() => {
     AnimatedRN.timing(aniControlValue, {
