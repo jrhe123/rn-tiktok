@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useState } from 'react';
-import { Animated as AnimatedRN, NativeModules } from 'react-native';
+import { Alert, Animated as AnimatedRN, NativeModules } from 'react-native';
 
 import isEqual from 'react-fast-compare';
 import { TextInput } from 'react-native-paper';
@@ -23,6 +23,23 @@ const FriendComponent = () => {
   useEffect(() => {
     if (!isAuth) {
       dispatch(appActions.onModalOpen('REGISTER'));
+    } else {
+      Alert.alert(
+        'Find contacts',
+        'To connect with people you know on TikTok, allow access to your contacts in your device settings.',
+        [
+          {
+            text: "Don't Allow",
+            onPress: () => {},
+            style: 'default',
+          },
+          {
+            text: 'Open settings',
+            onPress: () => {},
+            style: 'default',
+          },
+        ],
+      );
     }
   }, [isAuth]);
 
