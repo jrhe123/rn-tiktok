@@ -25,6 +25,7 @@ import { LanguageList } from './modals/language-list';
 import { Register } from './modals/register';
 import { RegisterPopup } from './modals/register-pop';
 import { SwipeUpAni } from './modals/swipe-up-ani';
+import { ViewFriendPost } from './modals/view-friend-post';
 
 const { width, height } = Dimensions.get('window');
 const { StatusBarManager } = NativeModules;
@@ -103,6 +104,11 @@ export const AppContainer = () => {
         break;
       case 'LANGUAGE_LIST':
         children = <LanguageList handleConfirm={hideDrop} />;
+        backgroundColor = 'transparent';
+        type = 'MODAL';
+        break;
+      case 'VIEW_FRIEND_POST':
+        children = <ViewFriendPost handleConfirm={hideDrop} />;
         backgroundColor = 'transparent';
         type = 'MODAL';
         break;

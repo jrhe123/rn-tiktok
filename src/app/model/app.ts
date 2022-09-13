@@ -31,4 +31,5 @@ export type ModalType =
   | 'SWIPE_UP_ANI_POPUP'
   | 'COUNTRY_LIST'
   | 'LANGUAGE_LIST'
+  | 'VIEW_FRIEND_POST'
   | 'OTHER';

@@ -35,7 +35,9 @@ const FriendComponent = () => {
           },
           {
             text: 'Open settings',
-            onPress: () => {},
+            onPress: () => {
+              dispatch(appActions.onModalOpen('VIEW_FRIEND_POST'));
+            },
             style: 'default',
           },
         ],
