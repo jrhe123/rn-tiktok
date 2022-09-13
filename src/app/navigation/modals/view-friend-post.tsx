@@ -118,7 +118,7 @@ const ViewFriendPostComponent = ({
                   You can change how your account is suggested to others in{' '}
                   <Text fontWeight={'bold'} color={'black'}>
                     Suggest your account to others
-                  </Text>
+                  </Text>{' '}
                   at any time.
                 </Text>
               </Block>
