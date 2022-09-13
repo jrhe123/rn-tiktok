@@ -12,7 +12,7 @@ export const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#ccc',
+    borderColor: '#8A8A8A',
     borderRadius: 1,
   },
   fill: {

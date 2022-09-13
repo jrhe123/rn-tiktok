@@ -41,9 +41,7 @@ const RegisterComponent = () => {
 
   const onPress = useCallback(() => {
     const isActive = _refBS?.current?.isActive();
-    if (isActive) {
-      _refBS?.current?.scrollTo(0);
-    } else {
+    if (!isActive) {
       _refBS?.current?.scrollTo(-(height - statusBarHeight));
     }
   }, []);

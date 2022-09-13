@@ -8,6 +8,11 @@ import {
 
 import isEqual from 'react-fast-compare';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
+import Animated, {
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
 
 import { dispatch } from '@common';
 import {
@@ -102,6 +107,8 @@ const languages: Language[] = [
     name: 'Tiếng Việt',
     isSelected: false,
   },
+];
+const secondLoad: Language[] = [
   {
     id: '16',
     name: '中文(繁體)',
@@ -413,7 +420,7 @@ const BTN_COLOR = '#E8445A';
 const BTN_TEXT_COLOR = 'white';
 const DIS_BTN_COLOR = '#E8E8E8';
 const DIS_BTN_TEXT_COLOR = '#A9A9A9';
-const { width, height } = Dimensions.get('window');
+const { height } = Dimensions.get('window');
 const { StatusBarManager } = NativeModules;
 let statusBarHeight = 0;
 StatusBarManager.getHeight(({ height }: { height: number }) => {
@@ -427,16 +434,24 @@ const LanguageListComponent = ({
 }) => {
   const _refBS = useRef<BottomSheetRef>(null);
   const [isCollapse, setIsCollapse] = useState<boolean>(true);
-  let formattedLanguages = languages;
+  const [languageList, setLanguageList] = useState<Language[]>(languages);
+  const animation = useSharedValue({ height: 90 });
+  const animationStyle = useAnimatedStyle(() => {
+    return {
+      height: withTiming(animation.value.height, {
+        duration: 300,
+      }),
+    };
+  });
+
+  let formattedLanguages = languageList;
   if (isCollapse) {
-    formattedLanguages = languages.slice(0, 2);
+    formattedLanguages = languageList.slice(0, 2);
   }
 
   const onPress = useCallback(() => {
     const isActive = _refBS?.current?.isActive();
-    if (isActive) {
-      _refBS?.current?.scrollTo(0);
-    } else {
+    if (!isActive) {
       _refBS?.current?.scrollTo((-(height - statusBarHeight) / 3) * 2);
     }
   }, []);
@@ -444,6 +459,18 @@ const LanguageListComponent = ({
   useEffect(() => {
     onPress();
   }, [onPress]);
+
+  useEffect(() => {
+    if (!isCollapse) {
+      _refBS?.current?.scrollTo(-(height - statusBarHeight));
+      animation.value = {
+        height: 370,
+      };
+      setTimeout(() => {
+        setLanguageList([...languageList, ...secondLoad]);
+      }, 300);
+    }
+  }, [animation, isCollapse]);
 
   const renderTopBar = () => (
     <>
@@ -484,6 +511,15 @@ const LanguageListComponent = ({
             }}
             size={20}
             value={lan.isSelected}
+            onToggle={() => {
+              const updated: Language[] = languageList.map(l => {
+                if (l.id === lan.id) {
+                  l.isSelected = !l.isSelected;
+                }
+                return l;
+              });
+              setLanguageList([...updated]);
+            }}
           />
         </Block>
       </Block>
@@ -498,7 +534,11 @@ const LanguageListComponent = ({
       <BottomSheet
         ref={_refBS}
         height={height - statusBarHeight}
-        secondHeight={((height - statusBarHeight) / 3) * 2} // enable half height
+        secondHeight={
+          isCollapse ? ((height - statusBarHeight) / 3) * 2 : undefined
+        }
+        // enable half height
+        // disable half height, after open full list
         throttle={100}
         toggleModal={toggle => {
           if (!toggle) {
@@ -516,7 +556,7 @@ const LanguageListComponent = ({
           }}>
           {renderTopBar()}
           {/* main content */}
-          <Block marginTop={30} width={width - 48}>
+          <Block marginTop={30} style={{ width: '100%' }}>
             <Block marginTop={12} alignItems={'center'}>
               <Icon icon={'translate'} size={64} />
             </Block>
@@ -537,17 +577,28 @@ const LanguageListComponent = ({
               </Text>
             </Block>
             {/* language list */}
-            <Block
-              style={{
-                height: 90,
-                width: '100%',
-                marginTop: 24,
-              }}>
-              <ScrollView style={{}}>
+            <Animated.View
+              style={[
+                {
+                  width: '100%',
+                  marginTop: 24,
+                },
+                animationStyle,
+              ]}>
+              <ScrollView
+                style={[
+                  {
+                    paddingHorizontal: 24,
+                    height: '100%',
+                  },
+                ]}>
                 {renderLanguageList()}
                 {isCollapse && (
                   <Block>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        setIsCollapse(false);
+                      }}>
                       <Text fontSize={15} color={'#8A8A8A'}>
                         More languages
                       </Text>
@@ -555,9 +606,10 @@ const LanguageListComponent = ({
                   </Block>
                 )}
               </ScrollView>
-            </Block>
+            </Animated.View>
             {/* button */}
-            <Block style={{ marginTop: 72, width: '100%' }}>
+            <Block
+              style={{ marginTop: 72, width: '100%', paddingHorizontal: 24 }}>
               <Button
                 // onPress={confirmDate}
                 disabled={disabled}
