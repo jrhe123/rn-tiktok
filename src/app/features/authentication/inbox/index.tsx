@@ -443,7 +443,7 @@ const InboxComponent = () => {
           justifyContent={'space-between'}>
           <Text fontSize={15}>Activity</Text>
           <TouchableOpacity>
-            <Block style={{ width: 30 }}>
+            <Block style={{ width: 18 }}>
               <VectorIcon icon={'bx_chevron_right'} size={27} />
             </Block>
           </TouchableOpacity>
@@ -474,7 +474,7 @@ const InboxComponent = () => {
             </Text>
           </Block>
           <TouchableOpacity>
-            <Block style={{ width: 30 }}>
+            <Block style={{ width: 18 }}>
               <VectorIcon icon={'bx_chevron_right'} size={27} />
             </Block>
           </TouchableOpacity>
