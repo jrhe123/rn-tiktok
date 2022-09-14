@@ -18,7 +18,7 @@ const statusBarOffset = 0;
 const MAIN_HEADER_HEIGHT = 60;
 
 const FriendComponent = () => {
-  const [isAuth, setIsAuth] = useState<boolean>(true);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
 
   useEffect(() => {
     if (!isAuth) {
@@ -113,7 +113,7 @@ const FriendComponent = () => {
         position: 'relative',
         paddingHorizontal: 15,
       }}>
-      <Wallpaper backgroundImage={'tk_bg_wallpaper'} />
+      {isAuth && <Wallpaper backgroundImage={'tk_bg_wallpaper'} />}
       <Screen
         unsafe
         statusBarStyle="light-content"
@@ -121,58 +121,62 @@ const FriendComponent = () => {
         backgroundColor={'transparent'}>
         {renderTopBar()}
         {/* main content */}
-        <Block marginTop={36}>
-          <Text fontSize={48} fontWeight={'bold'} color={'white'}>
-            Don't miss
-          </Text>
-          <Text fontSize={48} fontWeight={'bold'} color={'white'}>
-            your friends'
-          </Text>
-          <Text fontSize={48} fontWeight={'bold'} color={'white'}>
-            posts
-          </Text>
-        </Block>
-        <Block marginTop={12}>
-          <Text fontSize={12} color={'white'}>
-            Your friends haven't posted anything yet.
-          </Text>
-        </Block>
-        <Block marginTop={30}>
-          <Button>
-            <Block
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 48,
-                backgroundColor: 'white',
-                borderRadius: 9,
-                borderLeftWidth: 6,
-                borderRightWidth: 6,
-                borderLeftColor: '#67D1E8',
-                borderRightColor: '#E7426D',
-              }}>
-              <Text fontSize={15} fontWeight={'bold'}>
-                Connect with contacts
+        {isAuth && (
+          <>
+            <Block marginTop={36}>
+              <Text fontSize={48} fontWeight={'bold'} color={'white'}>
+                Don't miss
+              </Text>
+              <Text fontSize={48} fontWeight={'bold'} color={'white'}>
+                your friends'
+              </Text>
+              <Text fontSize={48} fontWeight={'bold'} color={'white'}>
+                posts
               </Text>
             </Block>
-          </Button>
-        </Block>
-        <Block marginTop={15}>
-          <Button>
-            <Block
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                height: 48,
-                backgroundColor: '#1e1e1e',
-                borderRadius: 9,
-              }}>
-              <Text fontSize={15} color={'white'}>
-                Connect with Facebook friends
+            <Block marginTop={12}>
+              <Text fontSize={12} color={'white'}>
+                Your friends haven't posted anything yet.
               </Text>
             </Block>
-          </Button>
-        </Block>
+            <Block marginTop={30}>
+              <Button>
+                <Block
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: 48,
+                    backgroundColor: 'white',
+                    borderRadius: 9,
+                    borderLeftWidth: 6,
+                    borderRightWidth: 6,
+                    borderLeftColor: '#67D1E8',
+                    borderRightColor: '#E7426D',
+                  }}>
+                  <Text fontSize={15} fontWeight={'bold'}>
+                    Connect with contacts
+                  </Text>
+                </Block>
+              </Button>
+            </Block>
+            <Block marginTop={15}>
+              <Button>
+                <Block
+                  style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    height: 48,
+                    backgroundColor: '#1e1e1e',
+                    borderRadius: 9,
+                  }}>
+                  <Text fontSize={15} color={'white'}>
+                    Connect with Facebook friends
+                  </Text>
+                </Block>
+              </Button>
+            </Block>
+          </>
+        )}
       </Screen>
     </Block>
   );

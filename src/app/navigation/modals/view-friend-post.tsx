@@ -86,7 +86,7 @@ const ViewFriendPostComponent = ({
           {renderTopBar()}
           {/* main content */}
           <Block
-            style={{ width: width - 36, marginTop: 36, paddingBottom: 120 }}>
+            style={{ width: width - 48, marginTop: 36, paddingBottom: 120 }}>
             <Block style={{ marginTop: 24 }}>
               <Text fontSize={21} fontWeight={'bold'} center>
                 View your friends' posts
