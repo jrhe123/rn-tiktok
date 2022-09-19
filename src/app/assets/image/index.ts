@@ -9,6 +9,12 @@ export const images = {
   welcome_seal_tiktok: require('./source/welcome_seal_tiktok.gif'),
   welcome_iphone: require('./source/welcome_iphone.png'),
   pure_tiktok: require('./source/pure_tiktok_logo.png'),
+
+  tk_frame1: require('./source/tk_frame_1.png'),
+  tk_frame2: require('./source/tk_frame_2.png'),
+  tk_frame3: require('./source/tk_frame_3.png'),
+  tk_frame4: require('./source/tk_frame_4.png'),
+  tk_frame5: require('./source/tk_frame_5.png'),
 };
 
 export type ImageTypes = keyof typeof images;

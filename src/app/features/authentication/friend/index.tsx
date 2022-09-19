@@ -18,7 +18,7 @@ const statusBarOffset = 0;
 const MAIN_HEADER_HEIGHT = 60;
 
 const FriendComponent = () => {
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(true);
 
   useEffect(() => {
     if (!isAuth) {

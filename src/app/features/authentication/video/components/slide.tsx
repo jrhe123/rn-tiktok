@@ -5,6 +5,8 @@ import isEqual from 'react-fast-compare';
 
 import { Block, Text } from '@components';
 
+// import { Logo } from './logo';
+
 const { height, width } = Dimensions.get('window');
 const SlideComponent = () => {
   return (
@@ -12,6 +14,7 @@ const SlideComponent = () => {
       <Text fontSize={36} fontWeight="bold" color={'white'}>
         123
       </Text>
+      {/* <Logo /> */}
     </Block>
   );
 };
