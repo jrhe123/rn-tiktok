@@ -5,16 +5,18 @@ import isEqual from 'react-fast-compare';
 
 import { Block, Text } from '@components';
 
-// import { Logo } from './logo';
-
+const BOTTOM_BAR_HEIGHT = 90;
 const { height, width } = Dimensions.get('window');
 const SlideComponent = () => {
   return (
-    <Block style={{ width, height }}>
+    <Block
+      style={{
+        width,
+        height: height - BOTTOM_BAR_HEIGHT,
+      }}>
       <Text fontSize={36} fontWeight="bold" color={'white'}>
         123
       </Text>
-      {/* <Logo /> */}
     </Block>
   );
 };

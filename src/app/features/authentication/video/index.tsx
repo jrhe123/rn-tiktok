@@ -21,6 +21,7 @@ import { loadString, saveString } from '@storage';
 
 import { Slide } from './components/slide';
 
+const BOTTOM_BAR_HEIGHT = 90;
 const { height, width } = Dimensions.get('window');
 const { StatusBarManager } = NativeModules;
 let statusBarHeight = 0;
@@ -429,7 +430,7 @@ const VideoComponent = () => {
           keyExtractor={item => item.id}
           style={{
             width,
-            height,
+            height: height - BOTTOM_BAR_HEIGHT,
           }}
           scrollEventThrottle={height}
           pagingEnabled
@@ -448,7 +449,7 @@ const VideoComponent = () => {
           keyExtractor={item => item.id}
           style={{
             width,
-            height,
+            height: height - BOTTOM_BAR_HEIGHT,
           }}
           scrollEventThrottle={height}
           pagingEnabled
@@ -494,7 +495,7 @@ const VideoComponent = () => {
               horizontal
               style={{
                 width,
-                height,
+                height: height - BOTTOM_BAR_HEIGHT,
               }}
               initialScrollIndex={1}
               scrollEventThrottle={width}
