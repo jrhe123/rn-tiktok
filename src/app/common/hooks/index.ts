@@ -621,6 +621,22 @@ const useSwipe = (onSwipeUp?: any, onSwipeDown?: any, rangeOffset = 4) => {
   return { onTouchStart, onTouchEnd };
 };
 
+const useDebounce = <V>(value: V, delay?: number): V => {
+  const [debouncedValue, setDebouncedValue] = useState(value);
+
+  useEffect(() => {
+    // when value / delay changes, exec
+    const timeout = setTimeout(() => {
+      setDebouncedValue(value);
+    }, delay);
+    // after every useEffect call exec
+    return () => clearTimeout(timeout);
+  }, [value, delay]);
+
+  // return the final one, which is no one clear it
+  return debouncedValue;
+};
+
 export {
   useMessageYupTranslation,
   useDisableBackHandler,
@@ -644,4 +660,5 @@ export {
   useDidMount,
   useEventCallback,
   useSwipe,
+  useDebounce,
 };
