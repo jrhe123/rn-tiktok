@@ -5,6 +5,7 @@ import BootSplash from 'react-native-bootsplash';
 import { HomeTabNavigator } from '@features/authentication/tab-navigator';
 import { HelpCenter } from '@features/un-authentication/help';
 import { Info } from '@features/un-authentication/info';
+import { LiveStream } from '@features/un-authentication/live-stream';
 import { Login } from '@features/un-authentication/login';
 import { PhoneEmail } from '@features/un-authentication/phone-email';
 import { Policy } from '@features/un-authentication/policy';
@@ -58,6 +59,10 @@ export const RootNavigation = () => {
           <RootStack.Screen name={APP_SCREEN.REGISTER} component={Register} />
           <RootStack.Screen name={APP_SCREEN.LOGIN} component={Login} />
           <RootStack.Screen name={APP_SCREEN.SEARCH} component={Search} />
+          <RootStack.Screen
+            name={APP_SCREEN.LIVE_STREAM}
+            component={LiveStream}
+          />
           <RootStack.Screen name={APP_SCREEN.HELP} component={HelpCenter} />
           <RootStack.Screen name={APP_SCREEN.INFO} component={Info} />
           <RootStack.Screen

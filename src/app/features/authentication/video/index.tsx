@@ -10,8 +10,9 @@ import {
 
 import isEqual from 'react-fast-compare';
 
+import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { dispatch, STORAGE_NOTIFICATION, STORAGE_TRACKING } from '@common';
-import { Block, Button, Icon, Screen } from '@components';
+import { Block, Button, Icon, Screen, Text } from '@components';
 import { useSelector } from '@hooks';
 import { navigate } from '@navigation/navigation-service';
 import { APP_SCREEN } from '@navigation/screen-types';
@@ -31,6 +32,7 @@ const MAIN_HEADER_HEIGHT = 60;
 const MAIN_HEADER_BAR_WIDTH = 100;
 const MAIN_HEADER_BAR_UNDERNEATH_WIDTH = 30;
 const SEARCH_ICON_SIZE = 27;
+const LIVE_ICON_SIZE = 30;
 
 type View = {
   id: string;
@@ -368,6 +370,47 @@ const VideoComponent = () => {
               navigate(APP_SCREEN.SEARCH);
             }}>
             <Icon icon={'search'} color={'white'} size={SEARCH_ICON_SIZE} />
+          </Button>
+        </Block>
+        {/* Live icon */}
+        <Block
+          style={{
+            position: 'absolute',
+            left: 6,
+            top: 0,
+            height: MAIN_HEADER_HEIGHT,
+            width: MAIN_HEADER_HEIGHT,
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            zIndex: 1,
+          }}>
+          <Button
+            onPress={() => {
+              navigate(APP_SCREEN.LIVE_STREAM);
+            }}>
+            <Block
+              style={{
+                position: 'relative',
+              }}>
+              <Block
+                style={{
+                  position: 'absolute',
+                  top: 10,
+                  left: 2,
+                  zIndex: 1,
+                  backgroundColor: 'black',
+                }}>
+                <Text color={'white'} fontSize={11} fontWeight={'bold'}>
+                  LIVE
+                </Text>
+              </Block>
+              <VectorIcon
+                icon={'bx_tv1'}
+                color={'white'}
+                size={LIVE_ICON_SIZE}
+              />
+            </Block>
           </Button>
         </Block>
       </Block>

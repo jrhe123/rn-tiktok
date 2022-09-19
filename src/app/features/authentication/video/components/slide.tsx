@@ -10,7 +10,7 @@ import { Block, Text } from '@components';
 const { height, width } = Dimensions.get('window');
 const SlideComponent = () => {
   return (
-    <Block style={{ width, height, borderWidth: 1, borderColor: 'red' }}>
+    <Block style={{ width, height }}>
       <Text fontSize={36} fontWeight="bold" color={'white'}>
         123
       </Text>

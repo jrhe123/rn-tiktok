@@ -9,6 +9,7 @@ export enum APP_SCREEN {
   LOGIN = 'LOGIN',
   REGISTER = 'REGISTER',
   SEARCH = 'SEARCH',
+  LIVE_STREAM = 'LIVE_STREAM',
   //
   HELP = 'HELP',
   INFO = 'INFO',
@@ -35,6 +36,7 @@ export type UnAuthorizeParamsList = {
   [APP_SCREEN.LOGIN]: undefined;
   [APP_SCREEN.REGISTER]: undefined;
   [APP_SCREEN.SEARCH]: undefined;
+  [APP_SCREEN.LIVE_STREAM]: undefined;
   //
   [APP_SCREEN.HELP]: undefined;
   [APP_SCREEN.INFO]: undefined;

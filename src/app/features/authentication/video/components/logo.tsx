@@ -60,23 +60,23 @@ const LogoComponent = () => {
     AnimatedRN.loop(
       AnimatedRN.sequence([
         AnimatedRN.timing(aniShakeHValue, {
-          toValue: 2,
-          duration: 30,
+          toValue: 1,
+          duration: 10,
           useNativeDriver: false,
         }),
         AnimatedRN.timing(aniShakeHValue, {
-          toValue: -2,
-          duration: 30,
+          toValue: -1,
+          duration: 10,
           useNativeDriver: false,
         }),
         AnimatedRN.timing(aniShakeHValue, {
-          toValue: 2,
-          duration: 30,
+          toValue: 1,
+          duration: 10,
           useNativeDriver: false,
         }),
         AnimatedRN.timing(aniShakeHValue, {
           toValue: 0,
-          duration: 30,
+          duration: 10,
           useNativeDriver: false,
         }),
       ]),
@@ -92,14 +92,34 @@ const LogoComponent = () => {
         style={{
           transform: [{ translateY: aniShakeVValue }],
         }}>
-        <Block style={{ marginRight: 3, width: 18, height: 21 }}>
-          <LocalImage resizeMode={'cover'} source={IMAGES[index]} />
+        <Block
+          style={{
+            marginRight: 3,
+            width: 18,
+            height: 21,
+            position: 'relative',
+          }}>
+          {IMAGES.map((img, i) => (
+            <Block
+              key={i}
+              style={{
+                position: 'absolute',
+                top: 0,
+                left: 0,
+                width: 18,
+                height: 21,
+                zIndex: index === i ? 0 : -1,
+              }}>
+              <LocalImage resizeMode={'cover'} source={img} />
+            </Block>
+          ))}
         </Block>
       </AnimatedRN.View>
       <Block>
         <AnimatedRN.View
           style={{
             transform: [{ translateX: aniShakeHValue }],
+            marginTop: 3,
           }}>
           <Text fontSize={12} fontWeight="bold" color={'white'}>
             TikTok
