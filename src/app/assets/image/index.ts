@@ -15,6 +15,8 @@ export const images = {
   tk_frame3: require('./source/tk_frame_3.png'),
   tk_frame4: require('./source/tk_frame_4.png'),
   tk_frame5: require('./source/tk_frame_5.png'),
+
+  album: require('./source/album.png'),
 };
 
 export type ImageTypes = keyof typeof images;

@@ -13,6 +13,7 @@ import isEqual from 'react-fast-compare';
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { dispatch, STORAGE_NOTIFICATION, STORAGE_TRACKING } from '@common';
 import { Block, Button, Icon, Screen, Text } from '@components';
+import { S3_BASE_URL } from '@env';
 import { useSelector } from '@hooks';
 import { navigate } from '@navigation/navigation-service';
 import { APP_SCREEN } from '@navigation/screen-types';
@@ -34,14 +35,33 @@ const MAIN_HEADER_BAR_WIDTH = 100;
 const MAIN_HEADER_BAR_UNDERNEATH_WIDTH = 30;
 const SEARCH_ICON_SIZE = 27;
 const LIVE_ICON_SIZE = 30;
+const videoLink = S3_BASE_URL + '/dragon_0001.mp4';
+const videoLink2 = S3_BASE_URL + '/pokemon_00001.mp4';
+const videoLink3 = S3_BASE_URL + '/digimon_0001.mp4';
+const videoLink4 = S3_BASE_URL + '/yu-gi-oh_0001.mp4';
+const videoLink5 = S3_BASE_URL + '/bleach_0001.mp4';
+const videoLink6 = S3_BASE_URL + '/naruto_0001.mp4';
+const videoLink7 = S3_BASE_URL + '/one_piece_0001.mp4';
+const videoLink8 = S3_BASE_URL + '/marvel_0001.mp4';
+const videoLink9 = S3_BASE_URL + '/lord_of_ring_0001.mp4';
 
 type View = {
   id: string;
   type: string;
   title: string;
 };
+enum VIDEO_TYPE {
+  VIDEO = 'VIDEO',
+  IMAGE = 'IMAGE',
+  LIVE_STREAM = 'LIVE_STREAM',
+  FEEDBACK = 'FEEDBACK',
+  AD = 'AD',
+}
 type Video = {
   id: string;
+  type: VIDEO_TYPE;
+  url?: string;
+  image_urls?: string[];
 };
 enum TAB {
   FOLLOWING = 'FOLLOWING',
@@ -63,39 +83,51 @@ const views: View[] = [
 ];
 const videos_1: Video[] = [
   {
+    id: '007acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    type: VIDEO_TYPE.VIDEO,
+    url: videoLink,
+  },
+  {
     id: 'aa7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    type: VIDEO_TYPE.VIDEO,
+    url: videoLink2,
   },
   {
     id: 'bb7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    type: VIDEO_TYPE.VIDEO,
+    url: videoLink3,
   },
   {
     id: 'cc7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    type: VIDEO_TYPE.VIDEO,
+    url: videoLink4,
   },
   {
     id: 'dd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    type: VIDEO_TYPE.VIDEO,
+    url: videoLink5,
   },
   {
     id: 'ee7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-  },
-  {
-    id: 'ff7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-  },
-  {
-    id: 'gg7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-  },
-  {
-    id: 'hh7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    type: VIDEO_TYPE.VIDEO,
+    url: videoLink6,
   },
 ];
 const videos_2: Video[] = [
   {
-    id: 'aa7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-  },
-  {
     id: 'bb7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    type: VIDEO_TYPE.VIDEO,
+    url: videoLink7,
   },
   {
     id: 'cc7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    type: VIDEO_TYPE.VIDEO,
+    url: videoLink8,
+  },
+  {
+    id: 'dd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    type: VIDEO_TYPE.VIDEO,
+    url: videoLink9,
   },
 ];
 const viewabilityConfig = {
@@ -418,7 +450,27 @@ const VideoComponent = () => {
     </Block>
   );
 
-  const renderVItem = () => <Slide />;
+  const renderFOVItem = ({ item }: { item: Video }) => {
+    const itemIndex = videos_2.findIndex(i => i.id === item.id);
+    return (
+      <Slide
+        item={item}
+        active={
+          itemIndex === FOVisibleItemIndex && currentTab === TAB.FOLLOWING
+        }
+      />
+    );
+  };
+
+  const renderFUVItem = ({ item }: { item: Video }) => {
+    const itemIndex = videos_1.findIndex(i => i.id === item.id);
+    return (
+      <Slide
+        item={item}
+        active={itemIndex === FYVisibleItemIndex && currentTab === TAB.FOR_YOU}
+      />
+    );
+  };
 
   const renderItem = ({ item }: { item: View }) => {
     if (item.type === 'FOLLOWING') {
@@ -426,7 +478,7 @@ const VideoComponent = () => {
         <FlatList
           ref={_refFollowingRoot}
           data={videos_2}
-          renderItem={renderVItem}
+          renderItem={renderFOVItem}
           keyExtractor={item => item.id}
           style={{
             width,
@@ -445,7 +497,7 @@ const VideoComponent = () => {
         <FlatList
           ref={_refForYouRoot}
           data={videos_1}
-          renderItem={renderVItem}
+          renderItem={renderFUVItem}
           keyExtractor={item => item.id}
           style={{
             width,

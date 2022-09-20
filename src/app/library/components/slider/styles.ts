@@ -66,10 +66,10 @@ export const stylesRange = StyleSheet.create({
     backgroundColor: ACTIVE_COLOR,
   },
   centerThumb: {
-    left: (THUMB_SIZE * 2 - 15) / 2,
-    top: (THUMB_SIZE * 2 - 15) / 2,
-    width: THUMB_SIZE * 2 - 15,
-    height: THUMB_SIZE * 2 - 15,
+    left: (THUMB_SIZE * 2 - 12) / 2,
+    top: (THUMB_SIZE * 2 - 12) / 2,
+    width: THUMB_SIZE * 2 - 12,
+    height: THUMB_SIZE * 2 - 12,
     borderRadius: 20,
   },
   track: {

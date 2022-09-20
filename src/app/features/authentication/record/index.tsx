@@ -327,11 +327,11 @@ const RecordComponent = () => {
           <Text>DOWNLOAD</Text>
         </Button>
       </Block> */}
-      <Block style={{ borderWidth: 3, borderColor: 'green' }}>
+      {/* <Block style={{ borderWidth: 3, borderColor: 'green' }}>
         {renderCam()}
-      </Block>
-      {/* {renderAsset()}
-      {asset && (
+      </Block> */}
+      {renderAsset()}
+      {/* {asset && (
         <>
           <TouchableOpacity onPress={() => setAsset(null)}>
             <Text>Remove Selected Image</Text>
