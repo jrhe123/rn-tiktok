@@ -27,6 +27,7 @@
   "dependencies": {
     "@babel/plugin-transform-named-capturing-groups-regex": "^7.19.0",
     "@hookform/resolvers": "^2.9.0",
+    "@miblanchard/react-native-slider": "^2.1.0",
     "@react-native-async-storage/async-storage": "^1.17.10",
     "@react-native-community/cameraroll": "^4.1.2",
     "@react-native-community/masked-view": "^0.1.11",

@@ -1,16 +1,22 @@
-import React, { memo, useEffect, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import {
   Animated as AnimatedRN,
   Dimensions,
+  Easing,
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native';
 
 import isEqual from 'react-fast-compare';
-import Video from 'react-native-video';
+import Video, {
+  LoadError,
+  OnBufferData,
+  OnProgressData,
+} from 'react-native-video';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
-import { Block, LocalImage, Slider, Text } from '@components';
+import { Block, LocalImage, Text } from '@components';
+import { Slider } from '@miblanchard/react-native-slider';
 
 enum VIDEO_TYPE {
   VIDEO = 'VIDEO',
@@ -32,6 +38,7 @@ const AVATAR_ICON_SIZE = 48;
 const AVATAR_SM_ICON_SIZE = 18;
 const { height, width } = Dimensions.get('window');
 const aniValue = new AnimatedRN.Value(0);
+const aniScaleValue = new AnimatedRN.Value(0);
 const SlideComponent = ({
   item,
   active,
@@ -39,46 +46,78 @@ const SlideComponent = ({
   item: VideoElem;
   active: boolean;
 }) => {
+  const ref = useRef<Video | null>(null);
   const [pause, setPause] = useState<boolean>(!active);
-  const [sliderProgress, setSliderProgress] = useState<number>(0);
+  const [fullscreen, setFullscreen] = useState<boolean>(false);
+  const [rate, setRate] = useState<number>(1);
+  const [progress, setProgress] = useState<number>(0);
+  const [currentTime, setCurrentTime] = useState<number>(0);
+  const [total, setTotal] = useState<number>(0);
+  const [isLike, setIsLike] = useState<boolean>(false);
+  const [isBookmark, setIsBookmark] = useState<boolean>(false);
+
+  const rotateAni = AnimatedRN.loop(
+    AnimatedRN.sequence([
+      AnimatedRN.timing(aniValue, {
+        toValue: 1,
+        duration: 3000,
+        easing: Easing.linear,
+        useNativeDriver: true,
+      }),
+    ]),
+    {
+      iterations: -1,
+    },
+  );
+  const scalePauseBtn = aniScaleValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.1, 1],
+  });
 
   useEffect(() => {
-    startRotate();
-  }, []);
+    if (!active) {
+      setProgress(0);
+    } else {
+      // reset video from beginning
+      ref.current?.seek(0);
+    }
+    setPause(!active);
+  }, [active]);
+
+  useEffect(() => {
+    if (!pause) {
+      startRotate();
+      aniScaleValue.setValue(0);
+    } else {
+      stopRotate();
+      popupPauseBtn();
+    }
+  }, [pause]);
+
+  useEffect(() => {
+    setProgress(currentTime / total);
+  }, [currentTime, total]);
 
   const spin = aniValue.interpolate({
-    inputRange: [0, 0.25, 0.5, 0.75, 1],
-    outputRange: ['0deg', '90deg', '180deg', '270deg', '360deg'],
+    inputRange: [0, 1],
+    outputRange: ['0deg', '360deg'],
   });
 
   const startRotate = () => {
-    AnimatedRN.loop(
-      AnimatedRN.sequence([
-        AnimatedRN.timing(aniValue, {
-          toValue: 0.25,
-          duration: 800,
-          useNativeDriver: true,
-        }),
-        AnimatedRN.timing(aniValue, {
-          toValue: 0.5,
-          duration: 800,
-          useNativeDriver: true,
-        }),
-        AnimatedRN.timing(aniValue, {
-          toValue: 0.75,
-          duration: 800,
-          useNativeDriver: true,
-        }),
-        AnimatedRN.timing(aniValue, {
-          toValue: 1,
-          duration: 800,
-          useNativeDriver: true,
-        }),
-      ]),
-      {
-        iterations: -1,
-      },
-    ).start();
+    rotateAni.start();
+  };
+
+  const stopRotate = () => {
+    rotateAni.stop();
+  };
+
+  const popupPauseBtn = () => {
+    AnimatedRN.timing(aniScaleValue, {
+      toValue: 1,
+      duration: 100,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
   };
 
   return (
@@ -88,7 +127,7 @@ const SlideComponent = ({
       }}>
       <Block block style={{ position: 'relative' }}>
         {/* pause icon */}
-        {pause && (
+        {progress > 0 && pause && (
           <Block
             style={{
               position: 'absolute',
@@ -100,11 +139,23 @@ const SlideComponent = ({
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <VectorIcon
-              icon={'bx_play1'}
-              color={'rgba(255,255,255,0.5)'}
-              size={90}
-            />
+            <AnimatedRN.View
+              style={{
+                transform: [
+                  {
+                    scaleX: scalePauseBtn,
+                  },
+                  {
+                    scaleY: scalePauseBtn,
+                  },
+                ],
+              }}>
+              <VectorIcon
+                icon={'bx_play1'}
+                color={'rgba(255,255,255,0.5)'}
+                size={90}
+              />
+            </AnimatedRN.View>
           </Block>
         )}
         {/* right side bar */}
@@ -180,16 +231,27 @@ const SlideComponent = ({
           </Block>
           {/* likes */}
           <Block marginTop={30}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setIsLike(!isLike);
+              }}>
               <Block>
-                <VectorIcon icon={'bx_heart'} color={'white'} size={42} />
-              </Block>
-              <Block>
-                <Text fontSize={12} color={'white'} center>
-                  5449
-                </Text>
+                {isLike ? (
+                  <VectorIcon
+                    icon={'bx_heart_circle'}
+                    color={'#C54C58'}
+                    size={42}
+                  />
+                ) : (
+                  <VectorIcon icon={'bx_heart'} color={'white'} size={42} />
+                )}
               </Block>
             </TouchableOpacity>
+            <Block>
+              <Text fontSize={12} color={'white'} center>
+                5449
+              </Text>
+            </Block>
           </Block>
           {/* comments */}
           <Block marginTop={18}>
@@ -197,25 +259,36 @@ const SlideComponent = ({
               <Block>
                 <VectorIcon icon={'bx_message'} color={'white'} size={36} />
               </Block>
-              <Block>
-                <Text fontSize={12} color={'white'} center>
-                  172
-                </Text>
-              </Block>
             </TouchableOpacity>
+            <Block>
+              <Text fontSize={12} color={'white'} center>
+                172
+              </Text>
+            </Block>
           </Block>
           {/* bookmarks */}
           <Block marginTop={18}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                setIsBookmark(!isBookmark);
+              }}>
               <Block>
-                <VectorIcon icon={'bx_bookmark'} color={'white'} size={36} />
-              </Block>
-              <Block>
-                <Text fontSize={12} color={'white'} center>
-                  823
-                </Text>
+                {isBookmark ? (
+                  <VectorIcon
+                    icon={'bx_bookmark_alt'}
+                    color={'#ECD064'}
+                    size={36}
+                  />
+                ) : (
+                  <VectorIcon icon={'bx_bookmark'} color={'white'} size={36} />
+                )}
               </Block>
             </TouchableOpacity>
+            <Block>
+              <Text fontSize={12} color={'white'} center>
+                823
+              </Text>
+            </Block>
           </Block>
           {/* forward */}
           <Block marginTop={18}>
@@ -223,12 +296,12 @@ const SlideComponent = ({
               <Block>
                 <VectorIcon icon={'bx_link'} color={'white'} size={36} />
               </Block>
-              <Block>
-                <Text fontSize={12} color={'white'} center>
-                  2042
-                </Text>
-              </Block>
             </TouchableOpacity>
+            <Block>
+              <Text fontSize={12} color={'white'} center>
+                2042
+              </Text>
+            </Block>
           </Block>
           {/* music */}
           <Block marginTop={18}>
@@ -266,7 +339,7 @@ const SlideComponent = ({
             </AnimatedRN.View>
           </Block>
         </Block>
-        {/* bottom progress bar */}
+        {/* bottom information */}
         <Block
           style={{
             position: 'absolute',
@@ -274,8 +347,6 @@ const SlideComponent = ({
             left: 0,
             zIndex: 1,
             width,
-            height: 60,
-            justifyContent: 'flex-end',
           }}>
           <Block paddingHorizontal={12}>
             <Block marginBottom={9}>
@@ -290,13 +361,37 @@ const SlideComponent = ({
               </Text>
             </Block>
           </Block>
+        </Block>
+        {/* bottom progress bar */}
+        <Block
+          style={{
+            position: 'absolute',
+            bottom: -18,
+            left: 0,
+            zIndex: 1,
+            width,
+          }}>
           <Block
             style={{
               width,
-              height: 26,
-              marginBottom: -15,
             }}>
-            <Slider type={'linear'} onChangeLinear={setSliderProgress} />
+            <Slider
+              maximumValue={total}
+              minimumValue={0}
+              value={currentTime}
+              thumbStyle={{
+                width: 12,
+                height: 12,
+              }}
+              onValueChange={(value: number | Array<number>) => {
+                console.log('value: ', value);
+                if (Array.isArray(value)) {
+                  ref.current?.seek(value[0]);
+                } else {
+                  ref.current?.seek(value);
+                }
+              }}
+            />
           </Block>
         </Block>
         {/* main content */}
@@ -307,23 +402,37 @@ const SlideComponent = ({
             width: width,
             height: height - BOTTOM_BAR_HEIGHT,
           }}
+          ref={ref}
           resizeMode={'contain'}
           repeat={true}
           paused={pause}
-          onVideoLoad={() => {
-            console.log('onVideoLoad');
-          }}
+          rate={rate}
+          fullscreen={fullscreen}
+          muted={false}
+          // onVideoLoad={() => {
+          //   console.log('onVideoLoad');
+          // }}
           onVideoError={() => {
             console.log('onVideoError: ');
           }}
-          onVideoProgress={() => {
-            console.log('onVideoProgress: ');
+          // onVideoProgress={() => {
+          //   console.log('onVideoProgress: ');
+          // }}
+          // onVideoEnd={() => {
+          //   console.log('onVideoEnd: ');
+          // }}
+          // onVideoBuffer={() => {
+          //   console.log('onVideoBuffer: ');
+          // }}
+          onBuffer={(data: OnBufferData) => {
+            console.log('on buffer: ', data);
           }}
-          onVideoEnd={() => {
-            console.log('onVideoEnd: ');
+          onError={(error: LoadError) => {
+            console.log('error: ', error);
           }}
-          onVideoBuffer={() => {
-            console.log('onVideoBuffer: ');
+          onProgress={(data: OnProgressData) => {
+            setTotal(data.seekableDuration);
+            setCurrentTime(data.currentTime);
           }}
         />
       </Block>

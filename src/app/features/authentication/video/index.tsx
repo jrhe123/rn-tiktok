@@ -136,7 +136,7 @@ const viewabilityConfig = {
 };
 
 const distance = MAIN_HEADER_BAR_WIDTH;
-const aniControlValue = new AnimatedRN.Value(1);
+const aniControlValue = new AnimatedRN.Value(0);
 const VideoComponent = () => {
   // state
   const { askRegister, askLanguage } = useSelector(state => state.app);
@@ -144,7 +144,7 @@ const VideoComponent = () => {
   const [isShown, setIsShown] = useState<boolean>(false);
   const [allowNoti, setAllowNoti] = useState<boolean>(false);
   const [allowTrack, setAllowTrack] = useState<boolean>(false);
-  const [currentTab, setCurrentTab] = useState<TAB>(TAB.FOR_YOU);
+  const [currentTab, setCurrentTab] = useState<TAB>(TAB.FOLLOWING);
   const [translateX, setTranslateX] = useState<number>(0);
   const [FYVisibleItemIndex, setFYVisibleItemIndex] = useState<number>(0);
   const [FOVisibleItemIndex, setFOVisibleItemIndex] = useState<number>(0);
@@ -218,7 +218,6 @@ const VideoComponent = () => {
      * notification
      */
     const storageNoti = loadString(STORAGE_NOTIFICATION);
-    console.log('storageNoti: ', storageNoti);
     if (storageNoti === undefined) {
       Alert.alert(
         '"TikTok" Would Like to Send You Notifications',
@@ -247,7 +246,6 @@ const VideoComponent = () => {
      * tracking
      */
     const storageTrack = loadString(STORAGE_TRACKING);
-    console.log('storageTrack: ', storageTrack);
     if (storageTrack === undefined) {
       Alert.alert(
         'Allow "TikTok" to rack your activity across other companies\' apps and websites?',
@@ -452,24 +450,16 @@ const VideoComponent = () => {
 
   const renderFOVItem = ({ item }: { item: Video }) => {
     const itemIndex = videos_2.findIndex(i => i.id === item.id);
-    return (
-      <Slide
-        item={item}
-        active={
-          itemIndex === FOVisibleItemIndex && currentTab === TAB.FOLLOWING
-        }
-      />
-    );
+    const active =
+      itemIndex === FOVisibleItemIndex && currentTab === TAB.FOLLOWING;
+    return <Slide item={item} active={active} />;
   };
 
   const renderFUVItem = ({ item }: { item: Video }) => {
     const itemIndex = videos_1.findIndex(i => i.id === item.id);
-    return (
-      <Slide
-        item={item}
-        active={itemIndex === FYVisibleItemIndex && currentTab === TAB.FOR_YOU}
-      />
-    );
+    const active =
+      itemIndex === FYVisibleItemIndex && currentTab === TAB.FOR_YOU;
+    return <Slide item={item} active={active} />;
   };
 
   const renderItem = ({ item }: { item: View }) => {
@@ -549,7 +539,7 @@ const VideoComponent = () => {
                 width,
                 height: height - BOTTOM_BAR_HEIGHT,
               }}
-              initialScrollIndex={1}
+              initialScrollIndex={0}
               scrollEventThrottle={width}
               pagingEnabled
               showsHorizontalScrollIndicator={false}
