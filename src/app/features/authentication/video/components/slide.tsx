@@ -15,8 +15,10 @@ import Video, {
 } from 'react-native-video';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
+import { dispatch } from '@common';
 import { Block, LocalImage, Text } from '@components';
 import { Slider } from '@miblanchard/react-native-slider';
+import { appActions } from '@redux-slice';
 
 enum VIDEO_TYPE {
   VIDEO = 'VIDEO',
@@ -292,7 +294,10 @@ const SlideComponent = ({
           </Block>
           {/* forward */}
           <Block marginTop={18}>
-            <TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => {
+                dispatch(appActions.onModalOpen('VIDEO_SHARE'));
+              }}>
               <Block>
                 <VectorIcon icon={'bx_link'} color={'white'} size={36} />
               </Block>

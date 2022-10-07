@@ -32,4 +32,5 @@ export type ModalType =
   | 'COUNTRY_LIST'
   | 'LANGUAGE_LIST'
   | 'VIEW_FRIEND_POST'
+  | 'VIDEO_SHARE'
   | 'OTHER';

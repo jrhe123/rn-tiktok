@@ -26,6 +26,7 @@ import { Register } from './modals/register';
 import { RegisterPopup } from './modals/register-pop';
 import { SwipeUpAni } from './modals/swipe-up-ani';
 import { ViewFriendPost } from './modals/view-friend-post';
+import { VideoShare } from './modals/video-share';
 
 const { width, height } = Dimensions.get('window');
 const { StatusBarManager } = NativeModules;
@@ -109,6 +110,11 @@ export const AppContainer = () => {
         break;
       case 'VIEW_FRIEND_POST':
         children = <ViewFriendPost handleConfirm={hideDrop} />;
+        backgroundColor = 'transparent';
+        type = 'MODAL';
+        break;
+      case 'VIDEO_SHARE':
+        children = <VideoShare handleConfirm={hideDrop} />;
         backgroundColor = 'transparent';
         type = 'MODAL';
         break;
