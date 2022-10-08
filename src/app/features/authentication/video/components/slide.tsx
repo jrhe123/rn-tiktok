@@ -11,6 +11,7 @@ import isEqual from 'react-fast-compare';
 import Video, {
   LoadError,
   OnBufferData,
+  OnLoadData,
   OnProgressData,
 } from 'react-native-video';
 
@@ -20,6 +21,10 @@ import { Block, LocalImage, Text } from '@components';
 import { Slider } from '@miblanchard/react-native-slider';
 import { appActions } from '@redux-slice';
 
+enum Orientation {
+  LANDSCAPE = 'landscape',
+  PORTRAIT = 'portrait',
+}
 enum VIDEO_TYPE {
   VIDEO = 'VIDEO',
   IMAGE = 'IMAGE',
@@ -49,14 +54,30 @@ const SlideComponent = ({
   active: boolean;
 }) => {
   const ref = useRef<Video | null>(null);
+  // video pause
   const [pause, setPause] = useState<boolean>(!active);
+  // full screen
   const [fullscreen, setFullscreen] = useState<boolean>(false);
+  // playback rate
   const [rate, setRate] = useState<number>(1);
+  // progress bar: in percentage
   const [progress, setProgress] = useState<number>(0);
+  // current time & total time & natural size info
   const [currentTime, setCurrentTime] = useState<number>(0);
   const [total, setTotal] = useState<number>(0);
+  const [naturalWidth, setNaturalWidth] = useState<number>(0);
+  const [naturalHeight, setNaturalHeight] = useState<number>(0);
+  const [orientation, setOrientation] = useState<Orientation>(
+    Orientation.LANDSCAPE,
+  );
+  // like & bookmark
   const [isLike, setIsLike] = useState<boolean>(false);
   const [isBookmark, setIsBookmark] = useState<boolean>(false);
+  // full screen btn position
+  const videoWidth = width;
+  const scaleRatio = naturalWidth === 0 ? 1 : naturalWidth / videoWidth;
+  const videoHeight =
+    naturalHeight === 0 ? videoWidth : naturalHeight / scaleRatio;
 
   const rotateAni = AnimatedRN.loop(
     AnimatedRN.sequence([
@@ -399,8 +420,51 @@ const SlideComponent = ({
             />
           </Block>
         </Block>
-        {/* main content */}
-        {/* #1 video */}
+        {/* full screen button: only landscape video support */}
+        {orientation === Orientation.LANDSCAPE && (
+          <Block
+            style={{
+              position: 'absolute',
+              top:
+                (height - BOTTOM_BAR_HEIGHT - videoHeight) / 2 +
+                videoHeight +
+                12,
+              left: (width - 130) / 2,
+              zIndex: 1,
+              width: 130,
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                ref.current?.presentFullscreenPlayer();
+              }}>
+              <Block
+                style={{
+                  backgroundColor: 'rgba(255,255,255,0.1)',
+                }}
+                direction={'row'}
+                alignItems={'center'}
+                justifyContent={'center'}
+                paddingVertical={6}
+                borderRadius={15}
+                borderWidth={0.5}
+                borderColor={'#C2C2C2'}>
+                <Block marginRight={6}>
+                  <VectorIcon
+                    icon={'bx_fullscreen'}
+                    color={'white'}
+                    size={21}
+                  />
+                </Block>
+                <Block>
+                  <Text color={'white'} fontSize={15}>
+                    full screen
+                  </Text>
+                </Block>
+              </Block>
+            </TouchableOpacity>
+          </Block>
+        )}
+        {/* video */}
         <Video
           source={{ uri: item.url }}
           style={{
@@ -417,9 +481,6 @@ const SlideComponent = ({
           // onVideoLoad={() => {
           //   console.log('onVideoLoad');
           // }}
-          onVideoError={() => {
-            console.log('onVideoError: ');
-          }}
           // onVideoProgress={() => {
           //   console.log('onVideoProgress: ');
           // }}
@@ -429,14 +490,45 @@ const SlideComponent = ({
           // onVideoBuffer={() => {
           //   console.log('onVideoBuffer: ');
           // }}
+          onFullscreenPlayerWillPresent={() => {
+            console.log('++++++++ onFullscreenPlayerWillPresent');
+          }}
+          onFullscreenPlayerDidPresent={() => {
+            console.log('++++++++ onFullscreenPlayerDidPresent');
+          }}
+          onFullscreenPlayerWillDismiss={() => {
+            console.log('++++++++ onFullscreenPlayerWillDismiss');
+          }}
+          onFullscreenPlayerDidDismiss={() => {
+            console.log('++++++++ onFullscreenPlayerDidDismiss');
+            ref.current?.seek(currentTime);
+            setPause(false);
+          }}
+          onVideoError={() => {
+            console.log('++++++++ onVideoError: ');
+          }}
+          onLoadStart={() => {
+            console.log('++++++++ onLoadStart: ');
+          }}
+          onLoad={(data: OnLoadData) => {
+            console.log('++++++++ onload: ', data);
+            setTotal(data.duration);
+            setNaturalWidth(data.naturalSize.width);
+            setNaturalHeight(data.naturalSize.height);
+            setOrientation(
+              data.naturalSize.orientation === 'landscape'
+                ? Orientation.LANDSCAPE
+                : Orientation.PORTRAIT,
+            );
+          }}
           onBuffer={(data: OnBufferData) => {
-            console.log('on buffer: ', data);
+            console.log('++++++++ on buffer: ', data);
           }}
           onError={(error: LoadError) => {
-            console.log('error: ', error);
+            console.log('++++++++ error: ', error);
           }}
           onProgress={(data: OnProgressData) => {
-            setTotal(data.seekableDuration);
+            console.log('++++++++ onProgress: ', data);
             setCurrentTime(data.currentTime);
           }}
         />

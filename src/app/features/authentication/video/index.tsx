@@ -82,36 +82,36 @@ const views: View[] = [
   },
 ];
 const videos_1: Video[] = [
-  {
-    id: '007acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    type: VIDEO_TYPE.VIDEO,
-    url: videoLink,
-  },
-  {
-    id: 'aa7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    type: VIDEO_TYPE.VIDEO,
-    url: videoLink2,
-  },
-  {
-    id: 'bb7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    type: VIDEO_TYPE.VIDEO,
-    url: videoLink3,
-  },
-  {
-    id: 'cc7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    type: VIDEO_TYPE.VIDEO,
-    url: videoLink4,
-  },
-  {
-    id: 'dd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    type: VIDEO_TYPE.VIDEO,
-    url: videoLink5,
-  },
-  {
-    id: 'ee7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    type: VIDEO_TYPE.VIDEO,
-    url: videoLink6,
-  },
+  // {
+  //   id: '007acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //   type: VIDEO_TYPE.VIDEO,
+  //   url: videoLink,
+  // },
+  // {
+  //   id: 'aa7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //   type: VIDEO_TYPE.VIDEO,
+  //   url: videoLink2,
+  // },
+  // {
+  //   id: 'bb7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //   type: VIDEO_TYPE.VIDEO,
+  //   url: videoLink3,
+  // },
+  // {
+  //   id: 'cc7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //   type: VIDEO_TYPE.VIDEO,
+  //   url: videoLink4,
+  // },
+  // {
+  //   id: 'dd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //   type: VIDEO_TYPE.VIDEO,
+  //   url: videoLink5,
+  // },
+  // {
+  //   id: 'ee7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //   type: VIDEO_TYPE.VIDEO,
+  //   url: videoLink6,
+  // },
 ];
 const videos_2: Video[] = [
   {
@@ -119,16 +119,16 @@ const videos_2: Video[] = [
     type: VIDEO_TYPE.VIDEO,
     url: videoLink7,
   },
-  {
-    id: 'cc7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    type: VIDEO_TYPE.VIDEO,
-    url: videoLink8,
-  },
-  {
-    id: 'dd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    type: VIDEO_TYPE.VIDEO,
-    url: videoLink9,
-  },
+  // {
+  //   id: 'cc7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //   type: VIDEO_TYPE.VIDEO,
+  //   url: videoLink8,
+  // },
+  // {
+  //   id: 'dd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //   type: VIDEO_TYPE.VIDEO,
+  //   url: videoLink9,
+  // },
 ];
 const viewabilityConfig = {
   itemVisiblePercentThreshold: 40,
