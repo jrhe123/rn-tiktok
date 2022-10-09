@@ -151,8 +151,9 @@ const ProfileComponent = () => {
   const _refBookmarkRoot = useRef<ScrollView>(null);
   const [index, setIndex] = useState<number>(0);
   const [bookmarkIndex, setBookmarkIndex] = useState<number>(0);
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(true);
   const [translateX, setTranslateX] = useState<number>(0);
+  const [showAskPhone, setshowAskPhone] = useState<boolean>(true);
   const debouncedParam = useDebounce(bookmarkIndex, 200);
 
   useEffect(() => {
@@ -202,6 +203,25 @@ const ProfileComponent = () => {
             }}>
             <TouchableOpacity onPress={() => {}}>
               <VectorIcon icon={'bx_user_plus'} size={USER_ICON_SIZE} />
+            </TouchableOpacity>
+          </Block>
+          <Block
+            style={{
+              position: 'absolute',
+              left: 48,
+              top: 0,
+              height: MAIN_HEADER_HEIGHT,
+              width: MAIN_HEADER_HEIGHT,
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <TouchableOpacity onPress={() => {}}>
+              <VectorIcon
+                icon={'bx_award'}
+                size={USER_ICON_SIZE}
+                color={'#ECD064'}
+              />
             </TouchableOpacity>
           </Block>
           <Block
@@ -664,7 +684,61 @@ const ProfileComponent = () => {
   };
 
   const renderAuth = () => (
-    <Block>
+    <Block style={{ position: 'relative' }} block>
+      {/* ask add phone number */}
+      {showAskPhone && (
+        <Block
+          style={{
+            width,
+            position: 'absolute',
+            bottom: 12,
+            left: 0,
+            paddingHorizontal: 12,
+            zIndex: 1,
+          }}>
+          <Block
+            style={{
+              paddingVertical: 12,
+              paddingHorizontal: 12,
+              flexDirection: 'row',
+              flex: 1,
+              justifyContent: 'space-between',
+              borderWidth: 0.5,
+              borderColor: '#c2c2c2',
+              borderRadius: 3,
+            }}>
+            <Block>
+              <Text fontSize={12} fontWeight={'bold'}>
+                Add photo number
+              </Text>
+              <Text fontSize={12}>Let contacts find you on TikTok</Text>
+            </Block>
+            <Block direction={'row'}>
+              <Block marginRight={12} justifyContent={'center'}>
+                <Button
+                  style={{
+                    paddingVertical: 3,
+                    paddingHorizontal: 18,
+                    borderWidth: 0.5,
+                    borderColor: '#c2c2c2',
+                    borderRadius: 3,
+                  }}>
+                  <Text fontSize={12}>Add</Text>
+                </Button>
+              </Block>
+              <Block justifyContent={'center'}>
+                <Button
+                  onPress={() => {
+                    setshowAskPhone(false);
+                  }}>
+                  <VectorIcon size={15} icon={'x_cross_exit'} />
+                </Button>
+              </Block>
+            </Block>
+          </Block>
+        </Block>
+      )}
+      {/* main content */}
       <Block paddingHorizontal={25}>
         {/* top icon */}
         <Block marginTop={12} alignItems={'center'}>
@@ -794,16 +868,18 @@ const ProfileComponent = () => {
             </Button>
           </Block>
           {/* add bio */}
-          <Block
-            marginTop={12}
-            style={{
-              backgroundColor: '#E8E8E8',
-              paddingVertical: 6,
-              paddingHorizontal: 12,
-              borderRadius: 3,
-            }}>
-            <Text fontSize={9}>+ Add bio</Text>
-          </Block>
+          <TouchableOpacity>
+            <Block
+              marginTop={12}
+              style={{
+                backgroundColor: '#E8E8E8',
+                paddingVertical: 6,
+                paddingHorizontal: 12,
+                borderRadius: 3,
+              }}>
+              <Text fontSize={9}>+ Add bio</Text>
+            </Block>
+          </TouchableOpacity>
         </Block>
         {/* four tab bar */}
         <Block

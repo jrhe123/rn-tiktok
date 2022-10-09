@@ -49,7 +49,7 @@ const BANNER_TEXT: string[] = [
 const InboxComponent = () => {
   const _refRoot = useRef<ScrollView>(null);
   const [index, setIndex] = useState<number>(0);
-  const [isAuth, setIsAuth] = useState<boolean>(false);
+  const [isAuth, setIsAuth] = useState<boolean>(true);
 
   useEffect(() => {
     // carousel auto scroll
@@ -379,7 +379,34 @@ const InboxComponent = () => {
   const renderAuth = () => (
     <Block>
       {/* top icon */}
-      <Block paddingHorizontal={25}>
+      <Block paddingHorizontal={25} direction={'row'}>
+        {/* widget */}
+        <Block
+          width={AVATAR_ICON_SIZE}
+          marginTop={12}
+          marginBottom={18}
+          marginRight={24}>
+          <TouchableOpacity>
+            <Block
+              style={{
+                height: AVATAR_ICON_SIZE,
+                width: AVATAR_ICON_SIZE,
+                borderRadius: AVATAR_ICON_SIZE,
+                backgroundColor: '#c2c2c2',
+                justifyContent: 'center',
+                alignItems: 'center',
+                position: 'relative',
+              }}>
+              <VectorIcon icon={'bx_basketball'} color={'#4D4D4D'} size={30} />
+            </Block>
+          </TouchableOpacity>
+          <Block marginTop={9}>
+            <Text fontSize={12} center color={'#6F7681'}>
+              + Widget
+            </Text>
+          </Block>
+        </Block>
+        {/* user */}
         <Block width={AVATAR_ICON_SIZE} marginTop={12} marginBottom={18}>
           <TouchableOpacity>
             <Block
