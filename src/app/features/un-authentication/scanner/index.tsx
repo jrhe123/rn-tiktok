@@ -112,7 +112,7 @@ const ScannerComponent = () => {
           }}>
           <Button
             onPress={() => {
-              // navigate(APP_SCREEN.SCANNER);
+              dispatch(appActions.onModalOpen('PHOTO_LIST'));
             }}>
             <Text fontSize={13} color={'white'}>
               Photos

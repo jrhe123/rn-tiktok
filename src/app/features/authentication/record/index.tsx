@@ -312,6 +312,11 @@ const RecordComponent = () => {
         backgroundColor: 'red',
         position: 'relative',
       }}>
+      <Block style={{ marginTop: 60 }}>
+        <Button onPress={selectFile}>
+          <Text>SELECT {asset ? 'ANOTHER' : ''} FILE</Text>
+        </Button>
+      </Block>
       {/* <Block style={{ marginTop: 60 }}>
         <Button onPress={selectFile}>
           <Text>SELECT {asset ? 'ANOTHER' : ''} FILE</Text>

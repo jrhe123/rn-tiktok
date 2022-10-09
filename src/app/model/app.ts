@@ -34,4 +34,5 @@ export type ModalType =
   | 'VIEW_FRIEND_POST'
   | 'VIDEO_SHARE'
   | 'VIDEO_COMMENT'
+  | 'PHOTO_LIST'
   | 'OTHER';

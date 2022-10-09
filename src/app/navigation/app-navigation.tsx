@@ -22,6 +22,7 @@ import { MyAppTheme } from '@theme';
 
 import { CountryList } from './modals/country-list';
 import { LanguageList } from './modals/language-list';
+import { PhotoList } from './modals/photo-list';
 import { Register } from './modals/register';
 import { RegisterPopup } from './modals/register-pop';
 import { SwipeUpAni } from './modals/swipe-up-ani';
@@ -121,6 +122,11 @@ export const AppContainer = () => {
         break;
       case 'VIDEO_COMMENT':
         children = <VideoComment handleConfirm={hideDrop} />;
+        backgroundColor = 'transparent';
+        type = 'MODAL';
+        break;
+      case 'PHOTO_LIST':
+        children = <PhotoList handleConfirm={hideDrop} />;
         backgroundColor = 'transparent';
         type = 'MODAL';
         break;
