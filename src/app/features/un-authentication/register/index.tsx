@@ -118,7 +118,10 @@ const RegisterComponent = () => {
           alignItems: 'center',
           zIndex: 1,
         }}>
-        <Button onPress={() => {}}>
+        <Button
+          onPress={() => {
+            goBack();
+          }}>
           <VectorIcon icon={'bx_chevron_left1'} size={48} />
         </Button>
       </Block>
@@ -156,8 +159,6 @@ const RegisterComponent = () => {
             padding: 36,
             paddingTop: statusBarHeight + statusBarOffset + MAIN_HEADER_HEIGHT,
             justifyContent: 'space-between',
-            borderColor: 'red',
-            borderWidth: 1,
           }}>
           {/* top section */}
           <Block>

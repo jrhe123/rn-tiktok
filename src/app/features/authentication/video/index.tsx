@@ -119,16 +119,16 @@ const videos_2: Video[] = [
     type: VIDEO_TYPE.VIDEO,
     url: videoLink7,
   },
-  {
-    id: 'cc7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    type: VIDEO_TYPE.VIDEO,
-    url: videoLink8,
-  },
-  {
-    id: 'dd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
-    type: VIDEO_TYPE.VIDEO,
-    url: videoLink9,
-  },
+  // {
+  //   id: 'cc7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //   type: VIDEO_TYPE.VIDEO,
+  //   url: videoLink8,
+  // },
+  // {
+  //   id: 'dd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+  //   type: VIDEO_TYPE.VIDEO,
+  //   url: videoLink9,
+  // },
 ];
 const viewabilityConfig = {
   itemVisiblePercentThreshold: 40,

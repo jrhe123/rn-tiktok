@@ -11,6 +11,7 @@ import { Login } from '@features/un-authentication/login';
 import { PhoneEmail } from '@features/un-authentication/phone-email';
 import { Policy } from '@features/un-authentication/policy';
 import { Register } from '@features/un-authentication/register';
+import { Scanner } from '@features/un-authentication/scanner';
 import { Search } from '@features/un-authentication/search';
 import { Settings } from '@features/un-authentication/settings';
 import { Terms } from '@features/un-authentication/terms';
@@ -64,6 +65,7 @@ export const RootNavigation = () => {
             name={APP_SCREEN.FIND_FRIEND}
             component={FindFriend}
           />
+          <RootStack.Screen name={APP_SCREEN.SCANNER} component={Scanner} />
           <RootStack.Screen
             name={APP_SCREEN.LIVE_STREAM}
             component={LiveStream}
