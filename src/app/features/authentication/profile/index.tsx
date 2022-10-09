@@ -201,7 +201,10 @@ const ProfileComponent = () => {
               justifyContent: 'center',
               alignItems: 'center',
             }}>
-            <TouchableOpacity onPress={() => {}}>
+            <TouchableOpacity
+              onPress={() => {
+                navigate(APP_SCREEN.FIND_FRIEND);
+              }}>
               <VectorIcon icon={'bx_user_plus'} size={USER_ICON_SIZE} />
             </TouchableOpacity>
           </Block>

@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import BootSplash from 'react-native-bootsplash';
 
 import { HomeTabNavigator } from '@features/authentication/tab-navigator';
+import { FindFriend } from '@features/un-authentication/find-friend';
 import { HelpCenter } from '@features/un-authentication/help';
 import { Info } from '@features/un-authentication/info';
 import { LiveStream } from '@features/un-authentication/live-stream';
@@ -59,6 +60,10 @@ export const RootNavigation = () => {
           <RootStack.Screen name={APP_SCREEN.REGISTER} component={Register} />
           <RootStack.Screen name={APP_SCREEN.LOGIN} component={Login} />
           <RootStack.Screen name={APP_SCREEN.SEARCH} component={Search} />
+          <RootStack.Screen
+            name={APP_SCREEN.FIND_FRIEND}
+            component={FindFriend}
+          />
           <RootStack.Screen
             name={APP_SCREEN.LIVE_STREAM}
             component={LiveStream}
