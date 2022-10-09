@@ -1,4 +1,5 @@
 import React, { useCallback, useImperativeHandle } from 'react';
+import { Dimensions } from 'react-native';
 
 import { Gesture, GestureDetector } from 'react-native-gesture-handler';
 import Animated, {
@@ -12,6 +13,8 @@ import Animated, {
 
 import { styles } from './styles';
 import { BottomSheetProps, BottomSheetRefProps } from './type';
+
+const windowHeight = Dimensions.get('window').height;
 
 export type BottomSheetRef = BottomSheetRefProps;
 export const BottomSheet = React.forwardRef<
@@ -91,7 +94,8 @@ export const BottomSheet = React.forwardRef<
           rBottomSheetStyle,
           {
             height,
-            top: height,
+            // top: height,
+            top: windowHeight,
           },
         ]}>
         {children}

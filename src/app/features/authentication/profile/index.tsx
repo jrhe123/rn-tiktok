@@ -151,7 +151,7 @@ const ProfileComponent = () => {
   const _refBookmarkRoot = useRef<ScrollView>(null);
   const [index, setIndex] = useState<number>(0);
   const [bookmarkIndex, setBookmarkIndex] = useState<number>(0);
-  const [isAuth, setIsAuth] = useState<boolean>(true);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
   const [translateX, setTranslateX] = useState<number>(0);
   const debouncedParam = useDebounce(bookmarkIndex, 200);
 

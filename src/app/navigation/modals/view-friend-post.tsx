@@ -19,8 +19,6 @@ import { appActions } from '@redux-slice';
 const { width, height } = Dimensions.get('window');
 const BTN_COLOR = '#E8445A';
 const BTN_TEXT_COLOR = 'white';
-const DIS_BTN_COLOR = '#E8E8E8';
-const DIS_BTN_TEXT_COLOR = '#A9A9A9';
 const { StatusBarManager } = NativeModules;
 let statusBarHeight = 0;
 StatusBarManager.getHeight(({ height }: { height: number }) => {
@@ -67,7 +65,7 @@ const ViewFriendPostComponent = ({
     <GestureHandlerRootView>
       <BottomSheet
         ref={_refBS}
-        height={height - statusBarHeight}
+        height={(height - statusBarHeight) / 2}
         throttle={100}
         toggleModal={toggle => {
           if (!toggle) {

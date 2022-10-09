@@ -25,8 +25,9 @@ import { LanguageList } from './modals/language-list';
 import { Register } from './modals/register';
 import { RegisterPopup } from './modals/register-pop';
 import { SwipeUpAni } from './modals/swipe-up-ani';
-import { ViewFriendPost } from './modals/view-friend-post';
+import { VideoComment } from './modals/video-comment';
 import { VideoShare } from './modals/video-share';
+import { ViewFriendPost } from './modals/view-friend-post';
 
 const { width, height } = Dimensions.get('window');
 const { StatusBarManager } = NativeModules;
@@ -115,6 +116,11 @@ export const AppContainer = () => {
         break;
       case 'VIDEO_SHARE':
         children = <VideoShare handleConfirm={hideDrop} />;
+        backgroundColor = 'transparent';
+        type = 'MODAL';
+        break;
+      case 'VIDEO_COMMENT':
+        children = <VideoComment handleConfirm={hideDrop} />;
         backgroundColor = 'transparent';
         type = 'MODAL';
         break;

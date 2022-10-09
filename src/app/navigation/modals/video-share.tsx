@@ -213,7 +213,7 @@ const VideoShareComponent = ({
 
   const renderTopBar = () => (
     <>
-      {/* top left btn */}
+      {/* top right btn */}
       <Block
         style={{
           position: 'absolute',
@@ -346,7 +346,7 @@ const VideoShareComponent = ({
     <GestureHandlerRootView>
       <BottomSheet
         ref={_refBS}
-        height={height - statusBarHeight}
+        height={(height - statusBarHeight) / 2}
         throttle={100}
         toggleModal={toggle => {
           if (!toggle) {

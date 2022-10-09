@@ -49,7 +49,7 @@ const BANNER_TEXT: string[] = [
 const InboxComponent = () => {
   const _refRoot = useRef<ScrollView>(null);
   const [index, setIndex] = useState<number>(0);
-  const [isAuth, setIsAuth] = useState<boolean>(true);
+  const [isAuth, setIsAuth] = useState<boolean>(false);
 
   useEffect(() => {
     // carousel auto scroll
