@@ -163,7 +163,10 @@ const ScannerComponent = () => {
               </Text>
             </Block>
             <Block marginTop={60}>
-              <Button>
+              <Button
+                onPress={() => {
+                  navigate(APP_SCREEN.QR_SHARE);
+                }}>
                 <Block alignItems={'center'}>
                   <VectorIcon icon={'bx_id_card'} color={'white'} size={42} />
                   <Text

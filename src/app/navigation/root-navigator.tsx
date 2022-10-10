@@ -10,6 +10,7 @@ import { LiveStream } from '@features/un-authentication/live-stream';
 import { Login } from '@features/un-authentication/login';
 import { PhoneEmail } from '@features/un-authentication/phone-email';
 import { Policy } from '@features/un-authentication/policy';
+import { QRShare } from '@features/un-authentication/qr-share';
 import { Register } from '@features/un-authentication/register';
 import { Scanner } from '@features/un-authentication/scanner';
 import { Search } from '@features/un-authentication/search';
@@ -66,6 +67,7 @@ export const RootNavigation = () => {
             component={FindFriend}
           />
           <RootStack.Screen name={APP_SCREEN.SCANNER} component={Scanner} />
+          <RootStack.Screen name={APP_SCREEN.QR_SHARE} component={QRShare} />
           <RootStack.Screen
             name={APP_SCREEN.LIVE_STREAM}
             component={LiveStream}

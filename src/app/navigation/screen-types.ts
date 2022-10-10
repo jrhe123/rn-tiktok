@@ -11,6 +11,7 @@ export enum APP_SCREEN {
   SEARCH = 'SEARCH',
   FIND_FRIEND = 'FIND_FRIEND',
   SCANNER = 'SCANNER',
+  QR_SHARE = 'QR_SHARE',
   LIVE_STREAM = 'LIVE_STREAM',
   //
   HELP = 'HELP',
@@ -40,6 +41,7 @@ export type UnAuthorizeParamsList = {
   [APP_SCREEN.SEARCH]: undefined;
   [APP_SCREEN.FIND_FRIEND]: undefined;
   [APP_SCREEN.SCANNER]: undefined;
+  [APP_SCREEN.QR_SHARE]: undefined;
   [APP_SCREEN.LIVE_STREAM]: undefined;
   //
   [APP_SCREEN.HELP]: undefined;
