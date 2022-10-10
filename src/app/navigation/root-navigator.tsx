@@ -14,6 +14,7 @@ import { QRShare } from '@features/un-authentication/qr-share';
 import { Register } from '@features/un-authentication/register';
 import { Scanner } from '@features/un-authentication/scanner';
 import { Search } from '@features/un-authentication/search';
+import { SearchResult } from '@features/un-authentication/search-result';
 import { Settings } from '@features/un-authentication/settings';
 import { Terms } from '@features/un-authentication/terms';
 import { Welcome } from '@features/un-authentication/welcome';
@@ -62,6 +63,10 @@ export const RootNavigation = () => {
           <RootStack.Screen name={APP_SCREEN.REGISTER} component={Register} />
           <RootStack.Screen name={APP_SCREEN.LOGIN} component={Login} />
           <RootStack.Screen name={APP_SCREEN.SEARCH} component={Search} />
+          <RootStack.Screen
+            name={APP_SCREEN.SEARCH_RESULT}
+            component={SearchResult}
+          />
           <RootStack.Screen
             name={APP_SCREEN.FIND_FRIEND}
             component={FindFriend}

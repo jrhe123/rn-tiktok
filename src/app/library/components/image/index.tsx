@@ -47,10 +47,12 @@ const ImageComponent = ({
   };
 
   const onLoadImageSucceeded = (event: OnLoadEvent) => {
-    setTimeout(() => {
-      setError(false);
-      setLoadSucceeded(true);
-    }, 200);
+    // setTimeout(() => {
+    //   setError(false);
+    //   setLoadSucceeded(true);
+    // }, 200);
+    setError(false);
+    setLoadSucceeded(true);
     execFunc(onLoad, event);
   };
 

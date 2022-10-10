@@ -5,15 +5,18 @@ import {
   Dimensions,
   NativeModules,
   ScrollView,
+  TouchableOpacity,
 } from 'react-native';
 
 import isEqual from 'react-fast-compare';
+import Highlighter from 'react-native-highlight-words';
 import { TextInput } from 'react-native-paper';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { dispatch } from '@common';
 import { Block, Button, Image, Screen, Text } from '@components';
-import { goBack } from '@navigation/navigation-service';
+import { goBack, navigate } from '@navigation/navigation-service';
+import { APP_SCREEN } from '@navigation/screen-types';
 import { appActions } from '@redux-slice';
 
 const { StatusBarManager } = NativeModules;
@@ -34,6 +37,86 @@ const images: string[] = [
   'https://picsum.photos/id/1008/5616/3744',
   'https://picsum.photos/id/1009/5000/7502',
 ];
+
+type History = {
+  id: string;
+  text: string;
+};
+const historyList: History[] = [
+  {
+    id: '1',
+    text: 'rerepubs',
+  },
+  {
+    id: '2',
+    text: 'IKEA Home Decor Ideas',
+  },
+  {
+    id: '3',
+    text: 'Valkyrie Cosplay',
+  },
+];
+
+type Result = {
+  id: string;
+  title: string;
+  isUser: boolean;
+  userAvatarImageUrl?: string;
+};
+const resultList: Result[] = [
+  {
+    id: '1',
+    title: 'rerepubs',
+    isUser: true,
+    userAvatarImageUrl: 'https://picsum.photos/id/1002/4312/2868',
+  },
+  {
+    id: '2',
+    title: 'rere the dancer',
+    isUser: false,
+  },
+  {
+    id: '3',
+    title: 'rerry',
+    isUser: false,
+  },
+  {
+    id: '4',
+    title: 'rerrington',
+    isUser: false,
+  },
+  {
+    id: '5',
+    title: 'rerrouvaille',
+    isUser: false,
+  },
+  {
+    id: '6',
+    title: 'rere',
+    isUser: false,
+  },
+  {
+    id: '7',
+    title: 'Rerr',
+    isUser: false,
+  },
+  {
+    id: '8',
+    title: 'rerererere',
+    isUser: false,
+  },
+  {
+    id: '9',
+    title: 'rerr what is that',
+    isUser: false,
+  },
+  {
+    id: '10',
+    title: 'rerrow',
+    isUser: false,
+  },
+];
+
 type MayLike = {
   id: string;
   color: string;
@@ -104,10 +187,12 @@ const mayLikeList: MayLike[] = [
 ];
 const CAROUSEL_WIDTH = width - 30;
 const CAROUSEL_HEIGHT = 150;
+const AVATAR_SIZE = 30;
 
 const SearchComponent = () => {
   const _refRoot = useRef<ScrollView>(null);
   const [index, setIndex] = useState<number>(0);
+  const [search, setSearch] = useState<string>('');
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -157,6 +242,20 @@ const SearchComponent = () => {
                 name={() => <VectorIcon icon={'bx_search'} size={21} />}
               />
             }
+            right={
+              search && (
+                <TextInput.Icon
+                  name={() => (
+                    <TouchableOpacity
+                      onPress={() => {
+                        setSearch('');
+                      }}>
+                      <VectorIcon icon={'x_cross_exit'} size={15} />
+                    </TouchableOpacity>
+                  )}
+                />
+              )
+            }
             style={{
               height: 36,
               backgroundColor: '#e2e3e4',
@@ -169,7 +268,8 @@ const SearchComponent = () => {
             underlineColor={'transparent'}
             placeholderTextColor={'#c2c2c2'}
             placeholder={'Search'}
-            // value={''}
+            value={search}
+            onChangeText={setSearch}
           />
         </Block>
         <Button onPress={() => {}}>
@@ -229,21 +329,35 @@ const SearchComponent = () => {
     ));
   };
 
-  return (
-    <Block
-      block
-      style={{
-        position: 'relative',
-        paddingHorizontal: 15,
-      }}>
-      <Screen
-        unsafe
-        statusBarStyle="dark-content"
-        bottomInsetColor="transparent"
-        backgroundColor={'transparent'}>
-        {renderTopBar()}
-        {/* main content */}
-        <Block marginTop={6}>
+  const renderHistoryList = () =>
+    historyList.map(history => (
+      <TouchableOpacity
+        key={history.id}
+        style={{ marginBottom: 12 }}
+        onPress={() => {
+          navigate(APP_SCREEN.SEARCH_RESULT);
+        }}>
+        <Block direction={'row'} alignItems={'center'}>
+          <Block marginRight={9}>
+            <VectorIcon icon={'bx_time'} size={18} />
+          </Block>
+          <Block style={{ flexGrow: 1 }}>
+            <Text fontSize={15}>{history.text}</Text>
+          </Block>
+          <Block>
+            <VectorIcon icon={'x_cross_exit'} size={18} color={'#a8a8a8'} />
+          </Block>
+        </Block>
+      </TouchableOpacity>
+    ));
+
+  const renderDefault = () => {
+    return (
+      <>
+        {/* history */}
+        <Block marginTop={12}>{renderHistoryList()}</Block>
+        {/* label */}
+        <Block marginTop={12}>
           <Text fontSize={15} fontWeight={'bold'}>
             You may like
           </Text>
@@ -267,6 +381,103 @@ const SearchComponent = () => {
             {renderCarousel()}
           </ScrollView>
         </Block>
+      </>
+    );
+  };
+
+  const renderSearchResultList = () =>
+    resultList.map(res => (
+      <TouchableOpacity key={res.id}>
+        <Block direction={'row'} marginBottom={15}>
+          <Block marginRight={12} justifyContent={'center'}>
+            <VectorIcon icon={'bx_search'} size={18} />
+          </Block>
+          <Block
+            direction={'row'}
+            style={{
+              flexGrow: 1,
+              alignItems: 'center',
+              justifyContent: 'space-between',
+            }}>
+            <Block direction={'row'} alignItems={'center'}>
+              <Highlighter
+                highlightStyle={{ backgroundColor: 'yellow' }}
+                searchWords={[search]}
+                textToHighlight={res.title}
+                style={{
+                  fontSize: 15,
+                }}
+              />
+              {res.isUser && (
+                <Block
+                  style={{
+                    width: 12,
+                    height: 12,
+                    borderRadius: 12,
+                    backgroundColor: '#88D0EB',
+                    marginLeft: 6,
+                  }}>
+                  <VectorIcon icon={'bx_check'} size={12} color={'white'} />
+                </Block>
+              )}
+            </Block>
+            {res.userAvatarImageUrl && res.isUser && (
+              <Block
+                style={{
+                  height: AVATAR_SIZE,
+                  width: AVATAR_SIZE,
+                  borderRadius: AVATAR_SIZE,
+                  overflow: 'hidden',
+                  marginRight: 12,
+                }}>
+                <Image
+                  style={{
+                    height: AVATAR_SIZE,
+                    width: AVATAR_SIZE,
+                  }}
+                  source={{ uri: res.userAvatarImageUrl }}
+                  resizeMode={'cover'}
+                />
+              </Block>
+            )}
+          </Block>
+          <Block>
+            <VectorIcon icon={'arrow_going_up'} size={19} />
+          </Block>
+        </Block>
+      </TouchableOpacity>
+    ));
+
+  const renderSearch = () => {
+    return (
+      <>
+        {/* results */}
+        <Block marginTop={12}>{renderSearchResultList()}</Block>
+        {/* info */}
+        <Block marginTop={12}>
+          <Text fontSize={12} color={'#a8a8a8'} center>
+            Press and hold on a suggestion to report
+          </Text>
+        </Block>
+      </>
+    );
+  };
+
+  return (
+    <Block
+      block
+      style={{
+        position: 'relative',
+        paddingHorizontal: 15,
+      }}>
+      <Screen
+        unsafe
+        statusBarStyle="dark-content"
+        bottomInsetColor="transparent"
+        backgroundColor={'transparent'}>
+        {renderTopBar()}
+        {/* main content */}
+        {search ? renderSearch() : renderDefault()}
       </Screen>
     </Block>
   );
