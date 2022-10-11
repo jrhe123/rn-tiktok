@@ -333,7 +333,7 @@ const SearchComponent = () => {
     historyList.map(history => (
       <TouchableOpacity
         key={history.id}
-        style={{ marginBottom: 12 }}
+        style={{ marginBottom: 24 }}
         onPress={() => {
           navigate(APP_SCREEN.SEARCH_RESULT);
         }}>

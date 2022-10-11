@@ -35,4 +35,6 @@ export type ModalType =
   | 'VIDEO_SHARE'
   | 'VIDEO_COMMENT'
   | 'PHOTO_LIST'
+  | 'SEARCH_FILTER'
+  | 'RESULT_FEEDBACK'
   | 'OTHER';

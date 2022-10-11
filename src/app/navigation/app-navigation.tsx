@@ -25,6 +25,8 @@ import { LanguageList } from './modals/language-list';
 import { PhotoList } from './modals/photo-list';
 import { Register } from './modals/register';
 import { RegisterPopup } from './modals/register-pop';
+import { ResultFeedback } from './modals/result-feedback';
+import { SearchFilter } from './modals/search-filter';
 import { SwipeUpAni } from './modals/swipe-up-ani';
 import { VideoComment } from './modals/video-comment';
 import { VideoShare } from './modals/video-share';
@@ -127,6 +129,16 @@ export const AppContainer = () => {
         break;
       case 'PHOTO_LIST':
         children = <PhotoList handleConfirm={hideDrop} />;
+        backgroundColor = 'transparent';
+        type = 'MODAL';
+        break;
+      case 'SEARCH_FILTER':
+        children = <SearchFilter handleConfirm={hideDrop} />;
+        backgroundColor = 'transparent';
+        type = 'MODAL';
+        break;
+      case 'RESULT_FEEDBACK':
+        children = <ResultFeedback handleConfirm={hideDrop} />;
         backgroundColor = 'transparent';
         type = 'MODAL';
         break;

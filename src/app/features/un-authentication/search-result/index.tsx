@@ -554,7 +554,10 @@ const SearchResultComponent = () => {
             onChangeText={setSearch}
           />
         </Block>
-        <Button onPress={() => {}}>
+        <Button
+          onPress={() => {
+            dispatch(appActions.onModalOpen('SEARCH_FILTER'));
+          }}>
           <VectorIcon icon={'bx_filter'} size={33} />
         </Button>
       </Block>
