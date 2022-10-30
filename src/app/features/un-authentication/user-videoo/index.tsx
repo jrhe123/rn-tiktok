@@ -17,11 +17,175 @@ import isEqual from 'react-fast-compare';
 
 import { VectorIcon } from '@assets/vector-icon/vector-icon';
 import { dispatch } from '@common';
-import { Block, Button, Image, Screen, Text } from '@components';
+import { Block, Button, Divider, Image, Screen, Text } from '@components';
 import { rxEmail, rxMobile } from '@config/regex';
 import { goBack, navigate } from '@navigation/navigation-service';
 import { APP_SCREEN } from '@navigation/screen-types';
 import { appActions } from '@redux-slice';
+import { capitalize } from '@utils/common';
+import dayjs from 'dayjs';
+
+type View = {
+  id: string;
+  type: string;
+};
+// TODO: replace
+const views: View[] = [
+  {
+    id: 'bd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    type: 'SHARE',
+  },
+  {
+    id: '3ac68afc-c605-48d3-a4f8-fbd91aa97f63',
+    type: 'PRIVATE',
+  },
+];
+
+type Share = {
+  id: string;
+  title: string;
+};
+const shares: Share[] = [
+  {
+    id: 'aa7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'ikea fall 2022',
+  },
+  {
+    id: 'bb7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'renter friendly upgrades',
+  },
+  {
+    id: 'cc7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'Quebec gateway',
+  },
+  {
+    id: 'dd7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'Ontario developer',
+  },
+  {
+    id: 'ee7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'React Native',
+  },
+  {
+    id: 'ff7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'Springboot',
+  },
+  {
+    id: 'gg7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'Typescipt programming',
+  },
+  {
+    id: 'hh7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'AI flask algorithm',
+  },
+  {
+    id: 'ii7acbea-c1b1-46c2-aed5-3ad53abb28ba',
+    title: 'Digital devops',
+  },
+];
+
+type Top = {
+  id: string;
+  url: string;
+  date: Date;
+  title: string;
+  subtitle: string;
+  userImageUrl: string;
+  userName: string;
+  likeCount: number;
+};
+const topList: Top[] = [
+  {
+    id: '1',
+    url: 'https://picsum.photos/id/1002/4312/2868',
+    date: new Date('2022-01-01'),
+    title: '...#katekerditips',
+    subtitle: '#homedecorideas',
+    userImageUrl: 'https://picsum.photos/id/1002/4312/2868',
+    userName: 'katekerdiinteri...',
+    likeCount: 11500,
+  },
+  {
+    id: '2',
+    url: 'https://picsum.photos/id/1003/1181/1772',
+    date: new Date('2022-01-02'),
+    title: '...home decor from ikea',
+    subtitle: 'alwways get asked abandor',
+    userImageUrl: 'https://picsum.photos/id/1003/1181/1772',
+    userName: 'emilyrogs',
+    likeCount: 64500,
+  },
+  {
+    id: '3',
+    url: 'https://picsum.photos/id/1004/5616/3744',
+    date: new Date('2022-01-03'),
+    title: '...#homedecorideas',
+    subtitle: '#ikeafinds #interiordesign',
+    userImageUrl: 'https://picsum.photos/id/1004/5616/3744',
+    userName: 'jordansamson..',
+    likeCount: 6983,
+  },
+  {
+    id: '4',
+    url: 'https://picsum.photos/id/1005/5760/3840',
+    date: new Date('2022-01-04'),
+    title: '...#homedecor',
+    subtitle: '#apartmentdecors #rente..',
+    userImageUrl: 'https://picsum.photos/id/1005/5760/3840',
+    userName: 'crampedliving',
+    likeCount: 8602,
+  },
+  {
+    id: '5',
+    url: 'https://picsum.photos/id/1002/4312/2868',
+    date: new Date('2022-01-01'),
+    title: '...#katekerditips',
+    subtitle: '#homedecorideas',
+    userImageUrl: 'https://picsum.photos/id/1002/4312/2868',
+    userName: 'katekerdiinteri...',
+    likeCount: 11500,
+  },
+  {
+    id: '6',
+    url: 'https://picsum.photos/id/1003/1181/1772',
+    date: new Date('2022-01-02'),
+    title: '...home decor from ikea',
+    subtitle: 'alwways get asked abandor',
+    userImageUrl: 'https://picsum.photos/id/1003/1181/1772',
+    userName: 'emilyrogs',
+    likeCount: 64500,
+  },
+  {
+    id: '7',
+    url: 'https://picsum.photos/id/1004/5616/3744',
+    date: new Date('2022-01-03'),
+    title: '...#homedecorideas',
+    subtitle: '#ikeafinds #interiordesign',
+    userImageUrl: 'https://picsum.photos/id/1004/5616/3744',
+    userName: 'jordansamson..',
+    likeCount: 6983,
+  },
+  {
+    id: '8',
+    url: 'https://picsum.photos/id/1005/5760/3840',
+    date: new Date('2022-01-04'),
+    title: '...#homedecor',
+    subtitle: '#apartmentdecors #rente..',
+    userImageUrl: 'https://picsum.photos/id/1005/5760/3840',
+    userName: 'crampedliving',
+    likeCount: 8602,
+  },
+  {
+    id: '9',
+    url: 'https://picsum.photos/id/1005/5760/3840',
+    date: new Date('2022-01-04'),
+    title: '...#homedecor',
+    subtitle: '#apartmentdecors #rente..',
+    userImageUrl: 'https://picsum.photos/id/1005/5760/3840',
+    userName: 'crampedliving',
+    likeCount: 118602,
+  },
+];
 
 const { StatusBarManager } = NativeModules;
 let statusBarHeight = 0;
@@ -33,8 +197,156 @@ const AVATAR_ICON_SIZE = 84;
 const { height, width } = Dimensions.get('window');
 const MAIN_HEADER_HEIGHT = 48;
 
+const MAIN_HEADER_BAR_WIDTH = width;
+const distance = MAIN_HEADER_BAR_WIDTH;
+const aniControlValue = new AnimatedRN.Value(0);
+const MAIN_HEADER_BAR_UNDERNEATH_WIDTH = 48;
+
 const UserVideoComponent = () => {
   const [hasAvatar, setHasAvatar] = useState<boolean>(false);
+  const _refTabRoot = useRef<FlatList>(null);
+  const _refShareTitleRoot = useRef<ScrollView>(null);
+  const [translateX, setTranslateX] = useState<number>(0);
+  const [shareIndex, setShareIndex] = useState<number>(0);
+
+  useEffect(() => {
+    AnimatedRN.timing(aniControlValue, {
+      toValue: translateX / distance,
+      duration: 200,
+      easing: Easing.linear,
+      useNativeDriver: true,
+    }).start();
+  }, [translateX]);
+
+  const translateDistance = aniControlValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0, distance / 2],
+  });
+  const opacityShare = aniControlValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [1, 0.5],
+  });
+  const opacityPrivate = aniControlValue.interpolate({
+    inputRange: [0, 1],
+    outputRange: [0.5, 1],
+  });
+
+  const renderShareTitles = () => {
+    return shares.map((b, index) => (
+      <Block
+        key={b.id}
+        style={{
+          alignItems: 'center',
+          borderWidth: 0.5,
+          borderColor: '#6F7681',
+          marginLeft: 6,
+          marginRight: 6,
+          height: 36,
+        }}
+        justifyContent={'center'}
+        paddingHorizontal={12}>
+        <Button
+          onPress={() => {
+            setShareIndex(index);
+          }}>
+          <Block direction={'row'} alignItems={'center'}>
+            <Text color={shareIndex === index ? 'black' : '#6F7681'}>
+              {capitalize(b.title)}
+            </Text>
+          </Block>
+        </Button>
+      </Block>
+    ));
+  };
+
+  const renderItem = ({ item }: { item: View }) => {
+    if (item.type === 'SHARE') {
+      return (
+        <Block
+          style={{
+            width,
+          }}>
+          {/* title list */}
+          <Block
+            style={{
+              height: 48,
+              marginTop: 12,
+            }}>
+            <ScrollView
+              ref={_refShareTitleRoot}
+              horizontal
+              showsHorizontalScrollIndicator={false}>
+              {renderShareTitles()}
+            </ScrollView>
+          </Block>
+          <Divider color="#ccc" height={0.5} />
+          {/* main content */}
+          <Block
+            direction={'row'}
+            flexWrap={'wrap'}
+            style={{
+              justifyContent: 'space-between',
+            }}>
+            {topList.map((top: Top) => (
+              <Block
+                key={top.id}
+                style={{
+                  width: '33%',
+                  marginBottom: 3,
+                }}>
+                {/* image */}
+                <TouchableOpacity>
+                  <Block
+                    style={{
+                      height: 180,
+                      width: '100%',
+                      position: 'relative',
+                    }}>
+                    <Image
+                      style={{
+                        height: 180,
+                        width: '100%',
+                      }}
+                      source={{ uri: top.url }}
+                      resizeMode={'cover'}
+                    />
+                    <Block
+                      style={{
+                        position: 'absolute',
+                        bottom: 12,
+                        left: 6,
+                        zIndex: 1,
+                      }}>
+                      <Block direction={'row'}>
+                        <Block marginRight={3}>
+                          <VectorIcon
+                            icon={'bx_play'}
+                            size={16}
+                            color={'white'}
+                          />
+                        </Block>
+                        <Text color={'white'} fontSize={12}>
+                          {top.likeCount / 1000}k
+                        </Text>
+                      </Block>
+                    </Block>
+                  </Block>
+                </TouchableOpacity>
+              </Block>
+            ))}
+          </Block>
+        </Block>
+      );
+    } else if (item.type === 'PRIVATE') {
+      return (
+        <Block
+          style={{
+            width,
+          }}></Block>
+      );
+    }
+    return null;
+  };
 
   const renderTopBar = () => (
     <Block
@@ -140,6 +452,7 @@ const UserVideoComponent = () => {
         <Block
           style={{
             padding: 24,
+            paddingBottom: 18,
             width: '100%',
           }}>
           {/* avatar */}
@@ -302,6 +615,120 @@ const UserVideoComponent = () => {
             </TouchableOpacity>
           </Block>
         </Block>
+        <Block>
+          <Divider color="#ccc" height={0.5} />
+        </Block>
+        {/* two tab bar */}
+        <Block
+          style={{
+            marginTop: 24,
+            position: 'relative',
+            flexDirection: 'row',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+          {/* tab 1 */}
+          <Block
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Button
+              onPress={() => {
+                if (_refTabRoot.current) {
+                  _refTabRoot.current?.scrollToIndex({
+                    animated: true,
+                    index: 0,
+                  });
+                }
+              }}>
+              <AnimatedRN.Text
+                style={{
+                  color: 'black',
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  opacity: opacityShare,
+                }}>
+                <VectorIcon icon={'bx_menu'} size={24} />
+              </AnimatedRN.Text>
+            </Button>
+          </Block>
+          {/* tab 2 */}
+          <Block
+            style={{
+              flex: 1,
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}>
+            <Button
+              onPress={() => {
+                if (_refTabRoot.current) {
+                  _refTabRoot.current?.scrollToIndex({
+                    animated: true,
+                    index: 1,
+                  });
+                }
+              }}>
+              <AnimatedRN.Text
+                style={{
+                  color: 'black',
+                  fontSize: 18,
+                  fontWeight: 'bold',
+                  textAlign: 'center',
+                  opacity: opacityPrivate,
+                }}>
+                <VectorIcon icon={'bx_heart1'} size={24} />
+              </AnimatedRN.Text>
+            </Button>
+          </Block>
+          {/* Underneath bar */}
+          <AnimatedRN.View
+            style={{
+              position: 'absolute',
+              transform: [{ translateX: translateDistance }],
+              bottom: -14,
+              left: (distance / 2 - MAIN_HEADER_BAR_UNDERNEATH_WIDTH) / 2,
+              height: 2,
+              width: MAIN_HEADER_BAR_UNDERNEATH_WIDTH,
+              backgroundColor: 'black',
+              borderRadius: 2,
+            }}
+          />
+        </Block>
+        <Block marginTop={11}>
+          <Divider color="#ccc" height={0.5} />
+        </Block>
+        {/* horizontal */}
+        <FlatList
+          onScroll={e => {
+            setTranslateX((e.nativeEvent.contentOffset.x / width) * distance);
+          }}
+          ref={_refTabRoot}
+          data={views}
+          renderItem={renderItem}
+          keyExtractor={item => item.id}
+          horizontal
+          style={{
+            width,
+          }}
+          initialScrollIndex={0}
+          scrollEventThrottle={width}
+          pagingEnabled
+          showsHorizontalScrollIndicator={false}
+          onScrollToIndexFailed={info => {
+            const wait: Promise<unknown> = new Promise(resolve =>
+              setTimeout(resolve, 500),
+            );
+            wait.then(() => {
+              _refTabRoot.current?.scrollToIndex({
+                index: info.index,
+                animated: true,
+              });
+            });
+          }}
+        />
       </Screen>
     </Block>
   );
