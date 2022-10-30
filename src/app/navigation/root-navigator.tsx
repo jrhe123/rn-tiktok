@@ -17,6 +17,7 @@ import { Search } from '@features/un-authentication/search';
 import { SearchResult } from '@features/un-authentication/search-result';
 import { Settings } from '@features/un-authentication/settings';
 import { Terms } from '@features/un-authentication/terms';
+import { UserVideo } from '@features/un-authentication/user-videoo';
 import { Welcome } from '@features/un-authentication/welcome';
 import { useSelector } from '@hooks';
 import { AppModule } from '@native-module';
@@ -88,6 +89,10 @@ export const RootNavigation = () => {
             component={Policy}
           />
           <RootStack.Screen name={APP_SCREEN.SETTINGS} component={Settings} />
+          <RootStack.Screen
+            name={APP_SCREEN.USER_VIDEO}
+            component={UserVideo}
+          />
           <RootStack.Screen
             name={APP_SCREEN.HOME}
             component={HomeTabNavigator}

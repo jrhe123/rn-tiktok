@@ -20,6 +20,8 @@ import { dispatch } from '@common';
 import { Block, LocalImage, Text } from '@components';
 import { useSelector } from '@hooks';
 import { Slider } from '@miblanchard/react-native-slider';
+import { navigate } from '@navigation/navigation-service';
+import { APP_SCREEN } from '@navigation/screen-types';
 import { appActions } from '@redux-slice';
 
 enum Orientation {
@@ -233,7 +235,10 @@ const SlideComponent = ({
             }}>
             {/* user avatar */}
             <Block>
-              <TouchableOpacity>
+              <TouchableOpacity
+                onPress={() => {
+                  navigate(APP_SCREEN.USER_VIDEO);
+                }}>
                 {/* outer white border */}
                 <Block
                   style={{
