@@ -84,6 +84,33 @@ const shares: Share[] = [
   },
 ];
 
+type Suggest = {
+  id: string;
+  title: string;
+  userImageUrl: string;
+  followerCount: number;
+};
+const suggestList: Suggest[] = [
+  {
+    id: '1',
+    title: 'katekerditips',
+    userImageUrl: 'https://picsum.photos/id/1002/4312/2868',
+    followerCount: 11500,
+  },
+  {
+    id: '2',
+    title: 'ikea',
+    userImageUrl: 'https://picsum.photos/id/1003/1181/1772',
+    followerCount: 64500,
+  },
+  {
+    id: '3',
+    title: 'homedecor',
+    userImageUrl: 'https://picsum.photos/id/1004/5616/3744',
+    followerCount: 6983,
+  },
+];
+
 type Top = {
   id: string;
   url: string;
@@ -194,6 +221,7 @@ StatusBarManager.getHeight(({ height }: { height: number }) => {
 });
 const BTN_COLOR = '#E8445A';
 const AVATAR_ICON_SIZE = 84;
+const SUGGEST_ICON_SIZE = 120;
 const { height, width } = Dimensions.get('window');
 const MAIN_HEADER_HEIGHT = 48;
 
@@ -204,6 +232,7 @@ const MAIN_HEADER_BAR_UNDERNEATH_WIDTH = 48;
 
 const UserVideoComponent = () => {
   const [hasAvatar, setHasAvatar] = useState<boolean>(false);
+  const [openSuggest, setOpenSuggest] = useState<boolean>(false);
   const _refTabRoot = useRef<FlatList>(null);
   const _refShareTitleRoot = useRef<ScrollView>(null);
   const [translateX, setTranslateX] = useState<number>(0);
@@ -434,6 +463,87 @@ const UserVideoComponent = () => {
     </Block>
   );
 
+  const renderSuggested = (suggest: Suggest) => (
+    <Block
+      key={suggest.id}
+      style={{
+        backgroundColor: '#F8F8F8',
+        marginRight: 12,
+        padding: 24,
+        width: 180,
+        position: 'relative',
+      }}>
+      {/* close btn */}
+      <Block
+        style={{
+          position: 'absolute',
+          right: 9,
+          top: 9,
+          zIndex: 1,
+        }}>
+        <Button>
+          <VectorIcon icon={'x_cross_exit'} size={15} />
+        </Button>
+      </Block>
+      {/* avatar */}
+      <Block
+        style={{
+          width: SUGGEST_ICON_SIZE,
+          height: SUGGEST_ICON_SIZE,
+          borderRadius: SUGGEST_ICON_SIZE,
+          overflow: 'hidden',
+        }}>
+        <Image
+          style={{
+            height: SUGGEST_ICON_SIZE,
+            width: SUGGEST_ICON_SIZE,
+          }}
+          source={{ uri: suggest.userImageUrl }}
+          resizeMode={'cover'}
+        />
+      </Block>
+      {/* info */}
+      <Block marginTop={12} direction={'row'} justifyContent={'center'}>
+        <Text fontSize={12} fontWeight={'bold'}>
+          {suggest.title}
+        </Text>
+        <Block
+          style={{
+            backgroundColor: '#83CEE6',
+            borderRadius: 30,
+            marginLeft: 3,
+          }}>
+          <VectorIcon icon={'bx_check'} size={15} color={'white'} />
+        </Block>
+      </Block>
+      <Block marginTop={6}>
+        <Text fontSize={12} color={'#8A8A8A'} textAlign={'center'}>
+          {suggest.followerCount / 1000}k followers
+        </Text>
+      </Block>
+      <Block marginTop={18}>
+        <Button>
+          <Block
+            style={{
+              backgroundColor: BTN_COLOR,
+              paddingVertical: 6,
+              borderRadius: 3,
+            }}>
+            <Text color={'white'} fontSize={15} textAlign={'center'}>
+              Follow
+            </Text>
+          </Block>
+        </Button>
+      </Block>
+    </Block>
+  );
+
+  const renderSuggestedAccounts = () => (
+    <ScrollView horizontal showsHorizontalScrollIndicator={false}>
+      {suggestList.map(suggest => renderSuggested(suggest))}
+    </ScrollView>
+  );
+
   return (
     <Block
       block
@@ -585,7 +695,10 @@ const UserVideoComponent = () => {
               </Button>
             </Block>
             <Block>
-              <Button>
+              <Button
+                onPress={() => {
+                  setOpenSuggest(!openSuggest);
+                }}>
                 <Block
                   style={{
                     borderColor: '#c2c2c2',
@@ -593,7 +706,10 @@ const UserVideoComponent = () => {
                     borderRadius: 3,
                     padding: 7,
                   }}>
-                  <VectorIcon icon={'bx_chevron_down'} size={27} />
+                  <VectorIcon
+                    icon={openSuggest ? 'bx_chevron_up' : 'bx_chevron_down'}
+                    size={27}
+                  />
                 </Block>
               </Button>
             </Block>
@@ -614,6 +730,36 @@ const UserVideoComponent = () => {
               </Block>
             </TouchableOpacity>
           </Block>
+          {/* suggested */}
+          {openSuggest && (
+            <Block style={{ marginTop: 24 }}>
+              {/* info */}
+              <Block direction={'row'} justifyContent={'space-between'}>
+                {/* left */}
+                <Block direction={'row'} alignItems={'center'}>
+                  <Block marginRight={3}>
+                    <Text fontSize={13}>Suggested accounts</Text>
+                  </Block>
+                  <VectorIcon icon={'bx_info_circle'} size={18} />
+                </Block>
+                {/* right */}
+                <Block direction={'row'} alignItems={'center'}>
+                  <Block marginRight={3}>
+                    <Text fontSize={13}>View all</Text>
+                  </Block>
+                  <VectorIcon icon={'bx_chevron_right'} size={21} />
+                </Block>
+              </Block>
+              {/* main content */}
+              <Block
+                direction={'row'}
+                style={{
+                  marginTop: 24,
+                }}>
+                {renderSuggestedAccounts()}
+              </Block>
+            </Block>
+          )}
         </Block>
         <Block>
           <Divider color="#ccc" height={0.5} />
